@@ -3,12 +3,22 @@ package sprites;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+/**
+ * Game level. Handles rendering and collisions
+ */
 public class Level {
+    
+    // level tile square side size
     private final int TILE_SIZE = 20;
     
+    // data representation of the level mapping
     private int[][] levelData = new int[21][21];
     
-    public Level() {
+    /**
+     * Initializes the level data
+     * @param levelNumber chosen level to initialize
+     */
+    public Level(int levelNumber) {
         
         int[][] level_1 = {
             {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20},
@@ -36,6 +46,11 @@ public class Level {
         this.levelData = level_1;
     }
     
+    /**
+     * Indicates if the level collides with a given sprite
+     * @param sprite sprite to check collision
+     * @return if the level collides with the given sprite
+     */
     public boolean collides(Sprite sprite) {
         Sprite tileSprite;
         int tileX, tileY;
@@ -52,7 +67,10 @@ public class Level {
         return false;
     }
             
-    
+    /**
+     * Renders the level 
+     * @param renderer rendering tool
+     */
     public void render(Graphics2D renderer) {
         renderer.setColor(Color.WHITE);
         for (int i = 0; i < levelData.length; i++)

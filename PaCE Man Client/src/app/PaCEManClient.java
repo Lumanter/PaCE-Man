@@ -1,8 +1,9 @@
 
-package pace.man.client;
+package app;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
+import main.GameBoard;
 
 
 public class PaCEManClient extends JFrame {

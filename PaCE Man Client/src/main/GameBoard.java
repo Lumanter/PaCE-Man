@@ -1,10 +1,9 @@
 
-package pace.man.client;
+package main;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +29,7 @@ public class GameBoard extends JPanel implements ActionListener {
     
     private void initVariables() {
         this.pacman = new Pacman(200, 300);
-        this.level = new Level();
+        this.level = new Level(1);
     }
  
     
@@ -85,7 +84,6 @@ public class GameBoard extends JPanel implements ActionListener {
     
     private void renderSprites(Graphics graphics) { 
         Graphics2D renderer = (Graphics2D) graphics;   
-        //renderer.drawImage(ghost, 10, 10,this);
  
         this.pacman.render(renderer, this);
         

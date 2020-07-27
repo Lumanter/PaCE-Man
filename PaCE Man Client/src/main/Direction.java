@@ -1,6 +1,8 @@
-package pace.man.client;
+package main;
 
-
+/**
+ * Represents the four basic directions
+ */
 public enum Direction {
     RIGHT,
     LEFT,
