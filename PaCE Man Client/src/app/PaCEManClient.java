@@ -3,8 +3,7 @@ package app;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import main.GameBoard;
-import movement.Constants;
+import data.Constants;
 
 
 public class PaCEManClient extends JFrame {

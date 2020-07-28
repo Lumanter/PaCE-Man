@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.ImageObserver;
-import movement.Constants;
-import movement.Position;
+import data.Constants;
+import data.Position;
 
 /**
  * Simple representation of a squared sprite to display. Handles rendering and collisions

@@ -3,9 +3,9 @@ package sprites;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import movement.Constants;
-import movement.Direction;
-import movement.Position;
+import data.Constants;
+import data.Direction;
+import data.Position;
 
 /**
  * Pacman representation. Handles collisions and animation

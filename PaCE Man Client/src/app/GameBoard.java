@@ -1,7 +1,7 @@
 
-package main;
+package app;
 
-import movement.Direction;
+import data.Direction;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,7 +12,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import movement.Constants;
+import data.Constants;
+import data.GhostColor;
 import sprites.Level;
 import sprites.Pacman;
 import sprites.Ghost;
@@ -20,20 +21,25 @@ import sprites.Ghost;
 
 public class GameBoard extends JPanel implements ActionListener {
     
+    private int levelNumber;
+    
     private Pacman pacman;
     private Level level;
     
-    private Ghost ghost;
-    
+    private Ghost[] ghosts;
+            
     public GameBoard() {
         initVariables();
         initBoard();
     }
     
     private void initVariables() {
+        this.levelNumber = 1;
         this.pacman = new Pacman();
-        this.ghost = new Ghost();
-        this.level = new Level(1);
+        this.level = new Level(levelNumber);
+        
+        this.ghosts = new Ghost[Constants.GHOSTS_NUMBER];
+        this.ghosts[GhostColor.RED] = new Ghost(levelNumber, GhostColor.RED);
     }
  
     
@@ -82,8 +88,10 @@ public class GameBoard extends JPanel implements ActionListener {
     
     private void moveSprites() {
         
-        // move ghost
-        this.ghost.move();
+        for(Ghost ghost: ghosts) {
+            if (ghost != null)
+                ghost.move();
+        }
         
         // move pacman
         this.pacman.warpIfNecessary();
@@ -93,7 +101,12 @@ public class GameBoard extends JPanel implements ActionListener {
     private void renderSprites(Graphics graphics) { 
         Graphics2D renderer = (Graphics2D) graphics;   
  
-        this.ghost.render(renderer, this);
+        for(Ghost ghost: ghosts) {
+            if (ghost != null)
+                ghost.render(renderer, this);
+        }
+        
+        //this.redGhost.render(renderer, this);
         
         this.pacman.render(renderer, this);
         

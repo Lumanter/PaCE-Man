@@ -1,4 +1,4 @@
-package movement;
+package data;
 
 /**
  * Represents the four basic directions

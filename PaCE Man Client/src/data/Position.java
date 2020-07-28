@@ -1,4 +1,4 @@
-package movement;
+package data;
 
 /**
  * Basic position representation
