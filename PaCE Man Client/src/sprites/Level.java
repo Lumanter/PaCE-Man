@@ -2,14 +2,12 @@ package sprites;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import movement.Constants;
 
 /**
  * Game level. Handles rendering and collisions
  */
 public class Level {
-    
-    // level tile square side size
-    private final int TILE_SIZE = 20;
     
     // data representation of the level mapping
     private int[][] levelData = new int[21][21];
@@ -57,9 +55,9 @@ public class Level {
         for (int i = 0; i < levelData.length; i++)
             for (int j = 0; j < levelData[i].length; j++) {
                 
-                tileX = levelData[i][j] * TILE_SIZE;
-                tileY = i * TILE_SIZE;
-                tileSprite = new Sprite(null, TILE_SIZE, tileX, tileY);
+                tileX = levelData[i][j] * Constants.TILE_SIZE;
+                tileY = i * Constants.TILE_SIZE;
+                tileSprite = new Sprite(null, tileX, tileY);
                 if (tileSprite.collides(sprite))
                     return true;
             }
@@ -75,7 +73,7 @@ public class Level {
         renderer.setColor(Color.WHITE);
         for (int i = 0; i < levelData.length; i++)
             for (int j = 0; j < levelData[i].length; j++) {
-                renderer.drawRect(levelData[i][j] * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+                renderer.drawRect(levelData[i][j] * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE);
                 //renderer.fillRect(levelData[i][j] * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }
     }

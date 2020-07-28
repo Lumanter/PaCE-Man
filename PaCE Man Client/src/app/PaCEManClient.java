@@ -4,6 +4,7 @@ package app;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import main.GameBoard;
+import movement.Constants;
 
 
 public class PaCEManClient extends JFrame {
@@ -22,8 +23,7 @@ public class PaCEManClient extends JFrame {
     private void initUI() {
         this.setTitle("PaCE Man");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        // 645, 720
-        this.setSize(436, 500);
+        this.setSize(Constants.LEVEL_SIZE, 500);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         

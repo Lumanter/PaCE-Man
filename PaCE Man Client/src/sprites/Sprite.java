@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.ImageObserver;
+import movement.Constants;
+import movement.Position;
 
 /**
  * Simple representation of a squared sprite to display. Handles rendering and collisions
@@ -13,25 +15,19 @@ public class Sprite {
     // sprite image
     protected Image sprite;
     
-    // sprite side size
-    protected int size;
-    
-    // sprite x and y location
-    protected int x, y;
+    // sprite position
+    protected Position pos;
 
     /**
      * Constructor to set all variables
      * 
      * @param sprite sprite image
-     * @param size sprite side size
      * @param position_x sprite x location
      * @param position_y sprite y location
      */
-    public Sprite(Image sprite, int size, int position_x, int position_y) {
+    public Sprite(Image sprite, int position_x, int position_y) {
         this.sprite = sprite;
-        this.size = size;
-        this.x = position_x;
-        this.y = position_y;
+        this.pos = new Position(position_x, position_y);
     }
     
     /**
@@ -41,8 +37,8 @@ public class Sprite {
      * @return if this sprite collides with the other sprite
      */
     public boolean collides(Sprite otherSprite) {
-        Rectangle thisRectangle = new Rectangle(x, y, size, size);
-        Rectangle otherRectangle = new Rectangle(otherSprite.getX(), otherSprite.getY(), otherSprite.getSize(), otherSprite.getSize());
+        Rectangle thisRectangle = new Rectangle(pos.x, pos.y, Constants.TILE_SIZE, Constants.TILE_SIZE);
+        Rectangle otherRectangle = new Rectangle(otherSprite.getPos().x, otherSprite.getPos().y, Constants.TILE_SIZE, Constants.TILE_SIZE);
         return thisRectangle.intersects(otherRectangle);
     }
     
@@ -53,7 +49,7 @@ public class Sprite {
      * @param context render context
      */
     public void render(Graphics2D renderer, ImageObserver context) {
-        renderer.drawImage(sprite, x, y, context);
+        renderer.drawImage(sprite, pos.x, pos.y, context);
     }
 
     public Image getSprite() {
@@ -64,28 +60,11 @@ public class Sprite {
         this.sprite = sprite;
     }
 
-    public int getSize() {
-        return size;
+    public Position getPos() {
+        return pos;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setPos(Position pos) {
+        this.pos = pos;
     }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-    
 }

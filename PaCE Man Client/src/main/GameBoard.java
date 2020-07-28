@@ -1,6 +1,7 @@
 
 package main;
 
+import movement.Direction;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,16 +12,18 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import movement.Constants;
 import sprites.Level;
 import sprites.Pacman;
+import sprites.Ghost;
 
 
 public class GameBoard extends JPanel implements ActionListener {
     
-    private final int FRAME_DELAY = 40; 
-    
     private Pacman pacman;
     private Level level;
+    
+    private Ghost ghost;
     
     public GameBoard() {
         initVariables();
@@ -28,14 +31,15 @@ public class GameBoard extends JPanel implements ActionListener {
     }
     
     private void initVariables() {
-        this.pacman = new Pacman(200, 300);
+        this.pacman = new Pacman();
+        this.ghost = new Ghost();
         this.level = new Level(1);
     }
  
     
     private void initBoard() {
         // call this class' actionPerformed to refresh display
-        Timer timer = new Timer(FRAME_DELAY, this);
+        Timer timer = new Timer(Constants.FRAME_DELAY, this);
         timer.start();
         
         this.addKeyListener(new KeyAdapter() {
@@ -77,6 +81,10 @@ public class GameBoard extends JPanel implements ActionListener {
     }
     
     private void moveSprites() {
+        
+        // move ghost
+        this.ghost.move();
+        
         // move pacman
         this.pacman.warpIfNecessary();
         this.pacman.move(level);
@@ -85,6 +93,8 @@ public class GameBoard extends JPanel implements ActionListener {
     private void renderSprites(Graphics graphics) { 
         Graphics2D renderer = (Graphics2D) graphics;   
  
+        this.ghost.render(renderer, this);
+        
         this.pacman.render(renderer, this);
         
         // render level background
@@ -97,7 +107,7 @@ public class GameBoard extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // animate Pacman
-        this.pacman.increaseAnimationTimer(FRAME_DELAY);
+        this.pacman.increaseAnimationTimer();
         this.pacman.updateAnimation();
         
         // update display on any action performed
