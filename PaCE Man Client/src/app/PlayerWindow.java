@@ -6,29 +6,32 @@ import javax.swing.JFrame;
 import data.Constants;
 
 
-public class PaCEManClient extends JFrame {
+public class PlayerWindow extends JFrame {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
-            JFrame ex = new PaCEManClient();
+            JFrame ex = new PlayerWindow();
             ex.setVisible(true);
         });
     }
     
-    public PaCEManClient() {
-        initUI();
+    public PlayerWindow() {
+        setupFrame();
     }
     
-    private void initUI() {
-        this.setTitle("PaCE Man");
+    private void setupFrame() {
+        this.setTitle("PaCE Man Player");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(Constants.LEVEL_SIZE, 500);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
-        PlayerView gameBoard = new PlayerView();
-        this.add(gameBoard);
+        PlayerView playerView = new PlayerView();
         
+        FakePlayerServer fakeServer = new FakePlayerServer(playerView);
+        fakeServer.setVisible(true);
+        
+        this.add(playerView);
     }
     
 }

@@ -49,22 +49,22 @@ public class PlayerView extends JPanel implements ActionListener {
                 
         // comands executed
         Command createRedGhost = new CreateGhostCommand(this, GhostColor.RED);
-        createRedGhost.execute();
+        //createRedGhost.execute();
         
         Command createBlueGhost = new CreateGhostCommand(this, GhostColor.BLUE);
-        createBlueGhost.execute();
+        //createBlueGhost.execute();
         
         Command createPinkGhost = new CreateGhostCommand(this, GhostColor.PINK);
-        createPinkGhost.execute();
+        //createPinkGhost.execute();
         
         Command createOrangeGhost = new CreateGhostCommand(this, GhostColor.ORANGE);
-        createOrangeGhost.execute();
+        //createOrangeGhost.execute();
         
         Command placePill = new PlacePillCommand(this, 1, 1);
-        placePill.execute();
+        //placePill.execute();
         
         Command placeAnotherPill = new PlacePillCommand(this, 9, 15);
-        placeAnotherPill.execute();
+        //placeAnotherPill.execute();
         
         Command newSpeed = new ChangeGhostsSpeedCommand(this, 6);
         //newSpeed.execute();
