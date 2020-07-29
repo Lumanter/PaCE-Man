@@ -26,7 +26,7 @@ public class PaCEManClient extends JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
-        GameBoard gameBoard = new GameBoard();
+        PlayerView gameBoard = new PlayerView();
         this.add(gameBoard);
         
     }

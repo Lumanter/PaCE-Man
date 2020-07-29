@@ -47,7 +47,7 @@ public class Level {
     /**
      * Renders the level 
      * @param renderer rendering tool
-     */
+     */ 
     public void render(Graphics2D renderer) {
         renderer.setColor(Color.WHITE);
         for (int i = 0; i < levelMapData.length; i++)

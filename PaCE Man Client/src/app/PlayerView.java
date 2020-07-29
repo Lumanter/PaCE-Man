@@ -14,21 +14,27 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import data.Constants;
 import data.GhostColor;
+import data.Position;
+import java.util.ArrayList;
 import sprites.Level;
 import sprites.Pacman;
 import sprites.Ghost;
+import sprites.PillManager;
 
 
-public class GameBoard extends JPanel implements ActionListener {
+public class PlayerView extends JPanel implements ActionListener {
     
     private int levelNumber;
     
     private Pacman pacman;
     private Level level;
     
-    private Ghost[] ghosts;
+    private final ArrayList<Ghost> ghosts = new ArrayList<>();
+    
+    
+    private PillManager pillManager;
             
-    public GameBoard() {
+    public PlayerView() {
         initVariables();
         initBoard();
     }
@@ -38,8 +44,11 @@ public class GameBoard extends JPanel implements ActionListener {
         this.pacman = new Pacman();
         this.level = new Level(levelNumber);
         
-        this.ghosts = new Ghost[Constants.GHOSTS_NUMBER];
-        this.ghosts[GhostColor.RED] = new Ghost(levelNumber, GhostColor.RED);
+        this.ghosts.add(new Ghost(levelNumber, GhostColor.RED));
+        
+        this.pillManager = new PillManager();
+        pillManager.addPill(20*1, 20*1);
+        pillManager.addPill(180, 300);
     }
  
     
@@ -82,12 +91,13 @@ public class GameBoard extends JPanel implements ActionListener {
     protected void paintComponent(Graphics renderer) {
         super.paintComponent(renderer);
         moveSprites();
-        
+        checkCollisions();
         renderSprites(renderer);
     }
     
     private void moveSprites() {
         
+        // move ghosts
         for(Ghost ghost: ghosts) {
             if (ghost != null)
                 ghost.move();
@@ -98,20 +108,48 @@ public class GameBoard extends JPanel implements ActionListener {
         this.pacman.move(level);
     }
     
+    private void checkCollisions() {
+        
+        // check for pills eaten
+        boolean pillEaten = (pillManager.hasCollision(pacman) != null);
+        if (pillEaten) {
+            Position eatenPillPosition = pillManager.hasCollision(pacman);
+            pillManager.removePill(eatenPillPosition);
+            pillManager.setPillActive(true);
+            for (Ghost ghost: ghosts)
+                    ghost.setIsEdible(true);
+        }
+        
+        // ghosts collisions
+        for (int i = 0; i < ghosts.size(); i++) {
+            Ghost ghost = ghosts.get(i);    
+            if (ghost.collides(pacman)) {
+                if (ghost.isIsEdible())
+                    // ghost eaten
+                    ghosts.remove(i);
+                else
+                    // pacman life -1
+                    pacman.resetPosition();
+            }
+        }
+    }
+    
     private void renderSprites(Graphics graphics) { 
         Graphics2D renderer = (Graphics2D) graphics;   
  
+        // render level background
+        this.level.render(renderer); 
+        
+        // render ghosts
         for(Ghost ghost: ghosts) {
-            if (ghost != null)
                 ghost.render(renderer, this);
         }
         
-        //this.redGhost.render(renderer, this);
-        
+        // render pacman
         this.pacman.render(renderer, this);
-        
-        // render level background
-        this.level.render(renderer);             
+                    
+        // render power pills
+        this.pillManager.render(renderer);
         
         // update display and release renderer resources
         Toolkit.getDefaultToolkit().sync();
@@ -119,9 +157,21 @@ public class GameBoard extends JPanel implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        
         // animate Pacman
-        this.pacman.increaseAnimationTimer();
-        this.pacman.updateAnimation();
+        pacman.increaseAnimationTimer();
+        pacman.updateAnimation();
+        
+        // decrease pill timer if there's a pill active
+        if (pillManager.isPillActive()) {
+            
+            boolean pillTimeFinished = (pillManager.tickTimer() == 0);
+            if (pillTimeFinished) {
+                // pill time finished so ghosts are no longer edible
+                for(Ghost ghost: ghosts)
+                        ghost.setIsEdible(false);
+            }
+        }
         
         // update display on any action performed
         this.repaint();

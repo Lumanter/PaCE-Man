@@ -17,6 +17,12 @@ public class Ghost extends Sprite {
     // ghost speed
     private int speed = 3;
     
+    // ghost color
+    private int color;
+    
+    // indicates if the ghost is currently edible
+    private boolean isEdible = false;
+    
     // ghost moving direction
     private Direction direction;
     
@@ -44,6 +50,8 @@ public class Ghost extends Sprite {
     public Ghost(int level, int ghostColor) {
         super(null, Constants.DEFAULT_GHOST_POSITION.x, Constants.DEFAULT_GHOST_POSITION.y);
         super.sprite = getGhostSprite(ghostColor);
+        
+        this.color = ghostColor;
         
         setPathData(level, ghostColor);
         initializeNextPathPosition();
@@ -193,20 +201,37 @@ public class Ghost extends Sprite {
         String spriteName;
         switch(ghostColor) {
             case GhostColor.BLUE:
-                spriteName = "ghost_blue.jpg";
+                spriteName = "ghost_blue.png";
                 break;
             case GhostColor.ORANGE:
-                spriteName = "ghost_orange.jpg";
+                spriteName = "ghost_orange.png";
                 break;
             case GhostColor.PINK:
-                spriteName = "ghost_pink.jpg";
+                spriteName = "ghost_pink.png";
                 break;
             default:
-                spriteName = "ghost_red.jpg";
+                spriteName = "ghost_red.png";
         }
         return new ImageIcon("resources/" + spriteName).getImage();
     }
-
+    
+    /**
+     * Sets the ghost edible state
+     * 
+     * @param isEdible ghost edible state
+     */
+    public void setIsEdible(boolean isEdible) {
+        this.isEdible = isEdible;
+        if (isEdible)
+            super.sprite = new ImageIcon("resources/ghost_weak.png").getImage();
+        else
+            super.sprite = getGhostSprite(this.color);
+    }
+    
+    public boolean isIsEdible() {
+        return isEdible;
+    }
+    
     public void setSpeed(int speed) {
         this.speed = speed;
     }

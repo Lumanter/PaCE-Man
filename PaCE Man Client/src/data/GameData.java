@@ -29,7 +29,7 @@ public class GameData {
     
     // initializes the levels map data
     private void initializeLevelsMapData() {
-        levelsMapData = new int[Constants.LEVELS][Constants.GRID_SIDE_DIMENSION][Constants.GRID_SIDE_DIMENSION];
+        levelsMapData = new int[Constants.LEVELS][Constants.GRID_DIMENSION][Constants.GRID_DIMENSION];
         
         // level 1
         levelsMapData[0] = new int[][]{
