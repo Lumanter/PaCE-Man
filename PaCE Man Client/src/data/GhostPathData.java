@@ -37,4 +37,39 @@ public class GhostPathData {
     public void setLoopingPath(Direction[] loopingPath) {
         this.loopingPath = loopingPath;
     }
+    
+    /**
+     * Reverse a path of directions
+     * 
+     * @param path path of directions
+     */
+    public static void reversePath(Direction[] path) {
+        for (int i = 0; i < path.length; i++) {
+            Direction direction = path[i];
+            Direction reversedDirection = reverseDirection(direction);
+            path[i] = reversedDirection;
+        }
+    }
+    
+    /**
+     * Returns the reversed direction of a given direction
+     * 
+     * @param direction given direction
+     * @return reversed direction
+     */
+    public static Direction reverseDirection(Direction direction) {
+        switch (direction) {
+            case UP:
+                return Direction.DOWN;
+                
+            case RIGHT:
+                return Direction.LEFT;
+                
+            case DOWN:
+                return Direction.UP;
+            
+            default:
+                return Direction.RIGHT;
+        }
+    }
 }

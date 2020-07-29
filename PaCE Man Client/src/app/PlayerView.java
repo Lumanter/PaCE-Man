@@ -1,6 +1,7 @@
 
 package app;
 
+import commands.ChangeGhostsSpeedCommand;
 import commands.Command;
 import commands.CreateGhostCommand;
 import commands.PlacePillCommand;
@@ -46,14 +47,27 @@ public class PlayerView extends JPanel implements ActionListener {
         this.level = new Level(levelNumber);
         this.pillManager = new PillManager();
                 
-        Command createGhost = new CreateGhostCommand(this, GhostColor.RED);
-        createGhost.execute();
+        // comands executed
+        Command createRedGhost = new CreateGhostCommand(this, GhostColor.RED);
+        createRedGhost.execute();
+        
+        Command createBlueGhost = new CreateGhostCommand(this, GhostColor.BLUE);
+        createBlueGhost.execute();
+        
+        Command createPinkGhost = new CreateGhostCommand(this, GhostColor.PINK);
+        createPinkGhost.execute();
+        
+        Command createOrangeGhost = new CreateGhostCommand(this, GhostColor.ORANGE);
+        createOrangeGhost.execute();
         
         Command placePill = new PlacePillCommand(this, 1, 1);
         placePill.execute();
         
         Command placeAnotherPill = new PlacePillCommand(this, 9, 15);
         placeAnotherPill.execute();
+        
+        Command newSpeed = new ChangeGhostsSpeedCommand(this, 6);
+        //newSpeed.execute();
     }
  
     
@@ -141,6 +155,9 @@ public class PlayerView extends JPanel implements ActionListener {
         // render level background
         this.level.render(renderer); 
         
+        // render power pills
+        this.pillManager.render(renderer);
+        
         // render ghosts
         for(Ghost ghost: ghosts) {
                 ghost.render(renderer, this);
@@ -149,9 +166,6 @@ public class PlayerView extends JPanel implements ActionListener {
         // render pacman
         this.pacman.render(renderer, this);
                     
-        // render power pills
-        this.pillManager.render(renderer);
-        
         // update display and release renderer resources
         Toolkit.getDefaultToolkit().sync();
     }

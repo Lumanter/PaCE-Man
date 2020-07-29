@@ -168,26 +168,34 @@ public class Ghost extends Sprite {
      * Advances the ghost in the path being traversed, either pre loop or loop
      */
     private void advanceInPath() {
-        this.positionInPath += 1;
-        if (this.insideLoop) {
+        positionInPath += 1;
+        
+        if (insideLoop) {
             boolean finishedPathLoop = (positionInPath >= loopingPath.length);
             if (finishedPathLoop)
-                this.positionInPath = 0;
-            // restart position in path loop
-            this.direction = loopingPath[this.positionInPath];
+                positionInPath = 0;
+            
+
+            // update direction
+            this.direction = loopingPath[positionInPath];
             
         } else {
+            
+            // not inside loop yet
             boolean enteredPathLoop = (positionInPath >= pathToEnterLoop.length);
             if(enteredPathLoop) {
+                
                 // just entered path loop
-                this.positionInPath = 0;
-                this.direction = loopingPath[positionInPath];
-                this.insideLoop = true;
+                positionInPath = 0;
+                direction = loopingPath[positionInPath];
+                insideLoop = true;
             } else {
+                
                 // advance in path to enter path loop
-                this.direction = pathToEnterLoop[positionInPath];
+                direction = pathToEnterLoop[positionInPath];
             }
         }
+        
         updateNextPathPosition();
     }
     
