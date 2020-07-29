@@ -1,6 +1,9 @@
 
 package app;
 
+import commands.Command;
+import commands.CreateGhostCommand;
+import commands.PlacePillCommand;
 import data.Direction;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -27,11 +30,9 @@ public class PlayerView extends JPanel implements ActionListener {
     private int levelNumber;
     
     private Pacman pacman;
-    private Level level;
-    
     private final ArrayList<Ghost> ghosts = new ArrayList<>();
-    
-    
+    private Level level;
+
     private PillManager pillManager;
             
     public PlayerView() {
@@ -43,12 +44,16 @@ public class PlayerView extends JPanel implements ActionListener {
         this.levelNumber = 1;
         this.pacman = new Pacman();
         this.level = new Level(levelNumber);
-        
-        this.ghosts.add(new Ghost(levelNumber, GhostColor.RED));
-        
         this.pillManager = new PillManager();
-        pillManager.addPill(20*1, 20*1);
-        pillManager.addPill(180, 300);
+                
+        Command createGhost = new CreateGhostCommand(this, GhostColor.RED);
+        createGhost.execute();
+        
+        Command placePill = new PlacePillCommand(this, 1, 1);
+        placePill.execute();
+        
+        Command placeAnotherPill = new PlacePillCommand(this, 9, 15);
+        placeAnotherPill.execute();
     }
  
     
@@ -96,12 +101,9 @@ public class PlayerView extends JPanel implements ActionListener {
     }
     
     private void moveSprites() {
-        
         // move ghosts
-        for(Ghost ghost: ghosts) {
-            if (ghost != null)
+        for(Ghost ghost: ghosts)
                 ghost.move();
-        }
         
         // move pacman
         this.pacman.warpIfNecessary();
@@ -109,7 +111,6 @@ public class PlayerView extends JPanel implements ActionListener {
     }
     
     private void checkCollisions() {
-        
         // check for pills eaten
         boolean pillEaten = (pillManager.hasCollision(pacman) != null);
         if (pillEaten) {
@@ -157,7 +158,6 @@ public class PlayerView extends JPanel implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        
         // animate Pacman
         pacman.increaseAnimationTimer();
         pacman.updateAnimation();
@@ -176,5 +176,24 @@ public class PlayerView extends JPanel implements ActionListener {
         // update display on any action performed
         this.repaint();
     }
-    
+
+    public int getLevelNumber() {
+        return levelNumber;
+    }
+
+    public Pacman getPacman() {
+        return pacman;
+    }
+
+    public ArrayList<Ghost> getGhosts() {
+        return ghosts;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public PillManager getPillManager() {
+        return pillManager;
+    }
 }
