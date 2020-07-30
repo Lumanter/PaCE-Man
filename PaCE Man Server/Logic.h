@@ -2,27 +2,28 @@
 // Created by valva on 7/29/2020.
 //
 
-#ifndef PACE_MAN_SERVER_LOGIC_H
-#define PACE_MAN_SERVER_LOGIC_H
+#pragma once
 
 #include <stdio.h>
 #include <stdbool.h>
 
-typedef struct Pac_Man {
+typedef struct Pair{
     int x;
     int y;
+} Pair;
+
+typedef struct Pac_Man {
+    Pair pos;
     int sprite;
 } Pac_Man;
 
 typedef struct Ghost {
-    int x;
-    int y;
+    Pair pos;
     int color;
 } Ghost;
 
 typedef struct Pill {
-    int x;
-    int y;
+    Pair pos;
 } Pill;
 
 typedef struct Game {
@@ -31,10 +32,16 @@ typedef struct Game {
     Pac_Man pac_man;
 } Game;
 
+Pair create_pair(int x,int y);
+
 Pac_Man create_pac_man();
+
+void modify_pac_man(Pac_Man* p_m_ptr,Pair new_pos,int new_sprite);
+
+void modify_pac_man_position(Pac_Man* p_m_ptr,Pair new_pos);
 
 Ghost create_ghost(int color);
 
-Pill create_pill(int x,int y);
+void modify_ghost_position(Ghost* g,Pair new_pos);
 
-#endif //PACE_MAN_SERVER_LOGIC_H
+Pill create_pill(Pair pos);
