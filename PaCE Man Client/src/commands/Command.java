@@ -4,6 +4,7 @@ import app.PlayerView;
 
 /**
  * Command to execute an action on a player view instance
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public abstract class Command {
     

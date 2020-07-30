@@ -7,17 +7,18 @@ import data.GameData;
 
 /**
  * Game level. Handles rendering and collisions
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class Level {
     
     // data representation of the level mapping
-    private int[][] levelMapData = new int[21][21];
+    private Integer[][] levelMapData = new Integer[21][21];
     
     /**
      * Initializes the level data
      * @param levelNumber chosen level to initialize
      */
-    public Level(int levelNumber) {
+    public Level(Integer levelNumber) {
         
         GameData gameData = GameData.getInstance();
         this.levelMapData = gameData.getLevelMapData(levelNumber);
@@ -30,9 +31,9 @@ public class Level {
      */
     public boolean collides(Sprite sprite) {
         Sprite tileSprite;
-        int tileX, tileY;
-        for (int i = 0; i < levelMapData.length; i++)
-            for (int j = 0; j < levelMapData[i].length; j++) {
+        Integer tileX, tileY;
+        for (Integer i = 0; i < levelMapData.length; i++)
+            for (Integer j = 0; j < levelMapData[i].length; j++) {
                 
                 tileX = levelMapData[i][j] * Constants.TILE_SIZE;
                 tileY = i * Constants.TILE_SIZE;
@@ -50,8 +51,8 @@ public class Level {
      */ 
     public void render(Graphics2D renderer) {
         renderer.setColor(Color.WHITE);
-        for (int i = 0; i < levelMapData.length; i++)
-            for (int j = 0; j < levelMapData[i].length; j++) {
+        for (Integer i = 0; i < levelMapData.length; i++)
+            for (Integer j = 0; j < levelMapData[i].length; j++) {
                 renderer.drawRect(levelMapData[i][j] * Constants.TILE_SIZE, i * Constants.TILE_SIZE, Constants.TILE_SIZE, Constants.TILE_SIZE);
                 //renderer.fillRect(levelData[i][j] * TILE_SIZE, i * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             }

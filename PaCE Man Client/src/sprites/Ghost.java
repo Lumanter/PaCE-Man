@@ -5,20 +5,20 @@ import javax.swing.ImageIcon;
 import data.Constants;
 import data.Direction;
 import data.GameData;
-import data.GhostColor;
 import data.GhostPathData;
 import data.Position;
 
 /**
  * Ghost position. Handles its moving in a path logic
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class Ghost extends Sprite {
     
     // ghost speed
-    private int speed = 3;
+    private Integer speed = 3;
     
     // ghost color
-    private int color;
+    private Integer color;
     
     // indicates if the ghost is currently edible
     private boolean isEdible = false;
@@ -36,7 +36,7 @@ public class Ghost extends Sprite {
     private Direction[] loopingPath;
     
     // position in the path used as index to traverse the path as array
-    private int positionInPath = 0;
+    private Integer positionInPath = 0;
     
     // holds the next position that the ghost is moving to in the path
     private Position nextPathPosition;
@@ -47,7 +47,7 @@ public class Ghost extends Sprite {
      * @param level level number
      * @param ghostColor ghost color
      */
-    public Ghost(int level, int ghostColor) {
+    public Ghost(Integer level, Integer ghostColor) {
         super(null, Constants.DEFAULT_GHOST_POSITION.x, Constants.DEFAULT_GHOST_POSITION.y);
         super.sprite = getGhostSprite(ghostColor);
         
@@ -63,7 +63,7 @@ public class Ghost extends Sprite {
      * @param level level number
      * @param ghostColor ghost color
      */
-    private void setPathData(int level, int ghostColor) {
+    private void setPathData(Integer level, Integer ghostColor) {
         GameData gameData = GameData.getInstance();
         GhostPathData ghostPathData = gameData.getGhostPathData(level, ghostColor);
         this.pathToEnterLoop = ghostPathData.getPathToEnterLoop();
@@ -205,16 +205,16 @@ public class Ghost extends Sprite {
      * @param ghostColor given color
      * @return ghost sprite of the given color
      */
-    private Image getGhostSprite(int ghostColor) {
+    private Image getGhostSprite(Integer ghostColor) {
         String spriteName;
         switch(ghostColor) {
-            case GhostColor.BLUE:
+            case 1:
                 spriteName = "ghost_blue.png";
                 break;
-            case GhostColor.ORANGE:
+            case 3:
                 spriteName = "ghost_orange.png";
                 break;
-            case GhostColor.PINK:
+            case 2:
                 spriteName = "ghost_pink.png";
                 break;
             default:
@@ -240,7 +240,7 @@ public class Ghost extends Sprite {
         return isEdible;
     }
     
-    public void setSpeed(int speed) {
+    public void setSpeed(Integer speed) {
         this.speed = speed;
     }
 }

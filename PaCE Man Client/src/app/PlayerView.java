@@ -28,7 +28,7 @@ import sprites.PillManager;
 
 public class PlayerView extends JPanel implements ActionListener {
     
-    private int levelNumber;
+    private Integer levelNumber;
     
     private Pacman pacman;
     private final ArrayList<Ghost> ghosts = new ArrayList<>();
@@ -82,7 +82,7 @@ public class PlayerView extends JPanel implements ActionListener {
                 super.keyPressed(e);
                 
                 // update pacman desired direction on arrow key input
-                int key = e.getKeyCode();
+                Integer key = e.getKeyCode();
                 Direction desiredDirection = null;
                 switch(key){
                     case KeyEvent.VK_RIGHT:
@@ -136,7 +136,7 @@ public class PlayerView extends JPanel implements ActionListener {
         }
         
         // ghosts collisions
-        for (int i = 0; i < ghosts.size(); i++) {
+        for (Integer i = 0; i < ghosts.size(); i++) {
             Ghost ghost = ghosts.get(i);    
             if (ghost.collides(pacman)) {
                 if (ghost.isIsEdible())
@@ -191,7 +191,7 @@ public class PlayerView extends JPanel implements ActionListener {
         this.repaint();
     }
 
-    public int getLevelNumber() {
+    public Integer getLevelNumber() {
         return levelNumber;
     }
 

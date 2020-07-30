@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 /**
  * Manages the pills to eat ghosts. Handles the pill time timer
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class PillManager {
     
@@ -17,7 +18,7 @@ public class PillManager {
     private final ArrayList<Pill> pills = new ArrayList<>();
     
     // timer to activate pill time
-    private int pillActiveTimer = Constants.PILL_TIME_DURATION;
+    private Integer pillActiveTimer = Constants.PILL_TIME_DURATION;
     
     /**
      * Adds a pill in the given position
@@ -25,7 +26,7 @@ public class PillManager {
      * @param x pill x position
      * @param y pill y position
      */
-    public void addPill(int x, int y) {
+    public void addPill(Integer x, Integer y) {
         pills.add(new Pill(x, y));
     }
     
@@ -35,7 +36,7 @@ public class PillManager {
      * @param pillPosition pill position
      */
     public void removePill(Position pillPosition) {
-        for (int i = 0; i < pills.size(); i++) {
+        for (Integer i = 0; i < pills.size(); i++) {
             Pill pill = pills.get(i);
             if (pill.getPos() == pillPosition) {
                 pills.remove(i);
@@ -85,7 +86,7 @@ public class PillManager {
      * 
      * @return the remaining pill time
      */
-    public int tickTimer() {
+    public Integer tickTimer() {
         pillActiveTimer -= Constants.FRAME_DELAY;
         if(pillActiveTimer <= 0) {
             pillActiveTimer = Constants.PILL_TIME_DURATION;

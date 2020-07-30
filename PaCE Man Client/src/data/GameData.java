@@ -2,6 +2,7 @@ package data;
 
 /**
  * Singleton class that holds the levels map and ghosts path data
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class GameData {
     
@@ -9,7 +10,7 @@ public class GameData {
     private static GameData instance = null;
     
     // set of level map data
-    private int[][][] levelsMapData;
+    private Integer[][][] levelsMapData;
     
     // set of ghosts path data
     private GhostPathData[][] ghostsPathData;
@@ -29,10 +30,10 @@ public class GameData {
     
     // initializes the levels map data
     private void initializeLevelsMapData() {
-        levelsMapData = new int[Constants.LEVELS][Constants.GRID_DIMENSION][Constants.GRID_DIMENSION];
+        levelsMapData = new Integer[Constants.LEVELS][Constants.GRID_DIMENSION][Constants.GRID_DIMENSION];
         
         // level 1
-        levelsMapData[0] = new int[][]{
+        levelsMapData[0] = new Integer[][]{
             {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20},
             {0,10,20},
             {0,2,3,4,6,7,8,10,12,13,14,16,17,18,20},
@@ -93,7 +94,7 @@ public class GameData {
      * @param level given level
      * @return map data of the level
      */
-    public int[][] getLevelMapData(int level) {
+    public Integer[][] getLevelMapData(Integer level) {
         return levelsMapData[level - 1];
     }
     
@@ -104,7 +105,7 @@ public class GameData {
      * @param ghostColor ghost color number
      * @return the corespondent ghost path data
      */
-    public GhostPathData getGhostPathData(int level, int ghostColor) {
+    public GhostPathData getGhostPathData(Integer level, Integer ghostColor) {
         return ghostsPathData[level - 1][ghostColor];
     }
 }

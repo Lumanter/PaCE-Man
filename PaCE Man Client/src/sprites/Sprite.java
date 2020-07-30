@@ -9,6 +9,7 @@ import data.Position;
 
 /**
  * Simple representation of a squared sprite to display. Handles rendering and collisions
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class Sprite {
     
@@ -25,7 +26,7 @@ public class Sprite {
      * @param position_x sprite x location
      * @param position_y sprite y location
      */
-    public Sprite(Image sprite, int position_x, int position_y) {
+    public Sprite(Image sprite, Integer position_x, Integer position_y) {
         this.sprite = sprite;
         this.pos = new Position(position_x, position_y);
     }

@@ -9,14 +9,15 @@ import data.Position;
 
 /**
  * Pacman representation. Handles collisions and animation
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class Pacman extends Sprite {
     
     // pacman speed
-    private final int SPEED = 4;
+    private final Integer SPEED = 4;
     
     // time that each animation frame lasts for
-    private final int ANIMATION_FRAME_TIME = 100;
+    private final Integer ANIMATION_FRAME_TIME = 100;
     
     // pacman current facing direction
     private Direction currentDirection = Direction.RIGHT;
@@ -25,13 +26,25 @@ public class Pacman extends Sprite {
     private Direction nextDirection = null;
     
     // timer used for animation frame toggle
-    private int animationFrameTimer = 0;
+    private Integer animationFrameTimer = 0;
     
     /**
-     * Constructor to set pacman initial position
+     * Constructor that sets pacman to the default position
      */
     public Pacman() {
         super(new ImageIcon("resources/pacman_closed.png").getImage(), 200, 300);
+    }
+    
+    /**
+     * Constructor that sets pacman position and animation frame
+     * 
+     * @param x pacman initial x position
+     * @param y pacman initial y position
+     * @param animationNumber indicates pacman's current animation sprite
+     */
+    public Pacman(Integer x, Integer y, Integer animationNumber) {
+        super(null, x, y);
+        setAnimationSprite(animationNumber);
     }
     
     /**
@@ -71,8 +84,8 @@ public class Pacman extends Sprite {
      * @return if pacman will collide with the level if it moves in the direction
      */
     private boolean notCollidesOnNextMove(Level level, Direction direction) {
-        int incrementX = 0;
-        int incrementY = 0;
+        Integer incrementX = 0;
+        Integer incrementY = 0;
         switch(direction){
             case RIGHT:
                 incrementX = SPEED;
@@ -182,7 +195,7 @@ public class Pacman extends Sprite {
      * 
      * @param animationNumber animation frame number representation
      */
-    public void setAnimationSprite(int animationNumber) {
+    public void setAnimationSprite(Integer animationNumber) {
         switch(animationNumber){
             case 0:
                 super.sprite = new ImageIcon("resources/pacman_closed.png").getImage();
@@ -201,7 +214,7 @@ public class Pacman extends Sprite {
      * Returns animation frame number representation
      * @return animation frame number representation
      */
-    public int getAnimationNumber() {
+    public Integer getAnimationNumber() {
         if (super.sprite == new ImageIcon("resources/pacman_up.png").getImage())
             return 1;
         if (super.sprite == new ImageIcon("resources/pacman_right.png").getImage())
