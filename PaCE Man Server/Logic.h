@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-typedef struct Pair{
+typedef struct Pair {
     int x;
     int y;
 } Pair;
@@ -19,6 +19,7 @@ typedef struct Pac_Man {
 
 typedef struct Ghost {
     Pair pos;
+    bool active;
     int color;
 } Ghost;
 
@@ -27,12 +28,22 @@ typedef struct Pill {
 } Pill;
 
 typedef struct Game {
+    unsigned int level;
+
     unsigned int lives;
+
     bool pill_active;
+
     Pac_Man pac_man;
+
+    Ghost ghosts[4];
+
+    // Linked list of pills
 } Game;
 
 Pair create_pair(int x,int y);
+
+// PAC-MAN
 
 Pac_Man create_pac_man();
 
@@ -40,8 +51,18 @@ void modify_pac_man(Pac_Man* p_m_ptr,Pair new_pos,int new_sprite);
 
 void modify_pac_man_position(Pac_Man* p_m_ptr,Pair new_pos);
 
+// GHOST
+
 Ghost create_ghost(int color);
 
 void modify_ghost_position(Ghost* g,Pair new_pos);
 
+void activate_ghost(Ghost* g);
+
+void deactivate_ghost(Ghost* g);
+
+// PILL
+
 Pill create_pill(Pair pos);
+
+Game create_game();
