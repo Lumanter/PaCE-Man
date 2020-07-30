@@ -6,6 +6,7 @@ import data.Position;
 
 /**
  * Command to place a new pill in the player view 
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class PlacePillCommand extends Command {
 
@@ -19,7 +20,7 @@ public class PlacePillCommand extends Command {
      * @param x pill x coordinate in grid system
      * @param y pill y coordinate in grid system
      */
-    public PlacePillCommand(PlayerView playerView, int x, int y) {
+    public PlacePillCommand(PlayerView playerView, Integer x, Integer y) {
         super(playerView);
         // convert the coordinates from grid system based to real display coordinates
         this.pillPosition = new Position(x * Constants.TILE_SIZE, y * Constants.TILE_SIZE);
@@ -32,5 +33,4 @@ public class PlacePillCommand extends Command {
     public void execute() {
         super.playerView.getPillManager().addPill(pillPosition.x, pillPosition.y);
     }
-    
 }

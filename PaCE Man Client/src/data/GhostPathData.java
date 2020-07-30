@@ -2,6 +2,7 @@ package data;
 
 /**
  * Holds the needed path data to move a ghost
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class GhostPathData {
     
@@ -44,7 +45,7 @@ public class GhostPathData {
      * @param path path of directions
      */
     public static void reversePath(Direction[] path) {
-        for (int i = 0; i < path.length; i++) {
+        for (Integer i = 0; i < path.length; i++) {
             Direction direction = path[i];
             Direction reversedDirection = reverseDirection(direction);
             path[i] = reversedDirection;

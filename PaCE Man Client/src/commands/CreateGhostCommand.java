@@ -5,11 +5,12 @@ import sprites.Ghost;
 
 /**
  * Command to create a new ghost in the player view
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class CreateGhostCommand extends Command {
 
     // ghost of the color to create
-    int ghostColor;
+    Integer ghostColor;
     
     /**
      * Constructor receives the color of the ghost to create
@@ -17,7 +18,7 @@ public class CreateGhostCommand extends Command {
      * @param playerView a player view instance
      * @param ghostColor ghost of the color to create
      */
-    public CreateGhostCommand(PlayerView playerView, int ghostColor) {
+    public CreateGhostCommand(PlayerView playerView, Integer ghostColor) {
         super(playerView);
         this.ghostColor = ghostColor;
     }

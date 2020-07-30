@@ -6,11 +6,12 @@ import sprites.Ghost;
 
 /**
  * Command to change the speed of the ghosts
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class ChangeGhostsSpeedCommand extends Command {
 
     // new speed of the ghosts
-    private int newGhostsSpeed;
+    private Integer newGhostsSpeed;
     
     /**
      * Constructor receives the new ghost speed
@@ -18,7 +19,7 @@ public class ChangeGhostsSpeedCommand extends Command {
      * @param playerView a player view instance
      * @param newGhostsSpeed new ghost speed
      */
-    public ChangeGhostsSpeedCommand(PlayerView playerView, int newGhostsSpeed) {
+    public ChangeGhostsSpeedCommand(PlayerView playerView, Integer newGhostsSpeed) {
         super(playerView);
         this.newGhostsSpeed = newGhostsSpeed;
     }

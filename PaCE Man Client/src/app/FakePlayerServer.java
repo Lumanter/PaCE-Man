@@ -20,7 +20,7 @@ public class FakePlayerServer extends javax.swing.JFrame {
         this.playerView = playerView;
     }
     
-    private int getSelectedGhostColor() {
+    private Integer getSelectedGhostColor() {
         String ghostColorString = ghostColor.getSelectedItem().toString();
         switch (ghostColorString) {
             case "red":
@@ -149,11 +149,11 @@ public class FakePlayerServer extends javax.swing.JFrame {
                 createGhost.execute();
                 break;
             case "place pill":
-                Command placePill = new PlacePillCommand(playerView, ((int) pillX.getValue()), ((int) pillY.getValue()));
+                Command placePill = new PlacePillCommand(playerView, ((Integer) pillX.getValue()), ((Integer) pillY.getValue()));
                 placePill.execute();
                 break;
             case "change speed":
-                Command changeSpeed = new ChangeGhostsSpeedCommand(playerView, ((int)ghostSpeed.getValue()));
+                Command changeSpeed = new ChangeGhostsSpeedCommand(playerView, ((Integer)ghostSpeed.getValue()));
                 changeSpeed.execute();
                 break;
         }
@@ -165,7 +165,7 @@ public class FakePlayerServer extends javax.swing.JFrame {
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* If Nimbus (Integerroduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {

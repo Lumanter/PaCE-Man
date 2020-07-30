@@ -2,14 +2,15 @@ package data;
 
 /**
  * Basic position representation
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class Position {
     
     // x position
-    public int x;
+    public Integer x;
     
     // y position
-    public int y;
+    public Integer y;
 
     /**
      * Constructor sets the initial values of the position
@@ -17,7 +18,7 @@ public class Position {
      * @param x x position
      * @param y y position
      */
-    public Position(int x, int y) {
+    public Position(Integer x, Integer y) {
         this.x = x;
         this.y = y;
     }
