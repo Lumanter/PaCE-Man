@@ -4,24 +4,26 @@
 
 #include "Logic.h"
 
-struct pac_man create_pac_man(){
-    struct pac_man p_m;
+
+Pac_Man create_pac_man(){
+    Pac_Man p_m;
     p_m.x = 0; // Starting X
     p_m.y = 0; // Staring Y
     p_m.sprite = 1; // Staring sprite
+    return p_m;
 }
 
 
-struct ghost create_ghost(int color) {
-    struct ghost g;
+Ghost create_ghost(int color) {
+    Ghost g;
     g.x = 0; // Starting X
     g.y = 0; // Starting Y
     g.color = color;
     return g;
 };
 
-struct pill create_pill(int x,int y){
-    struct pill p;
+Pill create_pill(int x,int y){
+    Pill p;
     p.x = x;
     p.y = y;
     return p;

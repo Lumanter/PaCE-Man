@@ -5,27 +5,36 @@
 #ifndef PACE_MAN_SERVER_LOGIC_H
 #define PACE_MAN_SERVER_LOGIC_H
 
-struct pac_man {
+#include <stdio.h>
+#include <stdbool.h>
+
+typedef struct Pac_Man {
     int x;
     int y;
     int sprite;
-};
+} Pac_Man;
 
-struct ghost {
+typedef struct Ghost {
     int x;
     int y;
     int color;
-};
+} Ghost;
 
-struct pill {
+typedef struct Pill {
     int x;
     int y;
-};
+} Pill;
 
-struct pac_man create_pac_man();
+typedef struct Game {
+    unsigned int lives;
+    bool pill_active;
+    Pac_Man pac_man;
+} Game;
 
-struct ghost create_ghost(int color);
+Pac_Man create_pac_man();
 
-struct pill create_pill(int x,int y);
+Ghost create_ghost(int color);
+
+Pill create_pill(int x,int y);
 
 #endif //PACE_MAN_SERVER_LOGIC_H
