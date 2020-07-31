@@ -56,6 +56,17 @@ public class Ghost extends Sprite {
         setPathData(level, ghostColor);
         initializeNextPathPosition();
     }
+    
+    /**
+     * Constructor to just display the ghost
+     * @param ghostColor ghost color
+     * @param x ghost x position
+     * @param y ghost y position
+     */
+    public Ghost(Integer ghostColor, Integer x, Integer y) {
+        super(null, x, y);
+        super.sprite = getGhostSprite(ghostColor);
+    }
 
     /**
      * Sets the ghost paths data

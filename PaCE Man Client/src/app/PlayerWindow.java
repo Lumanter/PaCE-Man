@@ -26,12 +26,12 @@ public class PlayerWindow extends JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
-        PlayerView playerView = new PlayerView();
+        PlayerView view = new PlayerView();
         
-        FakePlayerServer fakeServer = new FakePlayerServer(playerView);
+        FakePlayerServer fakeServer = new FakePlayerServer(view);
         fakeServer.setVisible(true);
         
-        this.add(playerView);
+        this.add(view);
     }
     
 }

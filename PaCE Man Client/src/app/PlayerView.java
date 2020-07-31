@@ -159,9 +159,9 @@ public class PlayerView extends JPanel implements ActionListener {
         this.pillManager.render(renderer);
         
         // render ghosts
-        for(Ghost ghost: ghosts) {
+        for(Ghost ghost: ghosts) 
                 ghost.render(renderer, this);
-        }
+        
         
         // render pacman
         this.pacman.render(renderer, this);

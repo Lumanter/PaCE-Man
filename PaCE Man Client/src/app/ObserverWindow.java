@@ -17,8 +17,13 @@ public class ObserverWindow extends JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
-        PlayerView gameBoard = new PlayerView();
-        this.add(gameBoard);
+        ObserverView view = new ObserverView();
+        
+        FakeObserverServer fakeServer = new FakeObserverServer(view);
+        fakeServer.setVisible(true);
+        
+        
+        this.add(view);
     }
     
 }

@@ -44,7 +44,7 @@ public class Pacman extends Sprite {
      */
     public Pacman(Integer x, Integer y, Integer animationNumber) {
         super(null, x, y);
-        setAnimationSprite(animationNumber);
+        this.setAnimationSprite(animationNumber);
     }
     
     /**
@@ -199,12 +199,16 @@ public class Pacman extends Sprite {
         switch(animationNumber){
             case 0:
                 super.sprite = new ImageIcon("resources/pacman_closed.png").getImage();
+                break;
             case 1:
                 super.sprite = new ImageIcon("resources/pacman_up.png").getImage();
+                break;
             case 2:
                 super.sprite = new ImageIcon("resources/pacman_right.png").getImage();
+                break;
             case 3:
                 super.sprite = new ImageIcon("resources/pacman_down.png").getImage();
+                break;
             case 4:
                 super.sprite = new ImageIcon("resources/pacman_left.png").getImage();
         }
