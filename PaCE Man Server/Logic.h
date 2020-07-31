@@ -65,4 +65,16 @@ void deactivate_ghost(Ghost* g);
 
 Pill create_pill(Pair pos);
 
+// GAME
+
 Game create_game();
+
+// GAME INTERACTION
+
+void update_game_pac_man(Game *game,Pair new_pos,int new_sprite);
+
+void update_game_pac_man_pos(Game *game,Pair new_pos);
+
+void update_game_ghosts_pos(Game *game,Pair* new_pos);
+
+

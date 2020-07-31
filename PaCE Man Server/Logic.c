@@ -54,13 +54,29 @@ Pill create_pill(Pair pos){
 }
 
 Game create_game(){
-    Game g;
-    g.level = 1;
-    g.lives = 3;
-    g.pac_man = create_pac_man();
-    g.pill_active = false;
-    g.ghosts[0] = create_ghost(1);
-    g.ghosts[1] = create_ghost(2);
-    g.ghosts[2] = create_ghost(3);
-    g.ghosts[3] = create_ghost(4);
+    Game game;
+    game.level = 1;
+    game.lives = 3;
+    game.pac_man = create_pac_man();
+    game.pill_active = false;
+    game.ghosts[0] = create_ghost(1);
+    game.ghosts[1] = create_ghost(2);
+    game.ghosts[2] = create_ghost(3);
+    game.ghosts[3] = create_ghost(4);
+    return game;
+}
+
+void update_game_pac_man(Game *game,Pair new_pos,int new_sprite){
+    modify_pac_man(&game->pac_man,new_pos,new_sprite);
+}
+
+void update_game_pac_man_pos(Game *game,Pair new_pos){
+    modify_pac_man_position(&game->pac_man, new_pos);
+}
+
+void update_game_ghosts_pos(Game *game,Pair* new_pos){
+    modify_ghost_position(&game->ghosts[0],new_pos[0]);
+    modify_ghost_position(&game->ghosts[1],new_pos[1]);
+    modify_ghost_position(&game->ghosts[2],new_pos[2]);
+    modify_ghost_position(&game->ghosts[3],new_pos[3]);
 }
