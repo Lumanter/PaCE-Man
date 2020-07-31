@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class PillManager {
     
     // indicates is a pill is active
-    private boolean pillActive = false;
+    private Boolean pillActive = false;
     
     // list of displayed pills
     private final ArrayList<Pill> pills = new ArrayList<>();
@@ -59,12 +59,8 @@ public class PillManager {
      * Indicates if there's a pill active
      * @return 
      */
-    public boolean isPillActive() {
+    public Boolean isPillActive() {
         return pillActive;
-    }
-
-    public void setPillActive(boolean pillActive) {
-        this.pillActive = pillActive;
     }
     
     /**
@@ -95,6 +91,10 @@ public class PillManager {
         } else {
             return pillActiveTimer;
         }
+    }
+    
+    public void setPillActive(Boolean pillActive) {
+        this.pillActive = pillActive;
     }
 
     public ArrayList<Pill> getPills() {

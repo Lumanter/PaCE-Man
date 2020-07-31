@@ -1,6 +1,9 @@
-package app;
+package windows;
 
+import clientViews.ObserverView;
+import fakeServers.FakeObserverServer;
 import data.Constants;
+import java.awt.EventQueue;
 import javax.swing.JFrame;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
@@ -8,6 +11,13 @@ public class ObserverWindow extends JFrame {
     
     public ObserverWindow() {
         setupFrame();
+    }
+    
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            JFrame ex = new ObserverWindow();
+            ex.setVisible(true);
+        });
     }
     
     private void setupFrame() {
@@ -21,8 +31,7 @@ public class ObserverWindow extends JFrame {
         
         FakeObserverServer fakeServer = new FakeObserverServer(view);
         fakeServer.setVisible(true);
-        
-        
+
         this.add(view);
     }
     

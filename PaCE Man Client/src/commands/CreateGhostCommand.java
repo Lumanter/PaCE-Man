@@ -1,6 +1,6 @@
 package commands;
 
-import app.PlayerView;
+import clientViews.PlayerView;
 import sprites.Ghost;
 
 /**

@@ -1,9 +1,7 @@
-package app;
+package windows;
 
 import data.Constants;
 import java.awt.Color;
-import javax.swing.JFrame;
-
 
 public class Menu extends javax.swing.JFrame {
 

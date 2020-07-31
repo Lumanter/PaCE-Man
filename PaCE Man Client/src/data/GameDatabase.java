@@ -4,10 +4,10 @@ package data;
  * Singleton class that holds the levels map and ghosts path data
  * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
-public class GameData {
+public class GameDatabase {
     
     // class singleton instance
-    private static GameData instance = null;
+    private static GameDatabase instance = null;
     
     // set of level map data
     private Integer[][][] levelsMapData;
@@ -16,15 +16,15 @@ public class GameData {
     private GhostPathData[][] ghostsPathData;
     
     // private constructor, loads aDirection.LEFT the data
-    private GameData() { 
+    private GameDatabase() { 
         initializeLevelsMapData();
         initializeGhostsPathData();
     }
     
     // singleton getInstance method, initializes the instances if it haven't been
-    public static GameData getInstance() {
+    public static GameDatabase getInstance() {
         if (instance == null)
-            instance = new GameData();
+            instance = new GameDatabase();
         return instance;
     }
     

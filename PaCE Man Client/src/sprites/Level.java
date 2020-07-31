@@ -3,7 +3,7 @@ package sprites;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import data.Constants;
-import data.GameData;
+import data.GameDatabase;
 
 /**
  * Game level. Handles rendering and collisions
@@ -20,7 +20,7 @@ public class Level {
      */
     public Level(Integer levelNumber) {
         
-        GameData gameData = GameData.getInstance();
+        GameDatabase gameData = GameDatabase.getInstance();
         this.levelMapData = gameData.getLevelMapData(levelNumber);
     }
     
@@ -29,7 +29,7 @@ public class Level {
      * @param sprite sprite to check collision
      * @return if the level collides with the given sprite
      */
-    public boolean collides(Sprite sprite) {
+    public Boolean collides(Sprite sprite) {
         Sprite tileSprite;
         Integer tileX, tileY;
         for (Integer i = 0; i < levelMapData.length; i++)

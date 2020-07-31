@@ -1,6 +1,6 @@
 package commands;
 
-import app.PlayerView;
+import clientViews.PlayerView;
 
 /**
  * Command to execute an action on a player view instance

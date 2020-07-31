@@ -1,10 +1,5 @@
+package clientViews;
 
-package app;
-
-import commands.ChangeGhostsSpeedCommand;
-import commands.Command;
-import commands.CreateGhostCommand;
-import commands.PlacePillCommand;
 import data.Direction;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -17,7 +12,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import data.Constants;
-import data.GhostColor;
 import data.ObserverPackage;
 import data.Position;
 import java.util.ArrayList;
@@ -26,57 +20,50 @@ import sprites.Pacman;
 import sprites.Ghost;
 import sprites.PillManager;
 
-
+/**
+ * Panel that manages the player view 
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
+ */
 public class PlayerView extends JPanel implements ActionListener {
     
+    // game level number
     private Integer levelNumber;
     
+    // game pacman
     private Pacman pacman;
+    
+    // game ghosts
     private final ArrayList<Ghost> ghosts = new ArrayList<>();
+    
+    // game level
     private Level level;
 
+    // game pill manager
     private PillManager pillManager;
             
+    /**
+     * Constructor initializes the needed variables and panel configurations
+     */
     public PlayerView() {
-        initVariables();
-        initBoard();
+        startGameState();
+        setupDirectionKeyListener();
+        configurePanel();
     }
     
-    private void initVariables() {
+    /**
+     * Starts the variables that define the game state
+     */
+    private void startGameState() {
         this.levelNumber = 1;
         this.pacman = new Pacman();
         this.level = new Level(levelNumber);
         this.pillManager = new PillManager();
-                
-        // comands executed
-        Command createRedGhost = new CreateGhostCommand(this, GhostColor.RED);
-        //createRedGhost.execute();
-        
-        Command createBlueGhost = new CreateGhostCommand(this, GhostColor.BLUE);
-        //createBlueGhost.execute();
-        
-        Command createPinkGhost = new CreateGhostCommand(this, GhostColor.PINK);
-        //createPinkGhost.execute();
-        
-        Command createOrangeGhost = new CreateGhostCommand(this, GhostColor.ORANGE);
-        //createOrangeGhost.execute();
-        
-        Command placePill = new PlacePillCommand(this, 1, 1);
-        //placePill.execute();
-        
-        Command placeAnotherPill = new PlacePillCommand(this, 9, 15);
-        //placeAnotherPill.execute();
-        
-        Command newSpeed = new ChangeGhostsSpeedCommand(this, 6);
-        //newSpeed.execute();
     }
  
-    
-    private void initBoard() {
-        // call this class' actionPerformed to refresh display
-        Timer timer = new Timer(Constants.FRAME_DELAY, this);
-        timer.start();
-        
+    /**
+     * Sets up the input key listener to change pacman direction
+     */
+    private void setupDirectionKeyListener() {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -98,15 +85,31 @@ public class PlayerView extends JPanel implements ActionListener {
                     case KeyEvent.VK_DOWN:
                         desiredDirection = Direction.DOWN;
                 }
-                if (desiredDirection != null && desiredDirection != pacman.getCurrentDirection())
+                
+                // set desired direction just if the direction is not the same as the current direction
+                Boolean desiredIsNotCurrentDirection = (desiredDirection != null && desiredDirection != pacman.getCurrentDirection());
+                if (desiredIsNotCurrentDirection)
                     pacman.setNextDirection(desiredDirection);
             }
         });
+    }
+    
+    /**
+     * Sets panel refresh timer and background color
+     */
+    private void configurePanel() {
+        // call this class' actionPerformed to refresh display
+        Timer timer = new Timer(Constants.FRAME_DELAY, this);
+        timer.start();
         
         this.setFocusable(true);
         this.setBackground(Color.black);
     }
 
+    /**
+     * Refreshes the display panel
+     * @param renderer renderer tool
+     */
     @Override
     protected void paintComponent(Graphics renderer) {
         super.paintComponent(renderer);
@@ -115,6 +118,9 @@ public class PlayerView extends JPanel implements ActionListener {
         renderSprites(renderer);
     }
     
+    /**
+     * Moves the dynamic sprites (ghosts and pacman)
+     */
     private void moveSprites() {
         // move ghosts
         for(Ghost ghost: ghosts)
@@ -125,9 +131,12 @@ public class PlayerView extends JPanel implements ActionListener {
         this.pacman.move(level);
     }
     
+    /**
+     * Check for game collisions and handles the consequent events
+     */
     private void checkCollisions() {
         // check for pills eaten
-        boolean pillEaten = (pillManager.hasCollision(pacman) != null);
+        Boolean pillEaten = (pillManager.hasCollision(pacman) != null);
         if (pillEaten) {
             Position eatenPillPosition = pillManager.hasCollision(pacman);
             pillManager.removePill(eatenPillPosition);
@@ -150,6 +159,10 @@ public class PlayerView extends JPanel implements ActionListener {
         }
     }
     
+    /**
+     * Renders all the sprites to the display
+     * @param graphics render tool
+     */
     private void renderSprites(Graphics graphics) { 
         Graphics2D renderer = (Graphics2D) graphics;   
  
@@ -163,7 +176,6 @@ public class PlayerView extends JPanel implements ActionListener {
         for(Ghost ghost: ghosts) 
                 ghost.render(renderer, this);
         
-        
         // render pacman
         this.pacman.render(renderer, this);
                     
@@ -171,6 +183,11 @@ public class PlayerView extends JPanel implements ActionListener {
         Toolkit.getDefaultToolkit().sync();
     }
     
+    /**
+     * The action listener is call each frame to handle frame-by-frame
+     * updates and refresh the display
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         // animate Pacman
@@ -180,12 +197,12 @@ public class PlayerView extends JPanel implements ActionListener {
         // decrease pill timer if there's a pill active
         if (pillManager.isPillActive()) {
             
-            boolean pillTimeFinished = (pillManager.tickTimer() == 0);
-            if (pillTimeFinished) {
+            Boolean pillTimeFinished = (pillManager.tickTimer() == 0);
+            if (pillTimeFinished) 
                 // pill time finished so ghosts are no longer edible
                 for(Ghost ghost: ghosts)
                         ghost.setIsEdible(false);
-            }
+            
         }
         
         // update display on any action performed
@@ -204,7 +221,7 @@ public class PlayerView extends JPanel implements ActionListener {
         data.pills = this.pillManager.getPills();
         
         // if there're ghosts, a pill is active 
-        // if the first is in edible mode
+        // if the first is in edible mode, then all are
         if (!ghosts.isEmpty())
             data.pillActive = ghosts.get(0).isIsEdible();
         

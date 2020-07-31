@@ -11,9 +11,19 @@ import sprites.Pill;
  * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class ObserverPackage {
+    
+    // game level
     public Integer level = 1;
+    
+    // indicates if a pill is active
     public Boolean pillActive = false;
+    
+    // game's pacman
     public Pacman pacman = new Pacman();
+    
+    // game's ghosts
     public ArrayList<Ghost> ghosts = new ArrayList<>();
+    
+    // game's pills
     public ArrayList<Pill> pills = new ArrayList<>();
 }

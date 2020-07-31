@@ -24,6 +24,9 @@ public class Constants {
     // n grid dimension, being the grid nxn  
     public final static Integer GRID_DIMENSION = 21;
     
+    // default pacman position
+    public final static Position DEFAULT_PACMAN_POSITION = new Position(200, 300);
+    
     // default spawning ghost position
     public final static Position DEFAULT_GHOST_POSITION = new Position(200, 180);
     

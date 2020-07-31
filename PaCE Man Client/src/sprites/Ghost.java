@@ -4,7 +4,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import data.Constants;
 import data.Direction;
-import data.GameData;
+import data.GameDatabase;
 import data.GhostPathData;
 import data.Position;
 
@@ -21,13 +21,13 @@ public class Ghost extends Sprite {
     private Integer color;
     
     // indicates if the ghost is currently edible
-    private boolean isEdible = false;
+    private Boolean isEdible = false;
     
     // ghost moving direction
     private Direction direction;
     
     // indicates if the ghost is traversing the looping path
-    private boolean insideLoop = false;
+    private Boolean insideLoop = false;
     
     // path to enter the looping path
     private Direction[] pathToEnterLoop;
@@ -75,7 +75,7 @@ public class Ghost extends Sprite {
      * @param ghostColor ghost color
      */
     private void setPathData(Integer level, Integer ghostColor) {
-        GameData gameData = GameData.getInstance();
+        GameDatabase gameData = GameDatabase.getInstance();
         GhostPathData ghostPathData = gameData.getGhostPathData(level, ghostColor);
         this.pathToEnterLoop = ghostPathData.getPathToEnterLoop();
         this.loopingPath = ghostPathData.getLoopingPath();
@@ -128,7 +128,7 @@ public class Ghost extends Sprite {
      * 
      * @return if the ghost exceeds the desired next path position if it moves in the current direction
      */
-    private boolean exceedsNextPositionAfterMoving() {
+    private Boolean exceedsNextPositionAfterMoving() {
         Position nextMovePos = getPositionAfterMoving();
         switch (this.direction) {
             case UP:
@@ -182,7 +182,7 @@ public class Ghost extends Sprite {
         positionInPath += 1;
         
         if (insideLoop) {
-            boolean finishedPathLoop = (positionInPath >= loopingPath.length);
+            Boolean finishedPathLoop = (positionInPath >= loopingPath.length);
             if (finishedPathLoop)
                 positionInPath = 0;
             
@@ -193,7 +193,7 @@ public class Ghost extends Sprite {
         } else {
             
             // not inside loop yet
-            boolean enteredPathLoop = (positionInPath >= pathToEnterLoop.length);
+            Boolean enteredPathLoop = (positionInPath >= pathToEnterLoop.length);
             if(enteredPathLoop) {
                 
                 // just entered path loop
@@ -239,7 +239,7 @@ public class Ghost extends Sprite {
      * 
      * @param isEdible ghost edible state
      */
-    public void setIsEdible(boolean isEdible) {
+    public void setIsEdible(Boolean isEdible) {
         this.isEdible = isEdible;
         if (isEdible)
             super.sprite = new ImageIcon("resources/ghost_weak.png").getImage();
@@ -247,7 +247,7 @@ public class Ghost extends Sprite {
             super.sprite = getGhostSprite(this.color);
     }
     
-    public boolean isIsEdible() {
+    public Boolean isIsEdible() {
         return isEdible;
     }
     

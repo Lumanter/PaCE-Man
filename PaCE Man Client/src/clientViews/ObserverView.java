@@ -1,27 +1,34 @@
-package app;
+package clientViews;
 
 import data.ObserverPackage;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 import sprites.Ghost;
 import sprites.Level;
 import sprites.Pacman;
 import sprites.Pill;
 
 
-public class ObserverView extends JPanel implements ActionListener {
+public class ObserverView extends JPanel {
     
+    // game level
     private Level level;
+    
+    // game pacman
     private Pacman pacman;
+    
+    // game ghosts
     private ArrayList<Ghost> ghosts;
+    
+    // game pills
     private ArrayList<Pill> pills;
     
+    /**
+     * Constructor sets the default display data
+     */
     public ObserverView() {
         ObserverPackage defaultData = new ObserverPackage();
         level = new Level(defaultData.level);
@@ -31,6 +38,10 @@ public class ObserverView extends JPanel implements ActionListener {
         this.setBackground(Color.black);
     }
     
+    /**
+     * Updates the display with a given data package
+     * @param updatedData data package
+     */
     public void update(ObserverPackage updatedData) {
         // update the display variables
         level = new Level(updatedData.level);
@@ -45,6 +56,10 @@ public class ObserverView extends JPanel implements ActionListener {
         this.repaint();
     }
     
+    /**
+     * Refreshes the display panel
+     * @param graphics render tool
+     */
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -63,11 +78,5 @@ public class ObserverView extends JPanel implements ActionListener {
         
         // render pacman
         pacman.render(renderer, this);
-    }
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // refresh display
-        this.repaint();
     }
 }

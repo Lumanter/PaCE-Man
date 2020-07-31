@@ -37,7 +37,7 @@ public class Sprite {
      * @param otherSprite sprite to check collision
      * @return if this sprite collides with the other sprite
      */
-    public boolean collides(Sprite otherSprite) {
+    public Boolean collides(Sprite otherSprite) {
         Rectangle thisRectangle = new Rectangle(pos.x, pos.y, Constants.TILE_SIZE, Constants.TILE_SIZE);
         Rectangle otherRectangle = new Rectangle(otherSprite.getPos().x, otherSprite.getPos().y, Constants.TILE_SIZE, Constants.TILE_SIZE);
         return thisRectangle.intersects(otherRectangle);

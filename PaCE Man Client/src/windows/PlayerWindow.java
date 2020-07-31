@@ -1,6 +1,7 @@
+package windows;
 
-package app;
-
+import clientViews.PlayerView;
+import fakeServers.FakePlayerServer;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import data.Constants;

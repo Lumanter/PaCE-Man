@@ -32,7 +32,7 @@ public class Pacman extends Sprite {
      * Constructor that sets pacman to the default position
      */
     public Pacman() {
-        super(new ImageIcon("resources/pacman_closed.png").getImage(), 200, 300);
+        super(new ImageIcon("resources/pacman_closed.png").getImage(), Constants.DEFAULT_PACMAN_POSITION.x, Constants.DEFAULT_PACMAN_POSITION.y);
     }
     
     /**
@@ -51,7 +51,7 @@ public class Pacman extends Sprite {
      * Resets pacman to its default position
      */
     public void resetPosition() {
-        super.pos = new Position(200, 300);
+        super.pos = Constants.DEFAULT_PACMAN_POSITION;
         this.currentDirection = Direction.RIGHT;
     }
     
@@ -83,7 +83,7 @@ public class Pacman extends Sprite {
      * @param direction direction to check collision
      * @return if pacman will collide with the level if it moves in the direction
      */
-    private boolean notCollidesOnNextMove(Level level, Direction direction) {
+    private Boolean notCollidesOnNextMove(Level level, Direction direction) {
         Integer incrementX = 0;
         Integer incrementY = 0;
         switch(direction){
@@ -152,7 +152,7 @@ public class Pacman extends Sprite {
      * Toggles between closed mouth and open mouth animation frames
      */
     private void toggleAnimationFrame() {
-        boolean inMouthClosedFrame = (getAnimationNumber() == 0);
+        Boolean inMouthClosedFrame = (getAnimationNumber() == 0);
         if (inMouthClosedFrame)
             super.sprite = getCurrentDirectionSprite();
         else

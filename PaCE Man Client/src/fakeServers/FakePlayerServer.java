@@ -1,5 +1,6 @@
-package app;
+package fakeServers;
 
+import clientViews.PlayerView;
 import commands.ChangeGhostsSpeedCommand;
 import commands.Command;
 import commands.CreateGhostCommand;
