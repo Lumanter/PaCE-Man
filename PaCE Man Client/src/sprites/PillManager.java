@@ -36,7 +36,7 @@ public class PillManager {
      * @param pillPosition pill position
      */
     public void removePill(Position pillPosition) {
-        for (Integer i = 0; i < pills.size(); i++) {
+        for (int i = 0; i < pills.size(); i++) {
             Pill pill = pills.get(i);
             if (pill.getPos() == pillPosition) {
                 pills.remove(i);

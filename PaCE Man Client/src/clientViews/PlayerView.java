@@ -146,7 +146,7 @@ public class PlayerView extends JPanel implements ActionListener {
         }
         
         // ghosts collisions
-        for (Integer i = 0; i < ghosts.size(); i++) {
+        for (int i = 0; i < ghosts.size(); i++) {
             Ghost ghost = ghosts.get(i);    
             if (ghost.collides(pacman)) {
                 if (ghost.isIsEdible())
