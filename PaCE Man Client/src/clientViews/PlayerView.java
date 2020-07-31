@@ -1,5 +1,7 @@
 package clientViews;
 
+import commands.Command;
+import commands.CreateFruitCommand;
 import data.Direction;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -15,6 +17,7 @@ import data.Constants;
 import data.ObserverPackage;
 import data.Position;
 import java.util.ArrayList;
+import sprites.FruitManager;
 import sprites.Level;
 import sprites.Pacman;
 import sprites.Ghost;
@@ -40,6 +43,9 @@ public class PlayerView extends JPanel implements ActionListener {
 
     // game pill manager
     private PillManager pillManager;
+    
+    // game fruit manager
+    private FruitManager fruitManager;
             
     /**
      * Constructor initializes the needed variables and panel configurations
@@ -58,6 +64,10 @@ public class PlayerView extends JPanel implements ActionListener {
         this.pacman = new Pacman();
         this.level = new Level(levelNumber);
         this.pillManager = new PillManager();
+        this.fruitManager = new FruitManager();
+        
+        (new CreateFruitCommand(this, 10, 20, 20)).execute();
+        (new CreateFruitCommand(this, 10, 180, 200)).execute();
     }
  
     /**
@@ -145,6 +155,13 @@ public class PlayerView extends JPanel implements ActionListener {
                     ghost.setIsEdible(true);
         }
         
+        // check for fruits eaten
+        Boolean fruitEaten = (fruitManager.hasCollision(pacman) != null);
+        if (fruitEaten) {
+            Position eatenFruitPosition = fruitManager.hasCollision(pacman);
+            fruitManager.removeFruit(eatenFruitPosition);
+        }
+        
         // ghosts collisions
         for (Integer i = 0; i < ghosts.size(); i++) {
             Ghost ghost = ghosts.get(i);    
@@ -171,6 +188,9 @@ public class PlayerView extends JPanel implements ActionListener {
         
         // render power pills
         this.pillManager.render(renderer);
+        
+        // render fruits
+        this.fruitManager.render(renderer);
         
         // render ghosts
         for(Ghost ghost: ghosts) 
@@ -246,5 +266,9 @@ public class PlayerView extends JPanel implements ActionListener {
 
     public PillManager getPillManager() {
         return pillManager;
+    }
+
+    public FruitManager getFruitManager() {
+        return fruitManager;
     }
 }
