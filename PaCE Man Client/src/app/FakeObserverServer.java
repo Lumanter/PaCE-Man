@@ -27,11 +27,10 @@ public class FakeObserverServer extends javax.swing.JFrame implements ActionList
         data.pacman = new Pacman((int)pacmanX.getValue(),(int)pacmanY.getValue(), (int)pacmanSprite.getValue());
         
         ArrayList<Ghost> ghosts = new ArrayList<>();
-        Ghost ghost = new Ghost((int)ghostColor.getValue(), (int)ghostX.getValue(), (int)ghostY.getValue());
-        if (pillActive.isSelected())
-            ghost.setIsEdible(true);
-        ghosts.add(ghost);
+        ghosts.add(new Ghost((int)ghostColor.getValue(), (int)ghostX.getValue(), (int)ghostY.getValue()));
         data.ghosts = ghosts;
+        
+        data.pillActive = pillActive.isSelected();
     
         ArrayList<Pill> pills = new ArrayList<>();
         pills.add(new Pill((int)pillX.getValue(), (int)pillY.getValue()));

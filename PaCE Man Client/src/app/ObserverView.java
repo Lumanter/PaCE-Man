@@ -37,6 +37,11 @@ public class ObserverView extends JPanel implements ActionListener {
         pacman = updatedData.pacman;
         ghosts = updatedData.ghosts;
         pills = updatedData.pills;
+        
+        if (updatedData.pillActive)
+            for (Ghost ghost: ghosts)
+                ghost.setIsEdible(true);
+        
         this.repaint();
     }
     

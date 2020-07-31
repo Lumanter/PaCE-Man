@@ -12,6 +12,7 @@ import sprites.Pill;
  */
 public class ObserverPackage {
     public Integer level = 1;
+    public Boolean pillActive = false;
     public Pacman pacman = new Pacman();
     public ArrayList<Ghost> ghosts = new ArrayList<>();
     public ArrayList<Pill> pills = new ArrayList<>();

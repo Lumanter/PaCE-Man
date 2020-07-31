@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import data.Constants;
 import data.GhostColor;
+import data.ObserverPackage;
 import data.Position;
 import java.util.ArrayList;
 import sprites.Level;
@@ -189,6 +190,25 @@ public class PlayerView extends JPanel implements ActionListener {
         
         // update display on any action performed
         this.repaint();
+    }
+    
+    /**
+     * Returns the game state as a package to display in the observer view
+     * 
+     * @return game state as a package to display in the observer view
+     */
+    public ObserverPackage getObserverPackage() {
+        ObserverPackage data = new ObserverPackage();
+        data.pacman = this.pacman;
+        data.ghosts = this.ghosts;
+        data.pills = this.pillManager.getPills();
+        
+        // if there're ghosts, a pill is active 
+        // if the first is in edible mode
+        if (!ghosts.isEmpty())
+            data.pillActive = ghosts.get(0).isIsEdible();
+        
+        return data;
     }
 
     public Integer getLevelNumber() {

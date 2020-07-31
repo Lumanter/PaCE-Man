@@ -96,4 +96,8 @@ public class PillManager {
             return pillActiveTimer;
         }
     }
+
+    public ArrayList<Pill> getPills() {
+        return pills;
+    }
 }
