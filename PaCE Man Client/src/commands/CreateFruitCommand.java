@@ -30,7 +30,7 @@ public class CreateFruitCommand extends Command {
      */
     @Override
     public void execute() {
-        super.playerView.getFruitManager().addFruit(fruit);
+        super.playerView.getFruitManager().addSprite(fruit);
     }
     
 }

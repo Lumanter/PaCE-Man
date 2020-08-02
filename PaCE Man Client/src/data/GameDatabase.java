@@ -1,5 +1,9 @@
 package data;
 
+import sprites.Sprite;
+import java.util.ArrayList;
+import sprites.Dot;
+
 /**
  * Singleton class that holds the levels map and ghosts path data
  * @author Luis Mariano Ramírez Segura - github/Lumanter
@@ -15,20 +19,31 @@ public class GameDatabase {
     // set of ghosts path data
     private GhostPathData[][] ghostsPathData;
     
-    // private constructor, loads aDirection.LEFT the data
+    // set of dots data
+    private Integer[][][] dotsData;
+    
+    /**
+     * Private constructor, loads all the data
+     */
     private GameDatabase() { 
         initializeLevelsMapData();
         initializeGhostsPathData();
+        initializeDotsData();
     }
     
-    // singleton getInstance method, initializes the instances if it haven't been
+    /**
+     * Singleton getInstance method, initializes the instances if it haven't been
+     * @return singleton instance
+     */
     public static GameDatabase getInstance() {
         if (instance == null)
             instance = new GameDatabase();
         return instance;
     }
-    
-    // initializes the levels map data
+
+    /**
+     * Initializes the levels map data
+     */
     private void initializeLevelsMapData() {
         levelsMapData = new Integer[Constants.LEVELS][Constants.GRID_DIMENSION][Constants.GRID_DIMENSION];
         
@@ -58,7 +73,9 @@ public class GameDatabase {
             };
     }
     
-    // initializes the ghosts path data
+    /**
+     * Initializes the ghosts path data
+     */
     private void initializeGhostsPathData() {
         ghostsPathData = new GhostPathData[Constants.LEVELS][Constants.GHOSTS_NUMBER]; 
         
@@ -89,6 +106,37 @@ public class GameDatabase {
     }
     
     /**
+     * Initializes the dots data for each level
+     */
+    public void initializeDotsData() {
+        dotsData = new Integer[Constants.LEVELS][Constants.GRID_DIMENSION][Constants.GRID_DIMENSION];
+        // level 1 dots
+        dotsData[0] = new Integer[][]{
+            {},
+            {1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19},
+            {1,5,9,11,15,19},
+            {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19},
+            {1,5,7,13,15,19},
+            {1,2,3,4,5,7,8,9,11,12,13,15,16,17,18,19},
+            {5,9,11,15},
+            {5,7,8,9,10,11,12,13,15},
+            {5,7,13,15},
+            {},
+            {5,7,13,15},
+            {5,7,8,9,10,11,12,13,15},
+            {5,7,13,15},
+            {1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,17,18,19},
+            {1,5,9,11,15,19},
+            {1,2,3,5,6,7,8,9,10,11,12,13,14,15,17,18,19},
+            {3,5,7,13,15,17},
+            {1,2,3,4,5,7,8,9,11,12,13,15,16,17,18,19},
+            {1,9,11,19},
+            {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19},
+            {}
+            };
+    }
+    
+    /**
      * Returns the map data of a given level
      * 
      * @param level given level
@@ -107,5 +155,21 @@ public class GameDatabase {
      */
     public GhostPathData getGhostPathData(Integer level, Integer ghostColor) {
         return ghostsPathData[level - 1][ghostColor];
+    }
+    
+    /**
+     * Returns the dots of a given level
+     * @param level given level
+     * @return list of dots
+     */
+    public ArrayList<Sprite> getDots(Integer level) {
+        ArrayList<Sprite> dots = new ArrayList<>();
+        Integer[][] rawDots = dotsData[level - 1];
+        
+        for (int i = 0; i < rawDots.length; i++)
+            for (int j = 0; j < rawDots[i].length; j++)
+                dots.add(new Dot(rawDots[i][j] * Constants.TILE_SIZE, i * Constants.TILE_SIZE));
+                
+        return dots;
     }
 }

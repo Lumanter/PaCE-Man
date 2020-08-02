@@ -1,6 +1,5 @@
 package clientViews;
 
-import commands.Command;
 import commands.CreateFruitCommand;
 import data.Direction;
 import java.awt.Color;
@@ -14,14 +13,16 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import data.Constants;
+import data.GameDatabase;
 import data.ObserverPackage;
 import data.Position;
 import java.util.ArrayList;
-import sprites.FruitManager;
+import sprites.Dot;
 import sprites.Level;
 import sprites.Pacman;
 import sprites.Ghost;
 import sprites.PillManager;
+import sprites.SpriteManager;
 
 /**
  * Panel that manages the player view 
@@ -45,8 +46,11 @@ public class PlayerView extends JPanel implements ActionListener {
     private PillManager pillManager;
     
     // game fruit manager
-    private FruitManager fruitManager;
-            
+    private SpriteManager fruitManager;
+        
+    // level dots manager
+    private SpriteManager dotsManager;
+    
     /**
      * Constructor initializes the needed variables and panel configurations
      */
@@ -60,14 +64,18 @@ public class PlayerView extends JPanel implements ActionListener {
      * Starts the variables that define the game state
      */
     private void startGameState() {
+        GameDatabase database = GameDatabase.getInstance();
+        
         this.levelNumber = 1;
         this.pacman = new Pacman();
         this.level = new Level(levelNumber);
         this.pillManager = new PillManager();
-        this.fruitManager = new FruitManager();
+        this.fruitManager = new SpriteManager();
+        
+        this.dotsManager = new SpriteManager();
+        this.dotsManager.setSprites(database.getDots(levelNumber));
         
         (new CreateFruitCommand(this, 10, 20, 20)).execute();
-        (new CreateFruitCommand(this, 10, 180, 200)).execute();
     }
  
     /**
@@ -159,11 +167,18 @@ public class PlayerView extends JPanel implements ActionListener {
         Boolean fruitEaten = (fruitManager.hasCollision(pacman) != null);
         if (fruitEaten) {
             Position eatenFruitPosition = fruitManager.hasCollision(pacman);
-            fruitManager.removeFruit(eatenFruitPosition);
+            fruitManager.removeSprite(eatenFruitPosition);
+        }
+        
+        // check for dots eaten
+        Boolean dotEaten = (dotsManager.hasCollision(pacman) != null);
+        if (dotEaten) {
+            Position eatenDotPosition = dotsManager.hasCollision(pacman);
+            dotsManager.removeSprite(eatenDotPosition);
         }
         
         // ghosts collisions
-        for (Integer i = 0; i < ghosts.size(); i++) {
+        for (int i = 0; i < ghosts.size(); i++) {
             Ghost ghost = ghosts.get(i);    
             if (ghost.collides(pacman)) {
                 if (ghost.isIsEdible())
@@ -186,6 +201,9 @@ public class PlayerView extends JPanel implements ActionListener {
         // render level background
         this.level.render(renderer); 
         
+        // render dots
+        this.dotsManager.render(renderer);
+        
         // render power pills
         this.pillManager.render(renderer);
         
@@ -198,7 +216,7 @@ public class PlayerView extends JPanel implements ActionListener {
         
         // render pacman
         this.pacman.render(renderer, this);
-                    
+        
         // update display and release renderer resources
         Toolkit.getDefaultToolkit().sync();
     }
@@ -268,7 +286,7 @@ public class PlayerView extends JPanel implements ActionListener {
         return pillManager;
     }
 
-    public FruitManager getFruitManager() {
+    public SpriteManager getFruitManager() {
         return fruitManager;
     }
 }
