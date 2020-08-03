@@ -4,7 +4,7 @@
 
 #include "Logic.h"
 
-// Pair - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// P A I R - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Pair create_pair(int x,int y){
     Pair p;
@@ -13,7 +13,8 @@ Pair create_pair(int x,int y){
     return p;
 }
 
-// Pac-Man - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// P A C - M A N - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 Pac_Man create_pac_man(){
     Pac_Man p_m;
     p_m.pos = create_pair(200,300); // Starting pos
@@ -30,7 +31,8 @@ void modify_pac_man_position(Pac_Man* p_m_ptr,Pair new_pos){
     p_m_ptr->pos = new_pos;
 }
 
-// Ghost - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// G H O S T - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - -
+
 Ghost create_ghost(int color) {
     Ghost g;
     g.pos = create_pair(200,180); // Starting pos
@@ -51,7 +53,8 @@ void deactivate_ghost(Ghost* g){
     g->active = false;
 }
 
-// Pill - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// P I L L - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 Pill create_pill(Pair pos){
     Pill p;
     p.pos = pos;
@@ -83,19 +86,32 @@ P_Node add_p_node(P_Node head,Pill pill){
     return head;
 }
 
-// Game - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
+
 Game create_game(){
     Game game;
     game.level = 1;
     game.lives = 3;
     game.pac_man = create_pac_man();
-    game.pill_active = false;
+    game.pill_state = false;
     game.pills = NULL;
     game.ghosts[0] = create_ghost(1);
     game.ghosts[1] = create_ghost(2);
     game.ghosts[2] = create_ghost(3);
     game.ghosts[3] = create_ghost(4);
     return game;
+}
+
+void update_game_level(Game *game,int new_level){
+    game->level = new_level;
+}
+
+void update_game_lives(Game *game,int new_lives){
+    game->lives = new_lives;
+}
+
+void update_game_pill_active(Game *game,bool new_pill_state){
+    game->pill_state = new_pill_state;
 }
 
 void update_game_pac_man(Game *game,Pair new_pos,int new_sprite){

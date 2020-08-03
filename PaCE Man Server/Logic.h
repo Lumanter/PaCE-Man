@@ -8,7 +8,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-// Pair - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// P A I R - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 typedef struct Pair {
     int x;
     int y;
@@ -16,7 +17,8 @@ typedef struct Pair {
 
 Pair create_pair(int x,int y);
 
-// Pac-Man - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// P A C - M A N - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 typedef struct Pac_Man {
     Pair pos;
     int sprite;
@@ -28,7 +30,8 @@ void modify_pac_man(Pac_Man* p_m_ptr,Pair new_pos,int new_sprite);
 
 void modify_pac_man_position(Pac_Man* p_m_ptr,Pair new_pos);
 
-// Ghost - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// G H O S T - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - -
+
 typedef struct Ghost {
     Pair pos;
     bool active;
@@ -43,7 +46,8 @@ void activate_ghost(Ghost* g);
 
 void deactivate_ghost(Ghost* g);
 
-// Pill - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// P I L L - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 typedef struct Pill {
     Pair pos;
 } Pill;
@@ -63,13 +67,14 @@ P_Node create_p_node();
 P_Node add_p_node(P_Node head, Pill pill);
 
 
-// Game - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
+
 typedef struct Game {
     unsigned int level;
 
     unsigned int lives;
 
-    bool pill_active;
+    bool pill_state;
 
     P_Node pills;
 
@@ -81,6 +86,12 @@ typedef struct Game {
 } Game;
 
 Game create_game();
+
+void update_game_level(Game *game,int new_level);
+
+void update_game_lives(Game *game,int new_lives);
+
+void update_game_pill_active(Game *game,bool new_pill_state);
 
 void update_game_pac_man(Game *game,Pair new_pos,int new_sprite);
 
