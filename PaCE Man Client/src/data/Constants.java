@@ -41,4 +41,7 @@ public class Constants {
     
     // points obtained from eating a pill
     public final static Integer PILL_POINTS = 100;
+    
+    // default game lifes
+    public final static Integer DEFAULT_LIFES = 3;
 }

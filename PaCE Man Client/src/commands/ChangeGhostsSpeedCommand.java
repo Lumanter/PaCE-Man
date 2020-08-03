@@ -11,7 +11,7 @@ import sprites.Ghost;
 public class ChangeGhostsSpeedCommand extends Command {
 
     // new speed of the ghosts
-    private Integer newGhostsSpeed;
+    private final Integer newGhostsSpeed;
     
     /**
      * Constructor receives the new ghost speed

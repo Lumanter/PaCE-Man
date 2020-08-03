@@ -1,6 +1,7 @@
 package data;
 
 import java.util.ArrayList;
+import sprites.Dot;
 import sprites.Ghost;
 import sprites.Pacman;
 import sprites.Pill;
@@ -26,4 +27,13 @@ public class ObserverPackage {
     
     // game's pills
     public ArrayList<Pill> pills = new ArrayList<>();
+    
+    // game's score
+    public Integer score  = 0;
+    
+    // game's dots
+    public ArrayList<Dot> dots = new ArrayList<>();
+    
+    // game lifes
+    public Integer lifes = 3;
 }

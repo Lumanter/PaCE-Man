@@ -1,6 +1,6 @@
 package clientViews;
 
-import commands.CreateFruitCommand;
+import commands.IncrementScoreCommand;
 import data.Direction;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -18,12 +18,12 @@ import data.ObserverPackage;
 import data.Position;
 import java.awt.Font;
 import java.util.ArrayList;
+import sprites.Dot;
 import sprites.Fruit;
 import sprites.Level;
 import sprites.Pacman;
 import sprites.Ghost;
 import sprites.PillManager;
-import sprites.Sprite;
 import sprites.SpriteManager;
 
 /**
@@ -39,7 +39,7 @@ public class PlayerView extends JPanel implements ActionListener {
     private Pacman pacman;
     
     // game ghosts
-    private final ArrayList<Ghost> ghosts = new ArrayList<>();
+    private ArrayList<Ghost> ghosts;
     
     // game level
     private Level level;
@@ -79,11 +79,12 @@ public class PlayerView extends JPanel implements ActionListener {
         this.level = new Level(levelNumber);
         this.pillManager = new PillManager();
         this.fruitManager = new SpriteManager();
+        this.ghosts = new ArrayList<>();
         
         this.dotsManager = new SpriteManager();
         this.dotsManager.setSprites(database.getDots(levelNumber));
         
-        this.lifes = 3;
+        this.lifes = Constants.DEFAULT_LIFES;
         this.score = 0;
     }
  
@@ -165,7 +166,7 @@ public class PlayerView extends JPanel implements ActionListener {
         // check for pills eaten
         Boolean pillEaten = (pillManager.hasCollision(pacman) != null);
         if (pillEaten) {
-            score += Constants.PILL_POINTS;
+            (new IncrementScoreCommand(this, Constants.PILL_POINTS)).execute();
             Position eatenPillPosition = pillManager.hasCollision(pacman);
             pillManager.removePill(eatenPillPosition);
             pillManager.setPillActive(true);
@@ -187,7 +188,7 @@ public class PlayerView extends JPanel implements ActionListener {
         // check for dots eaten
         Boolean dotEaten = (dotsManager.hasCollision(pacman) != null);
         if (dotEaten) {
-            score += Constants.DOT_POINTS;
+            (new IncrementScoreCommand(this, Constants.DOT_POINTS)).execute();
             Position eatenDotPosition = dotsManager.hasCollision(pacman);
             dotsManager.removeSprite(eatenDotPosition);
         }
@@ -199,11 +200,15 @@ public class PlayerView extends JPanel implements ActionListener {
                 
                 if (ghost.isIsEdible()) {
                     // ghost eaten
-                    score += Constants.GHOST_POINTS;
+                    (new IncrementScoreCommand(this, Constants.GHOST_POINTS)).execute();
                     ghosts.remove(i);
+                    
                 } else {
                     // pacman life -1
                     --lifes;
+                    // game over
+                    if (lifes < 0)
+                        lifes = 0;
                     pacman.resetPosition();
                 }
                 
@@ -236,9 +241,6 @@ public class PlayerView extends JPanel implements ActionListener {
         
         // render pacman
         this.pacman.render(renderer, this);
-        
-        Font small = new Font("Helvetica", Font.BOLD, 16);
-        renderer.setFont(small);
         
         renderer.drawString("Level " + String.valueOf(levelNumber), (int)(Constants.LEVEL_SIZE*0.15), 445);
         renderer.drawString("Lifes: " + String.valueOf(lifes), (int)(Constants.LEVEL_SIZE*0.4), 445);
@@ -281,16 +283,39 @@ public class PlayerView extends JPanel implements ActionListener {
      */
     public ObserverPackage getObserverPackage() {
         ObserverPackage data = new ObserverPackage();
-        data.pacman = this.pacman;
-        data.ghosts = this.ghosts;
-        data.pills = this.pillManager.getPills();
+        
+        data.level = this.levelNumber;
         
         // if there're ghosts, a pill is active 
         // if the first is in edible mode, then all are
         if (!ghosts.isEmpty())
             data.pillActive = ghosts.get(0).isIsEdible();
         
+        data.pacman = this.pacman;
+        
+        data.ghosts = this.ghosts;
+        
+        data.pills = this.pillManager.getPills();
+        
+        data.score = this.score;
+        
+        for (int i = 0; i < dotsManager.getSprites().size(); i++) {
+            Dot dot = (Dot) dotsManager.getSprites().get(i);
+            data.dots.add(dot);
+        }
+        
+        data.lifes = this.lifes;
+        
         return data;
+    }
+    
+    /**
+     * Increment the game score by a given increment
+     * 
+     * @param increment given increment
+     */
+    public void incrementScore(Integer increment) {
+       this.score += increment; 
     }
 
     public Integer getLevelNumber() {
@@ -316,4 +341,5 @@ public class PlayerView extends JPanel implements ActionListener {
     public SpriteManager getFruitManager() {
         return fruitManager;
     }
+    
 }
