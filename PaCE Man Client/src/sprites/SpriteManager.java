@@ -59,6 +59,19 @@ public class SpriteManager {
                 return sprite.getPos();
         return null;
     }
+    
+    /**
+     * Returns the sprite at the given position
+     * 
+     * @param position given position
+     * @return sprite at the given position
+     */
+    public Sprite getSprite(Position position) {
+        for (Sprite sprite : sprites)
+            if (sprite.getPos() == position)
+                return sprite;
+        return null;
+    }
 
     public void setSprites(ArrayList<Sprite> sprites) {
         this.sprites = sprites;

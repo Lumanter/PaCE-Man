@@ -3,8 +3,9 @@ package fakeServers;
 import clientViews.PlayerView;
 import commands.ChangeGhostsSpeedCommand;
 import commands.Command;
+import commands.CreateFruitCommand;
 import commands.CreateGhostCommand;
-import commands.PlacePillCommand;
+import commands.CreatePillCommand;
 import data.GhostColor;
 
 /**
@@ -53,6 +54,12 @@ public class FakePlayerServer extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         ghostSpeed = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        fruitPoints = new javax.swing.JSpinner();
+        fruitY = new javax.swing.JSpinner();
+        fruitX = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,7 +70,7 @@ public class FakePlayerServer extends javax.swing.JFrame {
             }
         });
 
-        commandDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "spawn ghost", "place pill", "change speed" }));
+        commandDropdown.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "spawn ghost", "place pill", "change speed", "create fruit" }));
 
         jLabel1.setText("Ghost Color");
 
@@ -73,13 +80,25 @@ public class FakePlayerServer extends javax.swing.JFrame {
 
         pillX.setModel(new javax.swing.SpinnerNumberModel(10, 0, 21, 1));
 
-        pillY.setModel(new javax.swing.SpinnerNumberModel(9, 0, 21, 1));
+        pillY.setModel(new javax.swing.SpinnerNumberModel(11, 0, 21, 1));
 
         jLabel3.setText("Ghost speed");
 
         ghostSpeed.setModel(new javax.swing.SpinnerNumberModel(4, 0, null, 1));
 
         jLabel4.setText("Command");
+
+        jLabel5.setText("Fruit");
+
+        jLabel6.setText("points");
+
+        jLabel7.setText("location");
+
+        fruitPoints.setModel(new javax.swing.SpinnerNumberModel(500, 0, null, 1));
+
+        fruitY.setModel(new javax.swing.SpinnerNumberModel(11, 0, null, 1));
+
+        fruitX.setModel(new javax.swing.SpinnerNumberModel(10, 0, null, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,8 +130,21 @@ public class FakePlayerServer extends javax.swing.JFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(commandDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(executeCommandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(113, Short.MAX_VALUE))
+                            .addComponent(executeCommandButton, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(fruitPoints)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(fruitX, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fruitY, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(113, 113, 113))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,7 +162,17 @@ public class FakePlayerServer extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(ghostSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fruitY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fruitPoints, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fruitX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(commandDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -150,12 +192,16 @@ public class FakePlayerServer extends javax.swing.JFrame {
                 createGhost.execute();
                 break;
             case "place pill":
-                Command placePill = new PlacePillCommand(playerView, ((Integer) pillX.getValue()), ((Integer) pillY.getValue()));
+                Command placePill = new CreatePillCommand(playerView, ((Integer) pillX.getValue()), ((Integer) pillY.getValue()));
                 placePill.execute();
                 break;
             case "change speed":
                 Command changeSpeed = new ChangeGhostsSpeedCommand(playerView, ((Integer)ghostSpeed.getValue()));
                 changeSpeed.execute();
+                break;
+            case "create fruit":
+                Command createFruit = new CreateFruitCommand(playerView, ((Integer) fruitPoints.getValue()), ((Integer) fruitX.getValue()), ((Integer) fruitY.getValue()));
+                createFruit.execute();
                 break;
         }
     }//GEN-LAST:event_executeCommandButtonActionPerformed
@@ -199,12 +245,18 @@ public class FakePlayerServer extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> commandDropdown;
     private javax.swing.JButton executeCommandButton;
+    private javax.swing.JSpinner fruitPoints;
+    private javax.swing.JSpinner fruitX;
+    private javax.swing.JSpinner fruitY;
     private javax.swing.JComboBox<String> ghostColor;
     private javax.swing.JSpinner ghostSpeed;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JSpinner pillX;
     private javax.swing.JSpinner pillY;
     // End of variables declaration//GEN-END:variables

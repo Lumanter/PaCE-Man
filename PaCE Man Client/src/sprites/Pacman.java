@@ -5,7 +5,6 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import data.Constants;
 import data.Direction;
-import data.Position;
 
 /**
  * Pacman representation. Handles collisions and animation
@@ -51,7 +50,8 @@ public class Pacman extends Sprite {
      * Resets pacman to its default position
      */
     public void resetPosition() {
-        super.pos = Constants.DEFAULT_PACMAN_POSITION;
+        super.pos.x = Constants.DEFAULT_PACMAN_POSITION.x;
+        super.pos.y = Constants.DEFAULT_PACMAN_POSITION.y;
         this.currentDirection = Direction.RIGHT;
     }
     

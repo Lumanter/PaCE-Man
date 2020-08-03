@@ -16,12 +16,14 @@ import data.Constants;
 import data.GameDatabase;
 import data.ObserverPackage;
 import data.Position;
+import java.awt.Font;
 import java.util.ArrayList;
-import sprites.Dot;
+import sprites.Fruit;
 import sprites.Level;
 import sprites.Pacman;
 import sprites.Ghost;
 import sprites.PillManager;
+import sprites.Sprite;
 import sprites.SpriteManager;
 
 /**
@@ -51,6 +53,12 @@ public class PlayerView extends JPanel implements ActionListener {
     // level dots manager
     private SpriteManager dotsManager;
     
+    // pacman lifes
+    private Integer lifes;
+    
+    // game score
+    private Integer score;
+    
     /**
      * Constructor initializes the needed variables and panel configurations
      */
@@ -75,7 +83,8 @@ public class PlayerView extends JPanel implements ActionListener {
         this.dotsManager = new SpriteManager();
         this.dotsManager.setSprites(database.getDots(levelNumber));
         
-        (new CreateFruitCommand(this, 10, 20, 20)).execute();
+        this.lifes = 3;
+        this.score = 0;
     }
  
     /**
@@ -156,6 +165,7 @@ public class PlayerView extends JPanel implements ActionListener {
         // check for pills eaten
         Boolean pillEaten = (pillManager.hasCollision(pacman) != null);
         if (pillEaten) {
+            score += Constants.PILL_POINTS;
             Position eatenPillPosition = pillManager.hasCollision(pacman);
             pillManager.removePill(eatenPillPosition);
             pillManager.setPillActive(true);
@@ -167,26 +177,36 @@ public class PlayerView extends JPanel implements ActionListener {
         Boolean fruitEaten = (fruitManager.hasCollision(pacman) != null);
         if (fruitEaten) {
             Position eatenFruitPosition = fruitManager.hasCollision(pacman);
+            
+            Fruit fruit = (Fruit) fruitManager.getSprite(eatenFruitPosition);
+            score += fruit.getPoints();            
+            
             fruitManager.removeSprite(eatenFruitPosition);
         }
         
         // check for dots eaten
         Boolean dotEaten = (dotsManager.hasCollision(pacman) != null);
         if (dotEaten) {
+            score += Constants.DOT_POINTS;
             Position eatenDotPosition = dotsManager.hasCollision(pacman);
             dotsManager.removeSprite(eatenDotPosition);
         }
         
         // ghosts collisions
         for (int i = 0; i < ghosts.size(); i++) {
-            Ghost ghost = ghosts.get(i);    
+            Ghost ghost = ghosts.get(i);  
             if (ghost.collides(pacman)) {
-                if (ghost.isIsEdible())
+                
+                if (ghost.isIsEdible()) {
                     // ghost eaten
+                    score += Constants.GHOST_POINTS;
                     ghosts.remove(i);
-                else
+                } else {
                     // pacman life -1
+                    --lifes;
                     pacman.resetPosition();
+                }
+                
             }
         }
     }
@@ -216,6 +236,13 @@ public class PlayerView extends JPanel implements ActionListener {
         
         // render pacman
         this.pacman.render(renderer, this);
+        
+        Font small = new Font("Helvetica", Font.BOLD, 16);
+        renderer.setFont(small);
+        
+        renderer.drawString("Level " + String.valueOf(levelNumber), (int)(Constants.LEVEL_SIZE*0.15), 445);
+        renderer.drawString("Lifes: " + String.valueOf(lifes), (int)(Constants.LEVEL_SIZE*0.4), 445);
+        renderer.drawString("Score: " + String.valueOf(score), (int)(Constants.LEVEL_SIZE*0.65), 445);
         
         // update display and release renderer resources
         Toolkit.getDefaultToolkit().sync();

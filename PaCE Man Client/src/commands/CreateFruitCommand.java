@@ -1,6 +1,7 @@
 package commands;
 
 import clientViews.PlayerView;
+import data.Constants;
 import sprites.Fruit;
 
 /**
@@ -22,7 +23,7 @@ public class CreateFruitCommand extends Command {
      */
     public CreateFruitCommand(PlayerView playerView, Integer points, Integer position_x, Integer position_y) {
         super(playerView);
-        this.fruit = new Fruit(points, position_x, position_y);
+        this.fruit = new Fruit(points, position_x * Constants.TILE_SIZE, position_y * Constants.TILE_SIZE);
     }
 
     /**
