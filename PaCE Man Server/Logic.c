@@ -125,14 +125,13 @@ P_Node delete_p_node(P_Node head,Pill pill){
     return head;
 }
 
-
-
 // G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
 
 Game create_game(){
     Game game;
     game.level = 1;
     game.lives = 3;
+    game.score = 0;
     game.pac_man = create_pac_man();
     game.pill_state = false;
     game.pills = NULL;
@@ -143,12 +142,28 @@ Game create_game(){
     return game;
 }
 
-void update_game_level(Game *game,int new_level){
+void update_game_level(Game *game,unsigned int new_level){
     game->level = new_level;
 }
 
-void update_game_lives(Game *game,int new_lives){
+unsigned int get_game_level(Game *game){
+    return game->level;
+}
+
+void update_game_lives(Game *game,unsigned int new_lives){
     game->lives = new_lives;
+}
+
+unsigned int get_game_lives(Game *game){
+    return game->lives;
+}
+
+void update_game_score(Game *game,unsigned int added_score){
+    game->score += added_score;
+}
+
+unsigned int get_game_score(Game *game){
+    return game->score;
 }
 
 void update_game_pill_active(Game *game,bool new_pill_state){

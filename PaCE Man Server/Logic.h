@@ -71,8 +71,9 @@ P_Node delete_p_node(P_Node head,Pill pill);
 // G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
 
 typedef struct Game {
-    unsigned int level; // Update -
-    unsigned int lives; // Update -
+    unsigned int level; // Update - Read
+    unsigned int lives; // Update - Read
+    unsigned int score; // Update -
     bool pill_state; // Update -
     P_Node pills; // Update (Add last & delete a specif) -
     Pac_Man pac_man; // Update (pos + sprite & pos alone) -
@@ -81,9 +82,17 @@ typedef struct Game {
 
 Game create_game();
 
-void update_game_level(Game *game,int new_level);
+void update_game_level(Game *game,unsigned int new_level);
 
-void update_game_lives(Game *game,int new_lives);
+unsigned int get_game_level(Game *game);
+
+void update_game_lives(Game *game,unsigned int new_lives);
+
+unsigned int get_game_lives(Game *game);
+
+void update_game_score(Game *game,unsigned int added_score);
+
+unsigned int get_game_score(Game *game);
 
 void update_game_pill_active(Game *game,bool new_pill_state);
 
