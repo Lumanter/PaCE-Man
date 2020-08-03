@@ -62,29 +62,70 @@ Pill create_pill(Pair pos){
 }
 
 P_Node create_p_node(){
-    P_Node temp;
-    temp = (P_Node)malloc(sizeof(struct Linked_List_Pill));
-    temp->next = NULL;
-    return temp;
+    P_Node node;
+    node = (P_Node)malloc(sizeof(struct Linked_List_Pill));
+    node->next = NULL;
+    return node;
 }
 
 P_Node add_p_node(P_Node head,Pill pill){
-    P_Node temp, p;
-    temp = create_p_node();
-    temp->pill = pill;
+    P_Node node, p;
+
+    node = create_p_node();
+    node->pill = pill;
 
     if (head == NULL){
-        head = temp;
+        head = node;
     }
     else {
         p = head;
         while (p->next != NULL){
             p = p->next;
         }
-        p->next = temp;
+        p->next = node;
     }
     return head;
 }
+
+P_Node delete_p_node(P_Node head,Pill pill){
+    // The list is empty
+    if (head->next == NULL){
+        return head;
+    }
+
+    // The node to delete is on the first node
+    int xc = head->next->pill.pos.x;
+    int yc = head->next->pill.pos.y;
+
+    if ((xc == pill.pos.x) && (yc == pill.pos.y)){
+        P_Node temp = create_p_node();
+        temp = head->next;
+
+        head->next = head->next->next;
+        free(temp);
+        return head;
+    }
+
+    P_Node previous = head->next;
+    P_Node current = head->next;
+    while (current->next != NULL){
+        xc = current->pill.pos.x;
+        yc = current->pill.pos.y;
+
+        if ((xc == pill.pos.x) && (yc == pill.pos.y)){
+            previous->next = current->next;
+            free(current);
+            return head;
+        }
+        else {
+            previous = current;
+            current = current->next;
+        }
+    }
+    return head;
+}
+
+
 
 // G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
 
@@ -129,6 +170,10 @@ void update_game_ghosts_pos(Game *game,Pair* new_pos){
     modify_ghost_position(&game->ghosts[3],new_pos[3]);
 }
 
-void add_pills_to_game(Game *game,Pill new_pill){
+void add_pill_to_game(Game *game, Pill new_pill){
     game->pills = add_p_node(game->pills,new_pill);
+}
+
+void delete_pill_from_game(Game *game,Pill pill){
+    game->pills = delete_p_node(game->pills,pill);
 }

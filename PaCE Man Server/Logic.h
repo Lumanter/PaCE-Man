@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 // P A I R - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -54,7 +55,6 @@ typedef struct Pill {
 
 Pill create_pill(Pair pos);
 
-// Pill Linked List
 struct Linked_List_Pill {
     Pill pill;
     struct Linked_List_Pill *next;
@@ -66,23 +66,17 @@ P_Node create_p_node();
 
 P_Node add_p_node(P_Node head, Pill pill);
 
+P_Node delete_p_node(P_Node head,Pill pill);
 
 // G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
 
 typedef struct Game {
-    unsigned int level;
-
-    unsigned int lives;
-
-    bool pill_state;
-
-    P_Node pills;
-
-    Pac_Man pac_man;
-
-    Ghost ghosts[4];
-
-    // Linked list of pills
+    unsigned int level; // Update -
+    unsigned int lives; // Update -
+    bool pill_state; // Update -
+    P_Node pills; // Update (Add last & delete a specif) -
+    Pac_Man pac_man; // Update (pos + sprite & pos alone) -
+    Ghost ghosts[4]; // Update (all 4 ghost via int list[4]) -
 } Game;
 
 Game create_game();
@@ -99,4 +93,6 @@ void update_game_pac_man_pos(Game *game,Pair new_pos);
 
 void update_game_ghosts_pos(Game *game,Pair* new_pos);
 
-void add_pills_to_game(Game *game,Pill new_pill);
+void add_pill_to_game(Game *game,Pill new_pill);
+
+void delete_pill_from_game(Game *game,Pill pill);
