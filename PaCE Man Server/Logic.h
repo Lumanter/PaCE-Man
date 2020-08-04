@@ -68,16 +68,39 @@ P_Node add_p_node(P_Node head, Pill pill);
 
 P_Node delete_p_node(P_Node head,Pill pill);
 
+// F R U I T - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
+
+typedef struct Fruit {
+    Pair pos;
+    int value;
+} Fruit;
+
+Fruit create_fruit(Pair pos,int value);
+
+struct Linked_List_Fruit {
+    Fruit fruit;
+    struct Linked_List_Fruit *next;
+};
+
+typedef struct Linked_List_Fruit *F_Node;
+
+F_Node create_f_node();
+
+F_Node add_f_node(F_Node head,Fruit fruit);
+
+F_Node delete_f_node(F_Node head,Fruit fruit);
+
 // G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
 
 typedef struct Game {
     unsigned int level; // Update - Read
     unsigned int lives; // Update - Read
-    unsigned int score; // Update -
-    bool pill_state; // Update -
+    unsigned int score; // Update - Read
+    bool pill_state; // Update - Read
     P_Node pills; // Update (Add last & delete a specif) -
+    F_Node fruits;
     Pac_Man pac_man; // Update (pos + sprite & pos alone) -
-    Ghost ghosts[4]; // Update (all 4 ghost via int list[4]) -
+    Ghost ghosts[4]; // Update (all 4 ghost via Pair list[4]) -
 } Game;
 
 Game create_game();
@@ -95,6 +118,8 @@ void update_game_score(Game *game,unsigned int added_score);
 unsigned int get_game_score(Game *game);
 
 void update_game_pill_active(Game *game,bool new_pill_state);
+
+bool get_pill_state(Game *game);
 
 void update_game_pac_man(Game *game,Pair new_pos,int new_sprite);
 

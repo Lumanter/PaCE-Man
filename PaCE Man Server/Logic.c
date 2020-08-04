@@ -106,6 +106,7 @@ P_Node delete_p_node(P_Node head,Pill pill){
         return head;
     }
 
+    // The node to delete is on the rest of the list
     P_Node previous = head->next;
     P_Node current = head->next;
     while (current->next != NULL){
@@ -125,6 +126,81 @@ P_Node delete_p_node(P_Node head,Pill pill){
     return head;
 }
 
+// F R U I T - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
+
+Fruit create_fruit(Pair pos,int value){
+    Fruit f;
+    f.pos = pos;
+    f.value = value;
+    return f;
+}
+
+F_Node create_f_node(){
+    F_Node node;
+    node = (F_Node)malloc(sizeof(struct Linked_List_Fruit));
+    node->next = NULL;
+    return node;
+}
+
+F_Node add_f_node(F_Node head,Fruit fruit){
+    F_Node node, p;
+
+    node = create_f_node();
+    node->fruit = fruit;
+
+    if (head == NULL){
+        head = node;
+    }
+    else {
+        p = head;
+        while (p->next != NULL){
+            p = p->next;
+        }
+        p->next = node;
+    }
+    return head;
+}
+
+F_Node delete_f_node(F_Node head,Fruit fruit){
+    // The list is empty
+    if (head->next == NULL){
+        return head;
+    }
+
+    // The node to delete is on the first node
+    int xc = head->next->fruit.pos.x;
+    int yc = head->next->fruit.pos.y;
+
+    if ((xc == fruit.pos.x) && (yc == fruit.pos.y)){
+        F_Node temp = create_f_node();
+        temp = head->next;
+
+        head->next = head->next->next;
+        free(temp);
+        return head;
+    }
+
+    // The node to delete is on the rest of the list
+    F_Node previous = head->next;
+    F_Node current = head->next;
+    while (current->next != NULL){
+        xc = current->fruit.pos.x;
+        yc = current->fruit.pos.y;
+
+        if ((xc == fruit.pos.x) && (yc == fruit.pos.y)){
+            previous->next = current->next;
+            free(current);
+            return head;
+        }
+        else {
+            previous = current;
+            current = current->next;
+        }
+    }
+    return head;
+}
+
+
 // G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
 
 Game create_game(){
@@ -134,6 +210,7 @@ Game create_game(){
     game.score = 0;
     game.pac_man = create_pac_man();
     game.pill_state = false;
+    game.pills = NULL;
     game.pills = NULL;
     game.ghosts[0] = create_ghost(1);
     game.ghosts[1] = create_ghost(2);
@@ -168,6 +245,10 @@ unsigned int get_game_score(Game *game){
 
 void update_game_pill_active(Game *game,bool new_pill_state){
     game->pill_state = new_pill_state;
+}
+
+bool get_pill_state(Game *game){
+    return game->pill_state;
 }
 
 void update_game_pac_man(Game *game,Pair new_pos,int new_sprite){
