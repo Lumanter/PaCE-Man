@@ -16,7 +16,6 @@ import data.Constants;
 import data.GameDatabase;
 import data.ObserverPackage;
 import data.Position;
-import java.awt.Font;
 import java.util.ArrayList;
 import sprites.Dot;
 import sprites.Fruit;
@@ -191,6 +190,14 @@ public class PlayerView extends JPanel implements ActionListener {
             (new IncrementScoreCommand(this, Constants.DOT_POINTS)).execute();
             Position eatenDotPosition = dotsManager.hasCollision(pacman);
             dotsManager.removeSprite(eatenDotPosition);
+            
+            Boolean levelFinished = dotsManager.getSprites().isEmpty();
+            if (levelFinished) {
+                if (this.levelNumber == 3) 
+                    System.out.println("Win message!");
+                else
+                    toLevel(levelNumber + 1);
+            }
         }
         
         // ghosts collisions
@@ -318,6 +325,25 @@ public class PlayerView extends JPanel implements ActionListener {
        this.score += increment; 
     }
 
+    /**
+     * Loads the game to a given level
+     * 
+     * @param level given level
+     */
+    public void toLevel(Integer level) {
+        GameDatabase database = GameDatabase.getInstance();
+        
+        this.levelNumber = level;
+        this.pacman.resetPosition();
+        this.level = new Level(levelNumber);
+        this.pillManager = new PillManager();
+        this.fruitManager = new SpriteManager();
+        this.ghosts = new ArrayList<>();
+        
+        this.dotsManager = new SpriteManager();
+        this.dotsManager.setSprites(database.getDots(levelNumber));
+    }
+    
     public Integer getLevelNumber() {
         return levelNumber;
     }
