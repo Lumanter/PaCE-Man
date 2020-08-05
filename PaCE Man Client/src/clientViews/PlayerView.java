@@ -67,7 +67,6 @@ public class PlayerView extends JPanel implements ActionListener {
      */
     public PlayerView() {
         restartGame();
-        loadLevel(3);
         setupDirectionKeyListener();
         configurePanel();
     }
