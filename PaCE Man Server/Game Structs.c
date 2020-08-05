@@ -2,7 +2,7 @@
 // Created by valva on 7/29/2020.
 //
 
-#include "Logic.h"
+#include "Game Structs.h"
 
 // P A I R - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -35,7 +35,7 @@ void modify_pac_man_position(Pac_Man* p_m_ptr,Pair new_pos){
 
 Ghost create_ghost(int color) {
     Ghost g;
-    g.pos = create_pair(200,180); // Starting pos
+    g.pos = create_pair(-1,-1); // Starting pos
     g.active = false;
     g.color = color;
     return g;

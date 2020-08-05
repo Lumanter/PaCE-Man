@@ -52,15 +52,30 @@ bool get_pill_state(Game *game){
     return game->pill_state;
 }
 
-void update_game_pac_man(Game *game,Pair new_pos,int new_sprite){
+void set_game_pac_man(Game *game, Pair new_pos, int new_sprite){
     modify_pac_man(&game->pac_man,new_pos,new_sprite);
 }
 
-void update_game_pac_man_pos(Game *game,Pair new_pos){
+Pac_Man get_game_pac_man(Game *game){
+    return game->pac_man;
+}
+
+void set_game_pac_man_pos(Game *game, Pair new_pos){
     modify_pac_man_position(&game->pac_man, new_pos);
 }
 
-void update_game_ghosts_pos(Game *game,Pair* new_pos){
+void set_game_ghosts(Game *game, Ghost *new_ghosts){
+    game->ghosts[0] = new_ghosts[0];
+    game->ghosts[1] = new_ghosts[1];
+    game->ghosts[2] = new_ghosts[2];
+    game->ghosts[3] = new_ghosts[3];
+}
+
+Ghost* get_game_ghosts(Game *game){
+    return game->ghosts;
+}
+
+void set_game_ghosts_pos(Game *game,Pair* new_pos){
     modify_ghost_position(&game->ghosts[0],new_pos[0]);
     modify_ghost_position(&game->ghosts[1],new_pos[1]);
     modify_ghost_position(&game->ghosts[2],new_pos[2]);
