@@ -40,6 +40,9 @@ public class PlayerView extends JPanel implements ActionListener {
 
     // game pill manager
     private PillManager pillManager;
+    
+    // indicates if pacman has being hit by a ghost
+    private Boolean pacmanHit;
             
     /**
      * Constructor initializes the needed variables and panel configurations
@@ -58,6 +61,8 @@ public class PlayerView extends JPanel implements ActionListener {
         this.pacman = new Pacman();
         this.level = new Level(levelNumber);
         this.pillManager = new PillManager();
+        
+        this.pacmanHit = false;
     }
  
     /**
@@ -149,12 +154,15 @@ public class PlayerView extends JPanel implements ActionListener {
         for (int i = 0; i < ghosts.size(); i++) {
             Ghost ghost = ghosts.get(i);    
             if (ghost.collides(pacman)) {
-                if (ghost.isIsEdible())
+                if (ghost.isIsEdible()) {
                     // ghost eaten
                     ghosts.remove(i);
-                else
-                    // pacman life -1
-                    pacman.resetPosition();
+                } else {
+                   // pacman life -1
+                    pacman.resetPosition(); 
+                    pacmanHit = true;
+                }
+                    
             }
         }
     }
@@ -228,6 +236,16 @@ public class PlayerView extends JPanel implements ActionListener {
         return data;
     }
 
+    /**
+     * Indicates if pacman has being hit 
+     * @return if pacman has being hit 
+     */
+    public Boolean isPacmanHit() {
+        Boolean isPacmanHit = pacmanHit;
+        pacmanHit = false;
+        return isPacmanHit;
+    }
+    
     public Integer getLevelNumber() {
         return levelNumber;
     }
