@@ -93,3 +93,10 @@ void add_pill_to_game(Game *game, Pill new_pill){
 void delete_pill_from_game(Game *game,Pill pill){
     game->pills = delete_p_node(game->pills,pill);
 }
+
+void add_fruit_to_game(Game *game,Fruit new_fruit){
+    game->fruits = add_f_node(game->fruits,new_fruit);
+}
+void delete_fruit_from_game(Game *game,Fruit fruit){
+    game->pills = delete_f_node(game->fruits,fruit);
+}
