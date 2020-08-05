@@ -42,13 +42,15 @@ void set_game_pac_man(Game *game,Pair new_pos, int new_sprite);
 Pac_Man get_game_pac_man(Game *game);
 
 void set_game_pac_man_pos(Game *game,Pair new_pos);
+Pair get_game_pac_man_pos(Game *game);
 
 // Ghosts
 void set_game_ghosts(Game *game, Ghost *new_ghosts);
 Ghost* get_game_ghosts(Game *game);
 
 void set_game_ghosts_pos(Game *game,Pair* new_pos);
+// Pair* get_game_ghosts_pos(Game *game);
 
+// Pill
 void add_pill_to_game(Game *game,Pill new_pill);
-
 void delete_pill_from_game(Game *game,Pill pill);

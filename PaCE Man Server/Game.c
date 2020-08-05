@@ -64,6 +64,10 @@ void set_game_pac_man_pos(Game *game, Pair new_pos){
     modify_pac_man_position(&game->pac_man, new_pos);
 }
 
+Pair get_game_pac_man_pos(Game *game){
+    return game->pac_man.pos;
+}
+
 void set_game_ghosts(Game *game, Ghost *new_ghosts){
     game->ghosts[0] = new_ghosts[0];
     game->ghosts[1] = new_ghosts[1];
