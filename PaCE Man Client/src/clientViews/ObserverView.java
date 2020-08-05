@@ -1,6 +1,7 @@
 package clientViews;
 
 import data.Constants;
+import data.GameState;
 import data.ObserverPackage;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -40,6 +41,9 @@ public class ObserverView extends JPanel {
     // game lifes
     private Integer lifes;
     
+    // current game state
+    private GameState gameState;
+    
     /**
      * Constructor sets the default display data
      */
@@ -53,6 +57,7 @@ public class ObserverView extends JPanel {
         score = defaultData.score;
         dots = defaultData.dots;
         lifes = defaultData.lifes;
+        gameState = decodeGameState(defaultData.gameState);
         this.setBackground(Color.black);
     }
     
@@ -76,6 +81,8 @@ public class ObserverView extends JPanel {
         dots = updatedData.dots;
         
         lifes = updatedData.lifes;
+        
+        gameState = decodeGameState(updatedData.gameState);
         
         this.repaint();
     }
@@ -117,5 +124,47 @@ public class ObserverView extends JPanel {
         
         // render pacman
         pacman.render(renderer, this);
+        
+        if (gameState != GameState.ACTIVE)
+            renderStateMessage(renderer, gameState);
+    }
+    
+    /**
+     * Decodes a game state from integer to its enumeration representation
+     * @param codedState game state integer representation
+     * @return game state enumeration representation
+     */
+    private GameState decodeGameState(Integer codedState) {
+        switch (codedState) {
+            case 1:
+                return GameState.WIN;
+            case -1:
+                return GameState.OVER;
+            default:
+                return GameState.ACTIVE;
+        }
+    }
+    
+    /**
+     * Shows win or game over message
+     * @param renderer render tool
+     * @param gameState current game state
+     */
+    private void renderStateMessage(Graphics2D renderer, GameState gameState) {
+        renderer.setColor(Color.white);
+        renderer.fillRect(100, 100, 221, 220);
+        
+        String message;
+        if (gameState == GameState.WIN)
+            message = "YOU WIN!";
+        else 
+            message = "GAME OVER";
+        
+        renderer.setColor(Color.black);
+        renderer.drawString(message, 180, 150);
+        
+        renderer.drawString("Your score: " + String.valueOf(score), 170, 200);
+        
+        renderer.drawString("Press SPACE to play again", 140, 240);
     }
 }

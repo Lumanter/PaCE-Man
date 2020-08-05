@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import data.Constants;
 import data.GameDatabase;
+import data.GameState;
 import data.ObserverPackage;
 import data.Position;
 import java.util.ArrayList;
@@ -58,11 +59,15 @@ public class PlayerView extends JPanel implements ActionListener {
     // game score
     private Integer score;
     
+    // game state
+    private GameState gameState;
+    
     /**
      * Constructor initializes the needed variables and panel configurations
      */
     public PlayerView() {
-        startGameState();
+        restartGame();
+        loadLevel(3);
         setupDirectionKeyListener();
         configurePanel();
     }
@@ -70,21 +75,11 @@ public class PlayerView extends JPanel implements ActionListener {
     /**
      * Starts the variables that define the game state
      */
-    private void startGameState() {
-        GameDatabase database = GameDatabase.getInstance();
-        
-        this.levelNumber = 1;
-        this.pacman = new Pacman();
-        this.level = new Level(levelNumber);
-        this.pillManager = new PillManager();
-        this.fruitManager = new SpriteManager();
-        this.ghosts = new ArrayList<>();
-        
-        this.dotsManager = new SpriteManager();
-        this.dotsManager.setSprites(database.getDots(levelNumber));
-        
+    private void restartGame() {
         this.lifes = Constants.DEFAULT_LIFES;
         this.score = 0;
+        this.gameState = GameState.ACTIVE;
+        loadLevel(1); 
     }
  
     /**
@@ -96,27 +91,35 @@ public class PlayerView extends JPanel implements ActionListener {
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
                 
-                // update pacman desired direction on arrow key input
-                Integer key = e.getKeyCode();
-                Direction desiredDirection = null;
-                switch(key){
-                    case KeyEvent.VK_RIGHT:
-                        desiredDirection = Direction.RIGHT;
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        desiredDirection = Direction.LEFT;
-                        break;  
-                    case KeyEvent.VK_UP:
-                        desiredDirection = Direction.UP;
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        desiredDirection = Direction.DOWN;
-                }
                 
-                // set desired direction just if the direction is not the same as the current direction
-                Boolean desiredIsNotCurrentDirection = (desiredDirection != null && desiredDirection != pacman.getCurrentDirection());
-                if (desiredIsNotCurrentDirection)
-                    pacman.setNextDirection(desiredDirection);
+                Integer key = e.getKeyCode();
+                
+                if (gameState == GameState.ACTIVE) {
+                    // update pacman desired direction on arrow key input
+                    Direction desiredDirection = null;
+                    switch(key){
+                        case KeyEvent.VK_RIGHT:
+                            desiredDirection = Direction.RIGHT;
+                            break;
+                        case KeyEvent.VK_LEFT:
+                            desiredDirection = Direction.LEFT;
+                            break;  
+                        case KeyEvent.VK_UP:
+                            desiredDirection = Direction.UP;
+                            break;
+                        case KeyEvent.VK_DOWN:
+                            desiredDirection = Direction.DOWN;
+                    }
+                    // set desired direction just if the direction is not the same as the current direction
+                    Boolean desiredIsNotCurrentDirection = (desiredDirection != null && desiredDirection != pacman.getCurrentDirection());
+                    if (desiredIsNotCurrentDirection)
+                        pacman.setNextDirection(desiredDirection);
+                } else {
+                    
+                    // on win or game over state
+                    if (key == KeyEvent.VK_SPACE)
+                        restartGame(); 
+                }
             }
         });
     }
@@ -140,8 +143,12 @@ public class PlayerView extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics renderer) {
         super.paintComponent(renderer);
-        moveSprites();
-        checkCollisions();
+        
+        if (gameState == GameState.ACTIVE) {
+            moveSprites();
+            checkCollisions();
+        }
+            
         renderSprites(renderer);
     }
     
@@ -193,10 +200,10 @@ public class PlayerView extends JPanel implements ActionListener {
             
             Boolean levelFinished = dotsManager.getSprites().isEmpty();
             if (levelFinished) {
-                if (this.levelNumber == 3) 
-                    System.out.println("Win message!");
+                if (this.levelNumber == 3)
+                    gameState = GameState.WIN;
                 else
-                    toLevel(levelNumber + 1);
+                    loadLevel(levelNumber + 1);
             }
         }
         
@@ -213,10 +220,13 @@ public class PlayerView extends JPanel implements ActionListener {
                 } else {
                     // pacman life -1
                     --lifes;
-                    // game over
-                    if (lifes < 0)
-                        lifes = 0;
                     pacman.resetPosition();
+                    // game over
+                    if (lifes < 0) {
+                        lifes = 0;
+                        this.gameState = GameState.OVER;
+                    }
+                        
                 }
                 
             }
@@ -252,6 +262,9 @@ public class PlayerView extends JPanel implements ActionListener {
         renderer.drawString("Level " + String.valueOf(levelNumber), (int)(Constants.LEVEL_SIZE*0.15), 445);
         renderer.drawString("Lifes: " + String.valueOf(lifes), (int)(Constants.LEVEL_SIZE*0.4), 445);
         renderer.drawString("Score: " + String.valueOf(score), (int)(Constants.LEVEL_SIZE*0.65), 445);
+        
+        if (gameState != GameState.ACTIVE)
+            renderStateMessage(renderer, gameState);
         
         // update display and release renderer resources
         Toolkit.getDefaultToolkit().sync();
@@ -313,6 +326,11 @@ public class PlayerView extends JPanel implements ActionListener {
         
         data.lifes = this.lifes;
         
+        if (gameState == GameState.OVER)
+            data.gameState = -1;
+        if (gameState == GameState.WIN)
+            data.gameState = 1;
+        
         return data;
     }
     
@@ -330,11 +348,11 @@ public class PlayerView extends JPanel implements ActionListener {
      * 
      * @param level given level
      */
-    public void toLevel(Integer level) {
+    public void loadLevel(Integer level) {
         GameDatabase database = GameDatabase.getInstance();
         
         this.levelNumber = level;
-        this.pacman.resetPosition();
+        this.pacman = new Pacman();
         this.level = new Level(levelNumber);
         this.pillManager = new PillManager();
         this.fruitManager = new SpriteManager();
@@ -342,6 +360,29 @@ public class PlayerView extends JPanel implements ActionListener {
         
         this.dotsManager = new SpriteManager();
         this.dotsManager.setSprites(database.getDots(levelNumber));
+    }
+    
+    /**
+     * Shows win or game over message
+     * @param renderer render tool
+     * @param gameState current game state
+     */
+    private void renderStateMessage(Graphics2D renderer, GameState gameState) {
+        renderer.setColor(Color.white);
+        renderer.fillRect(100, 100, 221, 220);
+        
+        String message;
+        if (gameState == GameState.WIN)
+            message = "YOU WIN!";
+        else 
+            message = "GAME OVER";
+        
+        renderer.setColor(Color.black);
+        renderer.drawString(message, 180, 150);
+        
+        renderer.drawString("Your score: " + String.valueOf(score), 170, 200);
+        
+        renderer.drawString("Press SPACE to play again", 140, 240);
     }
     
     public Integer getLevelNumber() {

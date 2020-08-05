@@ -40,6 +40,8 @@ public class FakeObserverServer extends javax.swing.JFrame implements ActionList
         
         data.score = (int) score.getValue();
         
+        data.gameState = (int) gameState.getValue();
+        
         observerView.update(data);
     }
     
@@ -74,6 +76,8 @@ public class FakeObserverServer extends javax.swing.JFrame implements ActionList
         ghostColor = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
         score = new javax.swing.JSpinner();
+        jLabel9 = new javax.swing.JLabel();
+        gameState = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +116,10 @@ public class FakeObserverServer extends javax.swing.JFrame implements ActionList
         jLabel8.setText("Score");
 
         score.setModel(new javax.swing.SpinnerNumberModel(100, 0, null, 1));
+
+        jLabel9.setText("Game State");
+
+        gameState.setModel(new javax.swing.SpinnerNumberModel(0, -1, 1, 1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -159,9 +167,15 @@ public class FakeObserverServer extends javax.swing.JFrame implements ActionList
                                 .addComponent(pillActive)
                                 .addGap(0, 90, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(score, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(score, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(gameState)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -200,7 +214,11 @@ public class FakeObserverServer extends javax.swing.JFrame implements ActionList
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(score, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(gameState, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(110, Short.MAX_VALUE))
         );
 
         pack();
@@ -239,6 +257,7 @@ public class FakeObserverServer extends javax.swing.JFrame implements ActionList
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSpinner gameState;
     private javax.swing.JSpinner ghostColor;
     private javax.swing.JSpinner ghostX;
     private javax.swing.JSpinner ghostY;
@@ -250,6 +269,7 @@ public class FakeObserverServer extends javax.swing.JFrame implements ActionList
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JSpinner pacmanSprite;
     private javax.swing.JSpinner pacmanX;
     private javax.swing.JSpinner pacmanY;

@@ -36,4 +36,7 @@ public class ObserverPackage {
     
     // game lifes
     public Integer lifes = 3;
+    
+    // indicates the current game state
+    public Integer gameState = 0;
 }
