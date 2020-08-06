@@ -2,6 +2,7 @@ package data;
 
 import java.util.ArrayList;
 import sprites.Dot;
+import sprites.Fruit;
 import sprites.Ghost;
 import sprites.Pacman;
 import sprites.Pill;
@@ -39,4 +40,7 @@ public class ObserverPackage {
     
     // indicates the current game state
     public Integer gameState = 0;
+    
+    // game's fruits
+    public ArrayList<Fruit> fruits = new ArrayList<>();
 }

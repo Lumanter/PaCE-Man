@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import sprites.Dot;
+import sprites.Fruit;
 import sprites.Ghost;
 import sprites.Level;
 import sprites.Pacman;
@@ -44,6 +45,9 @@ public class ObserverView extends JPanel {
     // current game state
     private GameState gameState;
     
+    // game fruits
+    private ArrayList<Fruit> fruits;
+    
     /**
      * Constructor sets the default display data
      */
@@ -66,6 +70,7 @@ public class ObserverView extends JPanel {
      * @param updatedData data package
      */
     public void update(ObserverPackage updatedData) {
+        System.out.println("update");
         // update the display variables
         level = new Level(updatedData.level);
         pacman = updatedData.pacman;
@@ -83,6 +88,8 @@ public class ObserverView extends JPanel {
         lifes = updatedData.lifes;
         
         gameState = decodeGameState(updatedData.gameState);
+        
+        fruits = updatedData.fruits;
         
         this.repaint();
     }
@@ -106,6 +113,9 @@ public class ObserverView extends JPanel {
         // render pills
         for (Pill pill : pills)
             pill.render(renderer, null);
+        
+        for (Fruit fruit : fruits)
+            fruit.render(renderer, this);
         
         // render ghosts
         for (Ghost ghost: ghosts)

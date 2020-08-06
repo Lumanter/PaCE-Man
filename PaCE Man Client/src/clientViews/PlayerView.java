@@ -330,6 +330,11 @@ public class PlayerView extends JPanel implements ActionListener {
         if (gameState == GameState.WIN)
             data.gameState = 1;
         
+        for (int i = 0; i < fruitManager.getSprites().size(); i++) {
+            Fruit fruit = (Fruit) fruitManager.getSprites().get(i);
+            data.fruits.add(fruit);
+        }
+        
         return data;
     }
     

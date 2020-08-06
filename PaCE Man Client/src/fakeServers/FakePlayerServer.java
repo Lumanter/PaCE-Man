@@ -1,25 +1,44 @@
 package fakeServers;
 
+import clientViews.ObserverView;
 import clientViews.PlayerView;
 import commands.ChangeGhostsSpeedCommand;
 import commands.Command;
 import commands.CreateFruitCommand;
 import commands.CreateGhostCommand;
 import commands.CreatePillCommand;
+import data.Constants;
 import data.GhostColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
+import windows.ObserverWindow;
 
 /**
  *
  * @author luism
  */
-public class FakePlayerServer extends javax.swing.JFrame {
+public class FakePlayerServer extends javax.swing.JFrame implements ActionListener {
 
     private PlayerView playerView;
     
+    private ObserverView observerView;
+    
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        observerView.update(playerView.getObserverPackage());
+    }
     
     public FakePlayerServer(PlayerView playerView) {
         initComponents();
         this.playerView = playerView;
+        
+        ObserverWindow observerWindow = new ObserverWindow();
+        observerWindow.setVisible(true);
+
+        this.observerView = observerWindow.getView();
+        Timer timer = new Timer(Constants.FRAME_DELAY, this);
+        timer.start();
     }
     
     private Integer getSelectedGhostColor() {
@@ -260,4 +279,5 @@ public class FakePlayerServer extends javax.swing.JFrame {
     private javax.swing.JSpinner pillX;
     private javax.swing.JSpinner pillY;
     // End of variables declaration//GEN-END:variables
+
 }
