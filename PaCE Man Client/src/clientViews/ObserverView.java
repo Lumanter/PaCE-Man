@@ -39,8 +39,8 @@ public class ObserverView extends JPanel {
     // game dots
     private ArrayList<Dot> dots;
     
-    // game lifes
-    private Integer lifes;
+    // game lives
+    private Integer lives;
     
     // current game state
     private GameState gameState;
@@ -60,7 +60,7 @@ public class ObserverView extends JPanel {
         pills = defaultData.pills;
         score = defaultData.score;
         dots = defaultData.dots;
-        lifes = defaultData.lifes;
+        lives = defaultData.lives;
         gameState = decodeGameState(defaultData.gameState);
         this.setBackground(Color.black);
     }
@@ -85,7 +85,7 @@ public class ObserverView extends JPanel {
         
         dots = updatedData.dots;
         
-        lifes = updatedData.lifes;
+        lives = updatedData.lives;
         
         gameState = decodeGameState(updatedData.gameState);
         
@@ -126,8 +126,8 @@ public class ObserverView extends JPanel {
         // render level number
         renderer.drawString("Level " + String.valueOf(levelNumber), (int)(Constants.LEVEL_SIZE*0.15), 445);
         
-        // render lifes
-        renderer.drawString("Lifes: " + String.valueOf(lifes), (int)(Constants.LEVEL_SIZE*0.4), 445);
+        // render lives
+        renderer.drawString("Lives: " + String.valueOf(lives), (int)(Constants.LEVEL_SIZE*0.4), 445);
         
         // render score
         renderer.drawString("Score: " + String.valueOf(score), (int)(Constants.LEVEL_SIZE*0.65), 445);

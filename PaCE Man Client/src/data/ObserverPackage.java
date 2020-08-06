@@ -35,8 +35,8 @@ public class ObserverPackage {
     // game's dots
     public ArrayList<Dot> dots = new ArrayList<>();
     
-    // game lifes
-    public Integer lifes = 3;
+    // game lives
+    public Integer lives = 3;
     
     // indicates the current game state
     public Integer gameState = 0;

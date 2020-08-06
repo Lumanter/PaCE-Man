@@ -53,8 +53,8 @@ public class PlayerView extends JPanel implements ActionListener {
     // level dots manager
     private SpriteManager dotsManager;
     
-    // pacman lifes
-    private Integer lifes;
+    // pacman lives
+    private Integer lives;
     
     // game score
     private Integer score;
@@ -75,7 +75,7 @@ public class PlayerView extends JPanel implements ActionListener {
      * Starts the variables that define the game state
      */
     private void restartGame() {
-        this.lifes = Constants.DEFAULT_LIFES;
+        this.lives = Constants.DEFAULT_LIVES;
         this.score = 0;
         this.gameState = GameState.ACTIVE;
         loadLevel(1); 
@@ -217,18 +217,24 @@ public class PlayerView extends JPanel implements ActionListener {
                     ghosts.remove(i);
                     
                 } else {
-                    // pacman life -1
-                    --lifes;
+                    // pacman lives -1
+                    --lives;
                     pacman.resetPosition();
                     // game over
-                    if (lifes < 0) {
-                        lifes = 0;
+                    if (lives < 0) {
+                        lives = 0;
                         this.gameState = GameState.OVER;
                     }
                         
                 }
                 
             }
+        }
+        
+        // lives +1
+        if (score > 10000) {
+            score = score - 10000;
+            lives += 1;
         }
     }
     
@@ -259,7 +265,7 @@ public class PlayerView extends JPanel implements ActionListener {
         this.pacman.render(renderer, this);
         
         renderer.drawString("Level " + String.valueOf(levelNumber), (int)(Constants.LEVEL_SIZE*0.15), 445);
-        renderer.drawString("Lifes: " + String.valueOf(lifes), (int)(Constants.LEVEL_SIZE*0.4), 445);
+        renderer.drawString("Lives: " + String.valueOf(lives), (int)(Constants.LEVEL_SIZE*0.4), 445);
         renderer.drawString("Score: " + String.valueOf(score), (int)(Constants.LEVEL_SIZE*0.65), 445);
         
         if (gameState != GameState.ACTIVE)
@@ -323,7 +329,7 @@ public class PlayerView extends JPanel implements ActionListener {
             data.dots.add(dot);
         }
         
-        data.lifes = this.lifes;
+        data.lives = this.lives;
         
         if (gameState == GameState.OVER)
             data.gameState = -1;
