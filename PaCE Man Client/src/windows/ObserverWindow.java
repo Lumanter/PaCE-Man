@@ -9,6 +9,8 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class ObserverWindow extends JFrame {
     
+    private ObserverView view;
+    
     public ObserverWindow() {
         setupFrame();
     }
@@ -27,12 +29,14 @@ public class ObserverWindow extends JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
-        ObserverView view = new ObserverView();
+        this.view = new ObserverView();
         
-        FakeObserverServer fakeServer = new FakeObserverServer(view);
-        fakeServer.setVisible(true);
-
+        /**FakeObserverServer fakeServer = new FakeObserverServer(view);
+        fakeServer.setVisible(true);**/
         this.add(view);
     }
     
+    public ObserverView getView() {
+        return view;
+    }
 }
