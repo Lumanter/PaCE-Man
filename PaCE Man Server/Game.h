@@ -230,3 +230,7 @@ void update_game_state(Game *game, int newState);
  * @return  Game's state
  */
 int get_game_state(Game* game);
+
+void itoa(int n, char s[]);
+
+void reverse(char s[]);
