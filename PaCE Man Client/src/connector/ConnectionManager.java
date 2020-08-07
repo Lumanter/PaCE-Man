@@ -12,8 +12,8 @@ import mainProcess.ClientObserver;
 import mainProcess.ClientPlayer;
 
 /**
- *
- * @author Jon Gs
+ * Class that manages socket connection
+ * @author Jonathan Gonzalez
  */
 public class ConnectionManager implements Runnable{
     private Socket socket = null;
@@ -47,6 +47,11 @@ public class ConnectionManager implements Runnable{
         }
     }
     
+    
+    /**
+     * Starts the connection between the current thread and the server
+     * @throws IOException 
+     */
     public void startSocketConnection() throws IOException{
         
         try{
@@ -74,8 +79,10 @@ public class ConnectionManager implements Runnable{
 
                     try {
                         this.clientPlayer.outputBuffer = input.readLine();
-                        this.clientPlayer.processOutput();
-                        //System.out.println("Out now is \n" + this.clientPlayer.outputBuffer);
+                        if(!this.clientPlayer.outputBuffer.equals("")){
+                            this.clientPlayer.processOutput();
+                            System.out.println("Out now is \n" + this.clientPlayer.outputBuffer);
+                        }
                     } catch (IOException ex) {
                         Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -96,7 +103,7 @@ public class ConnectionManager implements Runnable{
                     try {
                         this.clientObserver.outputBuffer = input.readLine();
                         this.clientObserver.messageToObserverPackage();
-                        System.out.println("Out now is \n" + this.clientObserver.outputBuffer);
+                        //System.out.println("Out now is \n" + this.clientObserver.outputBuffer);
                     } catch (IOException ex) {
                         Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
                     }

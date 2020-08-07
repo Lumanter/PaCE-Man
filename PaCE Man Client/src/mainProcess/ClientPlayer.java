@@ -18,8 +18,8 @@ import sprites.Ghost;
 import sprites.Pacman;
 
 /**
- *
- * @author Jon Gs
+ * Main class that carries data between the view and socket
+ * @author Jonathan Gonzalez
  */
 public class ClientPlayer {
     public String inputBuffer = "";
@@ -88,6 +88,10 @@ public class ClientPlayer {
     }
     
     
+    /**
+     * Processes each command in the message for the view of the player
+     * @param messageReceived 
+     */
     private void processCommand(String[] messageReceived){
         
         if(messageReceived.length == 0){
