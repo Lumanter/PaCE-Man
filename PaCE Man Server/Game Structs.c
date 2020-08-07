@@ -282,3 +282,97 @@ F_Node delete_f_node(F_Node head,Fruit fruit){
     }
     return head;
 }
+
+// D O T S - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - - -
+
+/**
+ * Creates a Dot struct
+ * @param pos
+ * @return Dot struct
+ */
+Dot create_dot(Pair pos){
+    Dot d;
+    d.pos = pos;
+    return d;
+}
+
+/**
+ * Creates a D Note struct
+ * @return D Note struct
+ */
+D_Node create_d_node(){
+    D_Node node;
+    node = (D_Node)malloc(sizeof(struct Linked_List_Dot));
+    node->next = NULL;
+    return node;
+}
+
+/**
+ * Adds a D Node struct as the last element of the linked list of D Nodes passed
+ * @param head
+ * @param dot
+ * @return D Node linked list without a specific D Node
+ */
+D_Node add_d_node(D_Node head,Dot dot){
+    D_Node node, p;
+
+    node = create_d_node();
+    node->dot = dot;
+
+    if (head == NULL){
+        head = node;
+    }
+    else {
+        p = head;
+        while (p->next != NULL){
+            p = p->next;
+        }
+        p->next = node;
+    }
+    return head;
+}
+
+/**
+ * Deletes a given D Node of a given D Node linked list by searching the Dots in the D nodes
+ * @param head
+ * @param dot
+ * @return D Node linked list without a specific D Node
+ */
+D_Node delete_d_node(D_Node head,Dot dot){
+    // The list is empty
+    if (head->next == NULL){
+        return head;
+    }
+
+    // The node to delete is on the first node
+    int xc = head->dot.pos.x;
+    int yc = head->dot.pos.y;
+
+    if ((xc == dot.pos.x) && (yc == dot.pos.y)){
+        D_Node temp = create_d_node();
+        temp = head;
+
+        head = head->next;
+        free(temp);
+        return head;
+    }
+
+    // The node to delete is on the rest of the list
+    D_Node previous = head->next;
+    D_Node current = head->next;
+    while (current->next != NULL){
+        xc = current->dot.pos.x;
+        yc = current->dot.pos.y;
+
+        if ((xc == dot.pos.x) && (yc == dot.pos.y)){
+            previous->next = current->next;
+            free(current);
+            return head;
+        }
+        else {
+            previous = current;
+            current = current->next;
+        }
+    }
+    return head;
+}

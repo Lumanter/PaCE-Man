@@ -17,6 +17,7 @@ Game create_game(){
     game.pill_state = INIT_PILL_STATE;
     game.pills = NULL;
     game.fruits = NULL;
+    game.dots = NULL;
     game.ghosts[0] = create_ghost(1);
     game.ghosts[1] = create_ghost(2);
     game.ghosts[2] = create_ghost(3);
@@ -250,6 +251,24 @@ void get_game_fruits(Game *game,char *string){
         strcat(sub_str_1, sub_str_2);
         strcat(string, sub_str_1);
     }
+}
+
+/**
+ * Adds a Dot to the Game's linked list of dots
+ * @param game
+ * @param new_dot
+ */
+void add_dot_to_game(Game *game,Dot new_dots){
+    game->dots = add_d_node(game->dots,new_dots);
+}
+
+/**
+ * Deletes a given Dot from the Game's linked list of dots
+ * @param game
+ * @param dot
+ */
+void delete_dot_from_game(Game *game,Dot dot){
+    game->dots = delete_d_node(game->dots,dot);
 }
 
 /**

@@ -172,3 +172,45 @@ F_Node add_f_node(F_Node head,Fruit fruit);
  * @return F Node linked list without a specific F Node
  */
 F_Node delete_f_node(F_Node head,Fruit fruit);
+
+// D O T S - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - - -
+
+typedef struct Dot {
+    Pair pos;
+} Dot;
+
+/**
+ * Creates a Dot struct
+ * @param pos
+ * @return Dot struct
+ */
+Dot create_dot(Pair pos);
+
+struct Linked_List_Dot {
+    Dot dot;
+    struct Linked_List_Dot *next;
+};
+
+typedef struct Linked_List_Dot *D_Node;
+
+/**
+ * Creates a D Note struct
+ * @return D Note struct
+ */
+D_Node create_d_node();
+
+/**
+ * Adds a D Node struct as the last element of the linked list of D Nodes passed
+ * @param head
+ * @param dot
+ * @return D Node linked list without a specific D Node
+ */
+D_Node add_d_node(D_Node head,Dot dot);
+
+/**
+ * Deletes a given D Node of a given D Node linked list by searching the Dots in the D nodes
+ * @param head
+ * @param dot
+ * @return D Node linked list without a specific D Node
+ */
+D_Node delete_d_node(D_Node head,Dot dot);

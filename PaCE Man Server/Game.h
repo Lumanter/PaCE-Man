@@ -16,6 +16,7 @@ typedef struct Game {
     bool pill_state;
     P_Node pills;
     F_Node fruits;
+    D_Node dots;
     Pac_Man pac_man;
     Ghost ghosts[4];
     int gameState;
@@ -190,6 +191,29 @@ void delete_fruit_from_game(Game *game,Fruit fruit);
  * @param string
  */
 void get_game_fruits(Game *game,char *string);
+
+// Dot
+
+/**
+ * Adds a Dot to the Game's linked list of dots
+ * @param game
+ * @param new_dot
+ */
+void add_dot_to_game(Game *game,Dot new_dot);
+
+/**
+ * Deletes a given Dot from the Game's linked list of dots
+ * @param game
+ * @param dot
+ */
+void delete_dot_from_game(Game *game,Dot dot);
+
+/**
+ *
+ * @param game
+ * @param string
+ */
+void get_game_dots(Game *game,char *string);
 
 // Game state
 
