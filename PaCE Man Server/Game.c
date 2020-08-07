@@ -67,7 +67,7 @@ unsigned int get_game_lives(Game *game){
  * @param added_score
  */
 void update_game_score(Game *game,unsigned int added_score){
-    game->score += added_score;
+    game->score = added_score;
 }
 
 /**
@@ -199,9 +199,9 @@ void get_game_pills(Game *game,char *string){
         char sub_str_1[500];
         char sub_str_2[500];
 
-        itoa(x, sub_str_1, 10);
+        itoa(x, sub_str_1);
         strcat(sub_str_1, ",");
-        itoa(y, sub_str_2, 10);
+        itoa(y, sub_str_2);
         strcat(sub_str_2, ",");
         t = t->next;
 

@@ -30,6 +30,13 @@ void processPlayerRequest(){
     for(int i = 0; i < 26; i++){
         numberVault[i] = outputBufferPlayer[i];
     }
+
+    int currentCheckCount = 27;
+
+    while(outputBufferPlayer[currentCheckCount] != NULL){
+        currentCheckCount++;
+    }
+
     char* error;
     Game* game1 = &game;
 
@@ -89,6 +96,45 @@ void processPlayerRequest(){
 
         update_game_state(&game, (int)strtol(outputBufferPlayer[25], NULL, 10));
 
+        int counter = 26;
+
+        char* current = outputBufferPlayer[26];
+
+        game.fruits = NULL;
+
+        if(strcmp(outputBufferPlayer[counter+1],"pills") != 0) {
+            while (strcmp(current, "pills") != 0) {
+                int score = (int) strtol(outputBufferPlayer[counter + 1], NULL, 10);
+                int current_x = (int) strtol(outputBufferPlayer[counter + 2], NULL, 10);
+                int current_y = (int) strtol(outputBufferPlayer[counter + 3], NULL, 10);
+                Fruit fruit;
+                fruit.value = score;
+                fruit.pos.x = current_x;
+                fruit.pos.y = current_y;
+                add_fruit_to_game(&game, fruit);
+                counter += 3;
+                current = outputBufferPlayer[counter + 1];
+            }
+        }
+
+        game.pills = NULL;
+
+        if(outputBufferPlayer[counter+2] != NULL) {
+            if (strcmp(outputBufferPlayer[counter + 2], "\r\n") != 0) {
+                while (strcmp(outputBufferPlayer[counter + 2], "\r\n") != 0) {
+                    char *test = outputBufferPlayer[counter + 3];
+                    int current_x = (int) strtol(outputBufferPlayer[counter + 2], NULL, 10);
+                    int current_y = (int) strtol(outputBufferPlayer[counter + 3], NULL, 10);
+                    Pill pill;
+                    pill.pos.x = current_x;
+                    pill.pos.y = current_y;
+                    add_pill_to_game(&game, pill);
+                    counter += 3;
+                }
+            }
+        }
+
+
 
 
 
@@ -124,7 +170,6 @@ void startGame(Game* game){
     messageToClient[7] = '\n';
 
     strcpy(inputPlayerBuffer, messageToClient);
-
 
     pthread_mutex_unlock(&lock);
 
@@ -226,7 +271,7 @@ void *socketThread(void *arg){
             updateinfo.score = get_game_score(&game);
             updateinfo.gameState = get_game_state(&game);
 
-            convertUpdateInfoToMessage(&updateinfo, message);
+            convertUpdateInfoToMessage(&updateinfo, &game, message);
 
             message[strlen(message)] = '\n';
 

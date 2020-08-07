@@ -6,6 +6,7 @@
 #define PACE_MAN_SERVER_MESSAGEPARSER_H
 
 #include <string.h>
+#include "Game.h"
 
 
 typedef struct Node{
@@ -93,7 +94,7 @@ void addToList(LIST* list, void* value);
  * @param message
  * @return
  */
-int convertUpdateInfoToMessage(UPDATEINFO* updateinfo, char* message);
+int convertUpdateInfoToMessage(UPDATEINFO* updateinfo, Game* game, char* message);
 
 
 

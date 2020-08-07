@@ -136,7 +136,7 @@ int countCommas(char *text, int sizeText) {
  * @param message
  * @return
  */
-int convertUpdateInfoToMessage(UPDATEINFO* updateinfo, char* message){
+int convertUpdateInfoToMessage(UPDATEINFO* updateinfo, Game* game, char* message){
     strcpy(message, "update,");
 
 
@@ -170,6 +170,41 @@ int convertUpdateInfoToMessage(UPDATEINFO* updateinfo, char* message){
         strcat(message, ghost4_i);
         strcat(message, ",");
     }
+
+    int pillState = (int)get_pill_state(game);
+    char pillStateChar[1];
+    sprintf(pillStateChar, "%d", pillState);
+    strcat(message, pillStateChar);
+    strcat(message, ",");
+
+    int level = get_game_level(game);
+    char levelStr[1];
+    sprintf(levelStr, "%d", level);
+    strcat(message, levelStr);
+    strcat(message, ",");
+
+    int score = get_game_score(game);
+    char scoreStr[1];
+    sprintf(scoreStr, "%d", score);
+    strcat(message, scoreStr);
+    strcat(message, ",");
+
+    int gameState = get_game_state(game);
+    char gameStateStr[1];
+    sprintf(gameStateStr, "%d", gameState);
+    strcat(message, gameStateStr);
+    strcat(message, ",");
+
+    strcat(message, "fruits,");
+    //char fruits[500];
+    get_game_fruits(game, message);
+    //strcat(message, fruits);
+
+    strcat(message, "pills,");
+    //char pills[500];
+    get_game_pills(game, message);
+    //strcat(message, pills);
+
 
 
 
