@@ -14,7 +14,7 @@ import sprites.Ghost;
 import sprites.Pacman;
 
 /**
- *
+ * Main class that carries data between the view and socket
  * @author Jon Gs
  */
 public class ClientObserver {
@@ -32,6 +32,10 @@ public class ClientObserver {
         connectorThread.start();
     }
     
+    /**
+     * Converts whatever is in the outputBuffer to a ObserverPackage to be
+     * updated
+     */
     public void messageToObserverPackage(){
         String[] parsedMessage = outputBuffer.split(",");
         
