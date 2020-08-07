@@ -43,7 +43,7 @@ void admin(Game* game){
                 add_pill_to_game(game,create_pill(create_pair(x,y)));
 
                 // We inform the user
-                printf("> You chose to add a pill to the game\n\n");
+                printf("> You added a pill to the game\n\n");
                 break;
             }
             case '2': { // GHOST
@@ -54,7 +54,7 @@ void admin(Game* game){
                 printf("> * Press 1 for Pinky: \n");
                 printf("> * Press 2 for Inky: \n");
                 printf("> * Press 3 for Clyde: \n");
-                printf("> ");
+                printf(">");
 
                 // We get which ghost the user wants
                 int ghost;
@@ -62,18 +62,39 @@ void admin(Game* game){
 
                 // We check the value was correct
                 if ((ghost != 0) && (ghost != 1) && (ghost != 2) && (ghost != 3)) {
-                    printf("\n> We couldn't add the ghost\n");
+                    printf("> We couldn't add the ghost\n");
                     break;
                 }
 
                 // We activate a ghost in the game
                 game->ghosts[ghost].active = true;
-                printf("\n>You chose to add a ghost to the game\n\n");
+
+                // We inform the user
+                printf("> You added a ghost to the game\n\n");
                 break;
             }
-            case '3':
-                printf("> You chose to add a fruit to the game\n");
+            case '3': {
+                int val; // For storing the value
+                int x,y; // For storing the pos
+
+                printf("> You chose to add a fruit to the game. Now choose the value of the fruit and\n");
+                printf("> its position\n");
+
+                // We get the data
+                printf("> Value:");
+                scanf("%d", &val);
+                printf("> X:");
+                scanf("%d", &x);
+                printf("> Y:");
+                scanf("%d", &y);
+
+                // We add a fruit to the game
+                add_fruit_to_game(game,create_fruit(create_pair(x,y),val));
+
+                // We inform the user
+                printf("> You added a fruit to the game\n\n");
                 break;
+            }
             default:
                 //printf("> Input not recognized\n");
                 break;

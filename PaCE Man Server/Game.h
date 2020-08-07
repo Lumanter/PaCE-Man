@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Game Structs.h"
+#include "Constants.h"
 
 // G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
 
@@ -54,3 +55,7 @@ void set_game_ghosts_pos(Game *game,Pair* new_pos);
 // Pill
 void add_pill_to_game(Game *game,Pill new_pill);
 void delete_pill_from_game(Game *game,Pill pill);
+
+// Fruit
+void add_fruit_to_game(Game *game,Fruit new_fruit);
+void delete_fruit_from_game(Game *game,Fruit fruit);

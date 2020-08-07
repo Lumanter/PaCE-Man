@@ -10,7 +10,7 @@ import sprites.Ghost;
 public class CreateGhostCommand extends Command {
 
     // ghost of the color to create
-    Integer ghostColor;
+    private Integer ghostColor;
     
     /**
      * Constructor receives the color of the ghost to create

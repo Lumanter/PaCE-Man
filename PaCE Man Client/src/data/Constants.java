@@ -32,4 +32,16 @@ public class Constants {
     
     // duration in miliseconds of the pill time state
     public final static Integer PILL_TIME_DURATION = 5000;
+    
+    // points obtained from eating a dot
+    public final static Integer DOT_POINTS = 10;
+    
+    // points obtained from eating a ghost
+    public final static Integer GHOST_POINTS = 500;
+    
+    // points obtained from eating a pill
+    public final static Integer PILL_POINTS = 100;
+    
+    // default game lives
+    public final static Integer DEFAULT_LIVES = 3;
 }

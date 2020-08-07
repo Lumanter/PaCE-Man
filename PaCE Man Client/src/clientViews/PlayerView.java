@@ -1,5 +1,6 @@
 package clientViews;
 
+import commands.IncrementScoreCommand;
 import data.Direction;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -12,13 +13,18 @@ import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import data.Constants;
+import data.GameDatabase;
+import data.GameState;
 import data.ObserverPackage;
 import data.Position;
 import java.util.ArrayList;
+import sprites.Dot;
+import sprites.Fruit;
 import sprites.Level;
 import sprites.Pacman;
 import sprites.Ghost;
 import sprites.PillManager;
+import sprites.SpriteManager;
 
 /**
  * Panel that manages the player view 
@@ -33,7 +39,7 @@ public class PlayerView extends JPanel implements ActionListener {
     private Pacman pacman;
     
     // game ghosts
-    private final ArrayList<Ghost> ghosts = new ArrayList<>();
+    private ArrayList<Ghost> ghosts;
     
     // game level
     private Level level;
@@ -41,14 +47,26 @@ public class PlayerView extends JPanel implements ActionListener {
     // game pill manager
     private PillManager pillManager;
     
-    // indicates if pacman has being hit by a ghost
-    private Boolean pacmanHit;
-            
+    // game fruit manager
+    private SpriteManager fruitManager;
+        
+    // level dots manager
+    private SpriteManager dotsManager;
+    
+    // pacman lives
+    private Integer lives;
+    
+    // game score
+    private Integer score;
+    
+    // game state
+    private GameState gameState;
+    
     /**
      * Constructor initializes the needed variables and panel configurations
      */
     public PlayerView() {
-        startGameState();
+        restartGame();
         setupDirectionKeyListener();
         configurePanel();
     }
@@ -56,13 +74,11 @@ public class PlayerView extends JPanel implements ActionListener {
     /**
      * Starts the variables that define the game state
      */
-    private void startGameState() {
-        this.levelNumber = 1;
-        this.pacman = new Pacman();
-        this.level = new Level(levelNumber);
-        this.pillManager = new PillManager();
-        
-        this.pacmanHit = false;
+    private void restartGame() {
+        this.lives = Constants.DEFAULT_LIVES;
+        this.score = 0;
+        this.gameState = GameState.ACTIVE;
+        loadLevel(1); 
     }
  
     /**
@@ -74,27 +90,35 @@ public class PlayerView extends JPanel implements ActionListener {
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
                 
-                // update pacman desired direction on arrow key input
-                Integer key = e.getKeyCode();
-                Direction desiredDirection = null;
-                switch(key){
-                    case KeyEvent.VK_RIGHT:
-                        desiredDirection = Direction.RIGHT;
-                        break;
-                    case KeyEvent.VK_LEFT:
-                        desiredDirection = Direction.LEFT;
-                        break;  
-                    case KeyEvent.VK_UP:
-                        desiredDirection = Direction.UP;
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        desiredDirection = Direction.DOWN;
-                }
                 
-                // set desired direction just if the direction is not the same as the current direction
-                Boolean desiredIsNotCurrentDirection = (desiredDirection != null && desiredDirection != pacman.getCurrentDirection());
-                if (desiredIsNotCurrentDirection)
-                    pacman.setNextDirection(desiredDirection);
+                Integer key = e.getKeyCode();
+                
+                if (gameState == GameState.ACTIVE) {
+                    // update pacman desired direction on arrow key input
+                    Direction desiredDirection = null;
+                    switch(key){
+                        case KeyEvent.VK_RIGHT:
+                            desiredDirection = Direction.RIGHT;
+                            break;
+                        case KeyEvent.VK_LEFT:
+                            desiredDirection = Direction.LEFT;
+                            break;  
+                        case KeyEvent.VK_UP:
+                            desiredDirection = Direction.UP;
+                            break;
+                        case KeyEvent.VK_DOWN:
+                            desiredDirection = Direction.DOWN;
+                    }
+                    // set desired direction just if the direction is not the same as the current direction
+                    Boolean desiredIsNotCurrentDirection = (desiredDirection != null && desiredDirection != pacman.getCurrentDirection());
+                    if (desiredIsNotCurrentDirection)
+                        pacman.setNextDirection(desiredDirection);
+                } else {
+                    
+                    // on win or game over state
+                    if (key == KeyEvent.VK_SPACE)
+                        restartGame(); 
+                }
             }
         });
     }
@@ -118,8 +142,12 @@ public class PlayerView extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics renderer) {
         super.paintComponent(renderer);
-        moveSprites();
-        checkCollisions();
+        
+        if (gameState == GameState.ACTIVE) {
+            moveSprites();
+            checkCollisions();
+        }
+            
         renderSprites(renderer);
     }
     
@@ -143,6 +171,7 @@ public class PlayerView extends JPanel implements ActionListener {
         // check for pills eaten
         Boolean pillEaten = (pillManager.hasCollision(pacman) != null);
         if (pillEaten) {
+            (new IncrementScoreCommand(this, Constants.PILL_POINTS)).execute();
             Position eatenPillPosition = pillManager.hasCollision(pacman);
             pillManager.removePill(eatenPillPosition);
             pillManager.setPillActive(true);
@@ -150,20 +179,62 @@ public class PlayerView extends JPanel implements ActionListener {
                     ghost.setIsEdible(true);
         }
         
+        // check for fruits eaten
+        Boolean fruitEaten = (fruitManager.hasCollision(pacman) != null);
+        if (fruitEaten) {
+            Position eatenFruitPosition = fruitManager.hasCollision(pacman);
+            
+            Fruit fruit = (Fruit) fruitManager.getSprite(eatenFruitPosition);
+            score += fruit.getPoints();            
+            
+            fruitManager.removeSprite(eatenFruitPosition);
+        }
+        
+        // check for dots eaten
+        Boolean dotEaten = (dotsManager.hasCollision(pacman) != null);
+        if (dotEaten) {
+            (new IncrementScoreCommand(this, Constants.DOT_POINTS)).execute();
+            Position eatenDotPosition = dotsManager.hasCollision(pacman);
+            dotsManager.removeSprite(eatenDotPosition);
+            
+            Boolean levelFinished = dotsManager.getSprites().isEmpty();
+            if (levelFinished) {
+                if (this.levelNumber == 3)
+                    gameState = GameState.WIN;
+                else
+                    loadLevel(levelNumber + 1);
+            }
+        }
+        
         // ghosts collisions
         for (int i = 0; i < ghosts.size(); i++) {
-            Ghost ghost = ghosts.get(i);    
+            Ghost ghost = ghosts.get(i);  
             if (ghost.collides(pacman)) {
+                
                 if (ghost.isIsEdible()) {
                     // ghost eaten
+                    (new IncrementScoreCommand(this, Constants.GHOST_POINTS)).execute();
                     ghosts.remove(i);
-                } else {
-                   // pacman life -1
-                    pacman.resetPosition(); 
-                    pacmanHit = true;
-                }
                     
+                } else {
+                    // pacman lives -1
+                    --lives;
+                    pacman.resetPosition();
+                    // game over
+                    if (lives < 0) {
+                        lives = 0;
+                        this.gameState = GameState.OVER;
+                    }
+                        
+                }
+                
             }
+        }
+        
+        // lives +1
+        if (score > 10000) {
+            score = score - 10000;
+            lives += 1;
         }
     }
     
@@ -177,8 +248,14 @@ public class PlayerView extends JPanel implements ActionListener {
         // render level background
         this.level.render(renderer); 
         
+        // render dots
+        this.dotsManager.render(renderer);
+        
         // render power pills
         this.pillManager.render(renderer);
+        
+        // render fruits
+        this.fruitManager.render(renderer);
         
         // render ghosts
         for(Ghost ghost: ghosts) 
@@ -186,7 +263,14 @@ public class PlayerView extends JPanel implements ActionListener {
         
         // render pacman
         this.pacman.render(renderer, this);
-                    
+        
+        renderer.drawString("Level " + String.valueOf(levelNumber), (int)(Constants.LEVEL_SIZE*0.15), 445);
+        renderer.drawString("Lives: " + String.valueOf(lives), (int)(Constants.LEVEL_SIZE*0.4), 445);
+        renderer.drawString("Score: " + String.valueOf(score), (int)(Constants.LEVEL_SIZE*0.65), 445);
+        
+        if (gameState != GameState.ACTIVE)
+            renderStateMessage(renderer, gameState);
+        
         // update display and release renderer resources
         Toolkit.getDefaultToolkit().sync();
     }
@@ -224,26 +308,91 @@ public class PlayerView extends JPanel implements ActionListener {
      */
     public ObserverPackage getObserverPackage() {
         ObserverPackage data = new ObserverPackage();
-        data.pacman = this.pacman;
-        data.ghosts = this.ghosts;
-        data.pills = this.pillManager.getPills();
+        
+        data.level = this.levelNumber;
         
         // if there're ghosts, a pill is active 
         // if the first is in edible mode, then all are
         if (!ghosts.isEmpty())
             data.pillActive = ghosts.get(0).isIsEdible();
         
+        data.pacman = this.pacman;
+        
+        data.ghosts = this.ghosts;
+        
+        data.pills = this.pillManager.getPills();
+        
+        data.score = this.score;
+        
+        for (int i = 0; i < dotsManager.getSprites().size(); i++) {
+            Dot dot = (Dot) dotsManager.getSprites().get(i);
+            data.dots.add(dot);
+        }
+        
+        data.lives = this.lives;
+        
+        if (gameState == GameState.OVER)
+            data.gameState = -1;
+        if (gameState == GameState.WIN)
+            data.gameState = 1;
+        
+        for (int i = 0; i < fruitManager.getSprites().size(); i++) {
+            Fruit fruit = (Fruit) fruitManager.getSprites().get(i);
+            data.fruits.add(fruit);
+        }
+        
         return data;
+    }
+    
+    /**
+     * Increment the game score by a given increment
+     * 
+     * @param increment given increment
+     */
+    public void incrementScore(Integer increment) {
+       this.score += increment; 
     }
 
     /**
-     * Indicates if pacman has being hit 
-     * @return if pacman has being hit 
+     * Loads the game to a given level
+     * 
+     * @param level given level
      */
-    public Boolean isPacmanHit() {
-        Boolean isPacmanHit = pacmanHit;
-        pacmanHit = false;
-        return isPacmanHit;
+    public void loadLevel(Integer level) {
+        GameDatabase database = GameDatabase.getInstance();
+        
+        this.levelNumber = level;
+        this.pacman = new Pacman();
+        this.level = new Level(levelNumber);
+        this.pillManager = new PillManager();
+        this.fruitManager = new SpriteManager();
+        this.ghosts = new ArrayList<>();
+        
+        this.dotsManager = new SpriteManager();
+        this.dotsManager.setSprites(database.getDots(levelNumber));
+    }
+    
+    /**
+     * Shows win or game over message
+     * @param renderer render tool
+     * @param gameState current game state
+     */
+    private void renderStateMessage(Graphics2D renderer, GameState gameState) {
+        renderer.setColor(Color.white);
+        renderer.fillRect(100, 100, 221, 220);
+        
+        String message;
+        if (gameState == GameState.WIN)
+            message = "YOU WIN!";
+        else 
+            message = "GAME OVER";
+        
+        renderer.setColor(Color.black);
+        renderer.drawString(message, 180, 150);
+        
+        renderer.drawString("Your score: " + String.valueOf(score), 170, 200);
+        
+        renderer.drawString("Press SPACE to play again", 140, 240);
     }
     
     public Integer getLevelNumber() {
@@ -265,4 +414,9 @@ public class PlayerView extends JPanel implements ActionListener {
     public PillManager getPillManager() {
         return pillManager;
     }
+
+    public SpriteManager getFruitManager() {
+        return fruitManager;
+    }
+    
 }

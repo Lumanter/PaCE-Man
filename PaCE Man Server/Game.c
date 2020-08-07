@@ -6,11 +6,11 @@
 
 Game create_game(){
     Game game;
-    game.level = 1;
-    game.lives = 3;
-    game.score = 0;
+    game.level = INIT_LEVEL;
+    game.lives = INIT_LIVES;
+    game.score = INIT_SCORE;
     game.pac_man = create_pac_man();
-    game.pill_state = false;
+    game.pill_state = INIT_PILL_STATE;
     game.pills = NULL;
     game.fruits = NULL;
     game.ghosts[0] = create_ghost(1);
@@ -92,4 +92,11 @@ void add_pill_to_game(Game *game, Pill new_pill){
 
 void delete_pill_from_game(Game *game,Pill pill){
     game->pills = delete_p_node(game->pills,pill);
+}
+
+void add_fruit_to_game(Game *game,Fruit new_fruit){
+    game->fruits = add_f_node(game->fruits,new_fruit);
+}
+void delete_fruit_from_game(Game *game,Fruit fruit){
+    game->fruits = delete_f_node(game->fruits,fruit);
 }
