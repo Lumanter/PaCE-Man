@@ -94,6 +94,26 @@ void delete_pill_from_game(Game *game,Pill pill){
     game->pills = delete_p_node(game->pills,pill);
 }
 
+void get_game_pills(Game *game,char *string){
+    P_Node t = game->pills;
+    while (t != NULL){
+        int x = t->pill.pos.x;
+        int y = t->pill.pos.y;
+
+        char sub_str_1[500];
+        char sub_str_2[500];
+
+        itoa(x, sub_str_1, 10);
+        strcat(sub_str_1, ",");
+        itoa(y, sub_str_2, 10);
+        strcat(sub_str_2, ",");
+        t = t->next;
+
+        strcat(sub_str_1, sub_str_2);
+        strcat(string, sub_str_1);
+    }
+}
+
 void add_fruit_to_game(Game *game,Fruit new_fruit){
     game->fruits = add_f_node(game->fruits,new_fruit);
 }

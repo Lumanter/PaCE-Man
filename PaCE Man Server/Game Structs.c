@@ -94,14 +94,14 @@ P_Node delete_p_node(P_Node head,Pill pill){
     }
 
     // The node to delete is on the first node
-    int xc = head->next->pill.pos.x;
-    int yc = head->next->pill.pos.y;
+    int xc = head->pill.pos.x;
+    int yc = head->pill.pos.y;
 
     if ((xc == pill.pos.x) && (yc == pill.pos.y)){
         P_Node temp = create_p_node();
-        temp = head->next;
+        temp = head;
 
-        head->next = head->next->next;
+        head = head->next;
         free(temp);
         return head;
     }
@@ -168,14 +168,14 @@ F_Node delete_f_node(F_Node head,Fruit fruit){
     }
 
     // The node to delete is on the first node
-    int xc = head->next->fruit.pos.x;
-    int yc = head->next->fruit.pos.y;
+    int xc = head->fruit.pos.x;
+    int yc = head->fruit.pos.y;
 
     if ((xc == fruit.pos.x) && (yc == fruit.pos.y)){
         F_Node temp = create_f_node();
-        temp = head->next;
+        temp = head;
 
-        head->next = head->next->next;
+        head = head->next;
         free(temp);
         return head;
     }
