@@ -4,14 +4,23 @@
 
 #include "Admin.h"
 
-void admin(Game* game){
+void admin(void* args){
+
+    ADMININFO* admininfo = (ADMININFO*) args;
+    Game* game = admininfo->game;
+    pthread_mutex_t* lock = admininfo->lock;
+    char* inputBuffer = admininfo->inputBuffer;
+    int* inputBufferSize = admininfo->inputBufferSize;
+
+
     // Intro
     printf("\n- - - - - Welcome to the PaCE-Man admin menu - - - - -\n");
     printf("Here you can make a series of actions to affect the game:\n");
     printf("* Press 0 exit\n");
     printf("* Press 1 to add a pill\n");
     printf("* Press 2 to add a ghost\n");
-    printf("* Press 3 to add a fruit\n\n");
+    printf("* Press 3 to add a fruit\n");
+    printf("* Press 4 to change to speed of the game\n\n");
 
     bool exit = false; // For exiting the loop
 
@@ -40,7 +49,13 @@ void admin(Game* game){
                 scanf("%d",&y);
 
                 // We add a pill to the game
+
+                pthread_mutex_lock(lock);
+                char command[15];
+                sprintf(command, "events,createPill,%i,%i", x, y);
+                strcat(inputBuffer, command);
                 add_pill_to_game(game,create_pill(create_pair(x,y)));
+                pthread_mutex_unlock(lock);
 
                 // We inform the user
                 printf("> You added a pill to the game\n\n");
@@ -66,6 +81,12 @@ void admin(Game* game){
                     break;
                 }
 
+                pthread_mutex_lock(lock);
+                char commandM[15];
+                sprintf(commandM, "events,createGhost,%i", ghost);
+                strcat(inputBuffer, commandM);
+                pthread_mutex_unlock(lock);
+
                 // We activate a ghost in the game
                 game->ghosts[ghost].active = true;
 
@@ -89,15 +110,41 @@ void admin(Game* game){
                 scanf("%d", &y);
 
                 // We add a fruit to the game
+                pthread_mutex_lock(lock);
+                char commandM[15];
+                sprintf(commandM, "events,createPill,%i,%i", x, y);
+                strcat(inputBuffer, commandM);
                 add_fruit_to_game(game,create_fruit(create_pair(x,y),val));
+                pthread_mutex_unlock(lock);
 
                 // We inform the user
                 printf("> You added a fruit to the game\n\n");
+                break;
+            }
+            case '4':{
+                int val; // For storing the value
+
+                printf("> You chose game speed, enter the new game speed\n");
+
+                // We get the data
+                printf("> Value:");
+                scanf("%d", &val);
+                pthread_mutex_lock(lock);
+                char commandM[15];
+                sprintf(commandM, "events,changeSpeed,%i", val);
+                strcat(inputBuffer, commandM);
+                pthread_mutex_unlock(lock);
+
+
+                printf("> You changed the speed of the game\n\n");
                 break;
             }
             default:
                 //printf("> Input not recognized\n");
                 break;
         }
+
+        admin(args);
+
     } while (exit == false);
 }
