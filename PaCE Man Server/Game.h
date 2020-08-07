@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Game Structs.h"
+#include "Constants.h"
 
 // G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
 
@@ -17,6 +18,7 @@ typedef struct Game {
     F_Node fruits;
     Pac_Man pac_man;
     Ghost ghosts[4];
+    int gameState;
 } Game;
 
 Game create_game();
@@ -55,6 +57,20 @@ void set_game_ghosts_pos(Game *game,Pair* new_pos);
 void add_pill_to_game(Game *game,Pill new_pill);
 void delete_pill_from_game(Game *game,Pill pill);
 
+void get_game_pills(Game* game,char *string);
+
 // Fruit
 void add_fruit_to_game(Game *game,Fruit new_fruit);
 void delete_fruit_from_game(Game *game,Fruit fruit);
+
+void get_game_fruits(Game *game,char *string);
+
+// Game state
+
+void update_game_state(Game *game, int newState);
+
+int get_game_state(Game* game);
+
+void itoa(int n, char s[]);
+
+void reverse(char s[]);

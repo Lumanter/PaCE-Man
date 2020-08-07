@@ -6,11 +6,11 @@
 
 Game create_game(){
     Game game;
-    game.level = 1;
-    game.lives = 3;
-    game.score = 0;
+    game.level = INIT_LEVEL;
+    game.lives = INIT_LIVES;
+    game.score = INIT_SCORE;
     game.pac_man = create_pac_man();
-    game.pill_state = false;
+    game.pill_state = INIT_PILL_STATE;
     game.pills = NULL;
     game.fruits = NULL;
     game.ghosts[0] = create_ghost(1);
@@ -94,9 +94,84 @@ void delete_pill_from_game(Game *game,Pill pill){
     game->pills = delete_p_node(game->pills,pill);
 }
 
+void get_game_pills(Game *game,char *string){
+    P_Node t = game->pills;
+    while (t != NULL){
+        int x = t->pill.pos.x;
+        int y = t->pill.pos.y;
+
+        char sub_str_1[500];
+        char sub_str_2[500];
+
+        itoa(x, sub_str_1, 10);
+        strcat(sub_str_1, ",");
+        itoa(y, sub_str_2, 10);
+        strcat(sub_str_2, ",");
+        t = t->next;
+
+        strcat(sub_str_1, sub_str_2);
+        strcat(string, sub_str_1);
+    }
+}
+
 void add_fruit_to_game(Game *game,Fruit new_fruit){
     game->fruits = add_f_node(game->fruits,new_fruit);
 }
 void delete_fruit_from_game(Game *game,Fruit fruit){
-    game->pills = delete_f_node(game->fruits,fruit);
+    game->fruits = delete_f_node(game->fruits,fruit);
+}
+
+void update_game_state(Game *game, int newState) {
+    game->gameState = newState;
+}
+
+int get_game_state(Game *game) {
+    return game->gameState;
+}
+
+
+void get_game_fruits(Game *game,char *string){
+    F_Node t = game->fruits;
+    while (t != NULL){
+        int x = t->fruit.pos.x;
+        int y = t->fruit.pos.y;
+
+        char sub_str_1[500];
+        char sub_str_2[500];
+
+        itoa(x, sub_str_1);
+        strcat(sub_str_1, ",");
+        itoa(y, sub_str_2);
+        strcat(sub_str_2, ",");
+        t = t->next;
+
+        strcat(sub_str_1, sub_str_2);
+        strcat(string, sub_str_1);
+    }
+}
+
+void itoa(int n, char *s) {
+    int i, sign;
+
+    if ((sign = n) < 0)  /* record sign */
+        n = -n;          /* make n positive */
+    i = 0;
+    do {       /* generate digits in reverse order */
+        s[i++] = n % 10 + '0';   /* get next digit */
+    } while ((n /= 10) > 0);     /* delete it */
+    if (sign < 0)
+        s[i++] = '-';
+    s[i] = '\0';
+    reverse(s);
+}
+
+void reverse(char *s) {
+    int i, j;
+    char c;
+
+    for (i = 0, j = strlen(s)-1; i<j; i++, j--) {
+        c = s[i];
+        s[i] = s[j];
+        s[j] = c;
+    }
 }

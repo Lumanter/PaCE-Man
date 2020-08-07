@@ -3,7 +3,8 @@
 //
 
 #include "Game.h"
+#include "Server.h"
 
 #pragma once
 
-void admin(Game* game);
+void admin(void* args);

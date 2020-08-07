@@ -44,4 +44,10 @@ public class Constants {
     
     // default game lives
     public final static Integer DEFAULT_LIVES = 3;
+    
+    //server address in the network
+    public final static String SERVERADDRESS = "192.168.31.188";
+    
+    //server port in the network
+    public final static Integer SERVERPORT = 7799;
 }

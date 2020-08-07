@@ -17,8 +17,8 @@ Pair create_pair(int x,int y){
 
 Pac_Man create_pac_man(){
     Pac_Man p_m;
-    p_m.pos = create_pair(200,300); // Starting pos
-    p_m.sprite = 0; // Staring sprite
+    p_m.pos = create_pair(INIT_PAC_POS_X,INIT_PAC_POS_Y);
+    p_m.sprite = INIT_PAC_SPRITE;
     return p_m;
 }
 
@@ -35,8 +35,8 @@ void modify_pac_man_position(Pac_Man* p_m_ptr,Pair new_pos){
 
 Ghost create_ghost(int color) {
     Ghost g;
-    g.pos = create_pair(-1,-1); // Starting pos
-    g.active = false;
+    g.pos = create_pair(INIT_GHOST_POS_X,INIT_GHOST_POS_Y); // Starting pos
+    g.active = INIT_GHOST_STATE;
     g.color = color;
     return g;
 }
@@ -94,14 +94,14 @@ P_Node delete_p_node(P_Node head,Pill pill){
     }
 
     // The node to delete is on the first node
-    int xc = head->next->pill.pos.x;
-    int yc = head->next->pill.pos.y;
+    int xc = head->pill.pos.x;
+    int yc = head->pill.pos.y;
 
     if ((xc == pill.pos.x) && (yc == pill.pos.y)){
         P_Node temp = create_p_node();
-        temp = head->next;
+        temp = head;
 
-        head->next = head->next->next;
+        head = head->next;
         free(temp);
         return head;
     }
@@ -168,14 +168,14 @@ F_Node delete_f_node(F_Node head,Fruit fruit){
     }
 
     // The node to delete is on the first node
-    int xc = head->next->fruit.pos.x;
-    int yc = head->next->fruit.pos.y;
+    int xc = head->fruit.pos.x;
+    int yc = head->fruit.pos.y;
 
     if ((xc == fruit.pos.x) && (yc == fruit.pos.y)){
         F_Node temp = create_f_node();
-        temp = head->next;
+        temp = head;
 
-        head->next = head->next->next;
+        head = head->next;
         free(temp);
         return head;
     }
