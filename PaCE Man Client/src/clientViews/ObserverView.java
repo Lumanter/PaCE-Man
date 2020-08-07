@@ -16,6 +16,10 @@ import sprites.Pacman;
 import sprites.Pill;
 
 
+/**
+ * Observer mode view. Handles the display updates
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
+ */
 public class ObserverView extends JPanel {
     
     // game level number
@@ -61,6 +65,7 @@ public class ObserverView extends JPanel {
         score = defaultData.score;
         dots = defaultData.dots;
         lives = defaultData.lives;
+        fruits = defaultData.fruits;
         gameState = decodeGameState(defaultData.gameState);
         this.setBackground(Color.black);
     }
@@ -70,7 +75,6 @@ public class ObserverView extends JPanel {
      * @param updatedData data package
      */
     public void update(ObserverPackage updatedData) {
-        System.out.println("update");
         // update the display variables
         level = new Level(updatedData.level);
         pacman = updatedData.pacman;
@@ -80,7 +84,7 @@ public class ObserverView extends JPanel {
         if (updatedData.pillActive)
             for (Ghost ghost: ghosts)
                 ghost.setIsEdible(true);
-        
+   
         score = updatedData.score;
         
         dots = updatedData.dots;
@@ -114,7 +118,7 @@ public class ObserverView extends JPanel {
         for (Pill pill : pills)
             pill.render(renderer, null);
         
-        for (Fruit fruit : fruits)
+        for (Fruit fruit : fruits) 
             fruit.render(renderer, this);
         
         // render ghosts
@@ -161,7 +165,7 @@ public class ObserverView extends JPanel {
      * @param gameState current game state
      */
     private void renderStateMessage(Graphics2D renderer, GameState gameState) {
-        renderer.setColor(Color.white);
+        renderer.setColor(Color.yellow);
         renderer.fillRect(100, 100, 221, 220);
         
         String message;

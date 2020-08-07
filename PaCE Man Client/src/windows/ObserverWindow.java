@@ -1,28 +1,25 @@
 package windows;
 
 import clientViews.ObserverView;
-import fakeServers.FakeObserverServer;
 import data.Constants;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
+/**
+ * Window of the observer mode
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
+ */
 public class ObserverWindow extends JFrame {
     
+    // observer view
     private ObserverView view;
     
-    public ObserverWindow() {
-        setupFrame();
-    }
-    
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            JFrame ex = new ObserverWindow();
-            ex.setVisible(true);
-        });
-    }
-    
-    private void setupFrame() {
+    /**
+     * Constructor passes the server ip to connect
+     * @param serverIp server ip address
+     */
+    public ObserverWindow(String serverIp) {
         this.setTitle("PaCE Man Observer");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(Constants.LEVEL_SIZE, 500);
@@ -34,6 +31,13 @@ public class ObserverWindow extends JFrame {
         /**FakeObserverServer fakeServer = new FakeObserverServer(view);
         fakeServer.setVisible(true);**/
         this.add(view);
+    }
+    
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            JFrame ex = new ObserverWindow("");
+            ex.setVisible(true);
+        });
     }
     
     public ObserverView getView() {

@@ -2,19 +2,45 @@ package windows;
 
 import data.Constants;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
+/**
+ * Main menu of the game to choose between player and observer mode
+ * @author Luis Mariano Ramírez Segura - github/Lumanter
+ */
 public class Menu extends javax.swing.JFrame {
 
+    /**
+     * Constructor initializes the window components
+     */
     public Menu() {
         initComponents();
-        
         setupFrame();
     }
     
+    /**
+     * Sets up the window size and background color
+     */
     private void setupFrame() {
         this.setLocationRelativeTo(null);
         this.setSize(Constants.LEVEL_SIZE, 500);
         this.getContentPane().setBackground(Color.black);
+    }
+    
+    /**
+     * Shows a failed server connection popup
+     */
+    private void showFailedConnectionMessage() {
+        JOptionPane.showMessageDialog(null, "Server not found");
+    }
+    
+    /**
+     * Indicates if a server is available to connect the client
+     * @param serverIp server ip address
+     * @return if the server is available
+     */
+    public Boolean serverConnected(String serverIp) {
+        return true;
     }
 
     /**
@@ -99,14 +125,44 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Action method of the player mode option
+     * @param evt widget action event
+     */
     private void playerModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playerModeButtonActionPerformed
-        (new PlayerWindow()).setVisible(true);
-        this.setVisible(false);
+        String serverIp = serverIpInput.getText();
+        if (!serverIp.isEmpty()) {
+            
+            if (serverConnected(serverIp)) {
+               (new PlayerWindow(serverIp)).setVisible(true);
+                this.setVisible(false); 
+            } else {
+                showFailedConnectionMessage();
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter a server ip");
+        }
     }//GEN-LAST:event_playerModeButtonActionPerformed
 
+    /**
+     * Action method of the observer mode option
+     * @param evt widget action event
+     */
     private void observerModeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_observerModeButtonActionPerformed
-        (new ObserverWindow()).setVisible(true);
-        this.setVisible(false);
+        String serverIp = serverIpInput.getText();
+        if (!serverIp.isEmpty()) {
+            
+            if (serverConnected(serverIp)) {
+                (new ObserverWindow(serverIp)).setVisible(true);
+                this.setVisible(false);
+            } else {
+                showFailedConnectionMessage();
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Please enter a server ip");
+        }
     }//GEN-LAST:event_observerModeButtonActionPerformed
 
     public static void main(String args[]) {
