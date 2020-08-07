@@ -18,6 +18,7 @@ typedef struct Game {
     F_Node fruits;
     Pac_Man pac_man;
     Ghost ghosts[4];
+    int gameState;
 } Game;
 
 Game create_game();
@@ -59,3 +60,8 @@ void delete_pill_from_game(Game *game,Pill pill);
 // Fruit
 void add_fruit_to_game(Game *game,Fruit new_fruit);
 void delete_fruit_from_game(Game *game,Fruit fruit);
+
+
+void update_game_state(Game *game, int newState);
+
+int get_game_state(Game* game);

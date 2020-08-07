@@ -100,3 +100,11 @@ void add_fruit_to_game(Game *game,Fruit new_fruit){
 void delete_fruit_from_game(Game *game,Fruit fruit){
     game->fruits = delete_f_node(game->fruits,fruit);
 }
+
+void update_game_state(Game *game, int newState) {
+    game->gameState = newState;
+}
+
+int get_game_state(Game *game) {
+    return game->gameState;
+}
