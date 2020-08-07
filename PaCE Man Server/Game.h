@@ -70,3 +70,7 @@ void get_game_fruits(Game *game,char *string);
 void update_game_state(Game *game, int newState);
 
 int get_game_state(Game* game);
+
+void itoa(int n, char s[]);
+
+void reverse(char s[]);
