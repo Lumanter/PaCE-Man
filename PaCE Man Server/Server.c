@@ -131,6 +131,11 @@ void startGame(Game* game){
     free(str);
 }
 
+/**
+ * Initiates a thread for a given socket connection
+ * @param arg: socket connection
+ *
+ */
 void *socketThread(void *arg){
     Game* gamePtr = &game;
 
@@ -235,6 +240,10 @@ void *socketThread(void *arg){
     }
 }
 
+/**
+ * Starts the main server in listening mode
+ * @return Error codes if any
+ */
 int startMainServer() {
 
     int serverSocket;
@@ -305,6 +314,10 @@ void processRequest(char *message, Game *game) {
     return;
 }
 
+/**
+ * Starts the administrator thread
+ * @param args
+ */
 void startAdmin(void* args){
     admin((ADMININFO*) args);
 }

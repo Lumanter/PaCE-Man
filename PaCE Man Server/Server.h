@@ -44,6 +44,10 @@ void processRequest(char* message, Game* game);
  */
 int startMainServer();
 
+/**
+ * Starts the administrator thread
+ * @param args
+ */
 void startAdmin(void* args);
 
 #endif //PACE_MAN_SERVER_H

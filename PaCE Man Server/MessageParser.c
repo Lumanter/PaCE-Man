@@ -7,9 +7,12 @@
 #include <stdlib.h>
 #include "MessageParser.h"
 
-/*Size = 2c+1
- * c = (size-1)/2
- * */
+/**
+ * parses a message
+ * @param message
+ * @param delimiter
+ * @param resultPtr
+ */
 void parseMessage(char* message, char delimiter[], char** resultPtr){
 
     char* token = strtok(message, delimiter);
@@ -25,22 +28,24 @@ void parseMessage(char* message, char delimiter[], char** resultPtr){
     }
 }
 
+/**
+ * copies a parse message for the buffer
+ * @param message
+ * @param sizeOfMessage
+ * @param buffer
+ */
 void copyParseMessageToBuffer(char **message, int sizeOfMessage, char **buffer) {
     for(int i = 0; i < sizeOfMessage; i++){
         buffer[i] = message[i];
     }
 }
 
-void convertToInfo(UPDATEINFO *updateinfo, char *message) {
-    int size = strlen(message);
-    int amountCommas = countCommas(message, size);
-    char* parsedMessage[amountCommas + 1];
-
-    parseMessage(message, ",", parsedMessage);
-
-    convertMessageToUpdateInfo(parsedMessage, amountCommas+1, updateinfo);
-}
-
+/**
+ * Convert a message to an updateInfo struct
+ * @param parsedMessage
+ * @param size
+ * @param updateinfo
+ */
 void convertMessageToUpdateInfo(char** parsedMessage, int size, UPDATEINFO* updateinfo){
 
     for(int i = 0; i < 4; i++){
@@ -59,6 +64,11 @@ void convertMessageToUpdateInfo(char** parsedMessage, int size, UPDATEINFO* upda
 
 }
 
+/**
+ * Adds element to a list
+ * @param list
+ * @param value
+ */
 void addToList(LIST* list, void* value){
     if(list->length == 0) {
         NODE node;
@@ -77,6 +87,13 @@ void addToList(LIST* list, void* value){
     }
 }
 
+/**
+ * Convert events in request
+ * @param updateinfo
+ * @param restOfMessage
+ * @param currentIndex
+ * @param size
+ */
 void convertEventInMessage(UPDATEINFO* updateinfo, char** restOfMessage, int currentIndex, int size){
 
     if(currentIndex >= size){
@@ -96,6 +113,12 @@ void convertEventInMessage(UPDATEINFO* updateinfo, char** restOfMessage, int cur
     }
 }
 
+/**
+ * Counts the amount of commas in a string
+ * @param text
+ * @param size
+ * @return amount of commas
+ */
 int countCommas(char *text, int sizeText) {
     char current;
     int commas = 0;
@@ -107,6 +130,12 @@ int countCommas(char *text, int sizeText) {
     }return commas;
 }
 
+/**
+ * Converts an
+ * @param updateinfo
+ * @param message
+ * @return
+ */
 int convertUpdateInfoToMessage(UPDATEINFO* updateinfo, char* message){
     strcpy(message, "update,");
 

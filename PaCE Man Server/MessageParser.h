@@ -39,20 +39,60 @@ typedef struct requestLevel{
     int level;
 }REQUESTLEVEL;
 
+/**
+ * Counts the amount of commas in a string
+ * @param text
+ * @param size
+ * @return amount of commas
+ */
 int countCommas(char* text, int size);
 
+/**
+ * copies a parse message for the buffer
+ * @param message
+ * @param sizeOfMessage
+ * @param buffer
+ */
 void copyParseMessageToBuffer(char** message, int sizeOfMessage, char** buffer);
 
+/**
+ * parses a message
+ * @param message
+ * @param delimiter
+ * @param resultPtr
+ */
 void parseMessage(char* message,char delimiter[], char** resultPtr);
 
+/**
+ * Convert a message to an updateInfo struct
+ * @param parsedMessage
+ * @param size
+ * @param updateinfo
+ */
 void convertMessageToUpdateInfo(char** parsedMessage, int size, UPDATEINFO* updateinfo);
 
+/**
+ * Convert events in request
+ * @param updateinfo
+ * @param restOfMessage
+ * @param currentIndex
+ * @param size
+ */
 void convertEventInMessage(UPDATEINFO* updateinfo, char** restOfMessage, int currentIndex, int size);
 
+/**
+ * Adds element to a list
+ * @param list
+ * @param value
+ */
 void addToList(LIST* list, void* value);
 
-void convertToInfo(UPDATEINFO* updateinfo, char* message);
-
+/**
+ * Converts an
+ * @param updateinfo
+ * @param message
+ * @return
+ */
 int convertUpdateInfoToMessage(UPDATEINFO* updateinfo, char* message);
 
 
