@@ -128,3 +128,24 @@ void update_game_state(Game *game, int newState) {
 int get_game_state(Game *game) {
     return game->gameState;
 }
+
+
+void get_game_fruits(Game *game,char *string){
+    F_Node t = game->fruits;
+    while (t != NULL){
+        int x = t->fruit.pos.x;
+        int y = t->fruit.pos.y;
+
+        char sub_str_1[500];
+        char sub_str_2[500];
+
+        itoa(x, sub_str_1, 10);
+        strcat(sub_str_1, ",");
+        itoa(y, sub_str_2, 10);
+        strcat(sub_str_2, ",");
+        t = t->next;
+
+        strcat(sub_str_1, sub_str_2);
+        strcat(string, sub_str_1);
+    }
+}

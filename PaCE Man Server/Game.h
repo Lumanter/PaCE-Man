@@ -63,6 +63,9 @@ void get_game_pills(Game* game,char *string);
 void add_fruit_to_game(Game *game,Fruit new_fruit);
 void delete_fruit_from_game(Game *game,Fruit fruit);
 
+void get_game_fruits(Game *game,char *string);
+
+// Game state
 
 void update_game_state(Game *game, int newState);
 
