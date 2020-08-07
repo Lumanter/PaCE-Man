@@ -17,8 +17,8 @@ Pair create_pair(int x,int y){
 
 Pac_Man create_pac_man(){
     Pac_Man p_m;
-    p_m.pos = create_pair(200,300); // Starting pos
-    p_m.sprite = 0; // Staring sprite
+    p_m.pos = create_pair(INIT_PAC_POS_X,INIT_PAC_POS_Y);
+    p_m.sprite = INIT_PAC_SPRITE;
     return p_m;
 }
 
@@ -35,8 +35,8 @@ void modify_pac_man_position(Pac_Man* p_m_ptr,Pair new_pos){
 
 Ghost create_ghost(int color) {
     Ghost g;
-    g.pos = create_pair(-1,-1); // Starting pos
-    g.active = false;
+    g.pos = create_pair(INIT_GHOST_POS_X,INIT_GHOST_POS_Y); // Starting pos
+    g.active = INIT_GHOST_STATE;
     g.color = color;
     return g;
 }

@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Game Structs.h"
+#include "Constants.h"
 
 // G A M E - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - - - - - - -
 
