@@ -254,4 +254,9 @@ public class Ghost extends Sprite {
     public void setSpeed(Integer speed) {
         this.speed = speed;
     }
+    
+    public Integer getColor() {
+        return color;
+    }
+
 }

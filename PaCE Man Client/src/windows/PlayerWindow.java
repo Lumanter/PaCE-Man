@@ -5,6 +5,7 @@ import fakeServers.FakePlayerServer;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import data.Constants;
+import mainProcess.ClientPlayer;
 
 /**
  * Window of the player mode
@@ -32,8 +33,7 @@ public class PlayerWindow extends JFrame {
         
         PlayerView view = new PlayerView();
         
-        //FakePlayerServer fakeServer = new FakePlayerServer(view);
-        //fakeServer.setVisible(true);
+        ClientPlayer clientProcess = new ClientPlayer(Constants.SERVERADDRESS, Constants.SERVERPORT, view);
         
         this.add(view);
     }
