@@ -5,6 +5,7 @@ import data.Constants;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import mainProcess.ClientObserver;
 
 /**
  * Window of the observer mode
@@ -28,8 +29,7 @@ public class ObserverWindow extends JFrame {
         
         this.view = new ObserverView();
         
-        /**FakeObserverServer fakeServer = new FakeObserverServer(view);
-        fakeServer.setVisible(true);**/
+        ClientObserver clientProcess = new ClientObserver(Constants.SERVERADDRESS, Constants.SERVERPORT, view);
         this.add(view);
     }
     
