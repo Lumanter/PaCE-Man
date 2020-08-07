@@ -29,15 +29,8 @@ public class ObserverWindow extends JFrame {
         
         this.view = new ObserverView();
         
-        ClientObserver clientProcess = new ClientObserver(Constants.SERVERADDRESS, Constants.SERVERPORT, view);
+        ClientObserver clientProcess = new ClientObserver(serverIp, Constants.SERVERPORT, view);
         this.add(view);
-    }
-    
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            JFrame ex = new ObserverWindow("");
-            ex.setVisible(true);
-        });
     }
     
     public ObserverView getView() {

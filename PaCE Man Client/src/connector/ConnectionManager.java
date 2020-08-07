@@ -76,12 +76,12 @@ public class ConnectionManager implements Runnable{
 
                 if(!this.clientPlayer.inputBuffer.equals("")){
                     output.println(this.clientPlayer.inputBuffer);
-
+                    System.out.println("Sending: " + this.clientPlayer.inputBuffer);
                     try {
                         this.clientPlayer.outputBuffer = input.readLine();
                         if(!this.clientPlayer.outputBuffer.equals("")){
                             this.clientPlayer.processOutput();
-                            System.out.println("Out now is \n" + this.clientPlayer.outputBuffer);
+                            //System.out.println("Out now is \n" + this.clientPlayer.outputBuffer);
                         }
                     } catch (IOException ex) {
                         Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,7 +103,7 @@ public class ConnectionManager implements Runnable{
                     try {
                         this.clientObserver.outputBuffer = input.readLine();
                         this.clientObserver.messageToObserverPackage();
-                        //System.out.println("Out now is \n" + this.clientObserver.outputBuffer);
+                        System.out.println("Out now is \n" + this.clientObserver.outputBuffer);
                     } catch (IOException ex) {
                         Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
                     }

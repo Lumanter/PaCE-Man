@@ -69,7 +69,6 @@ public class PlayerView extends JPanel implements ActionListener {
         restartGame();
         setupDirectionKeyListener();
         configurePanel();
-        loadLevel(3);
     }
     
     /**
@@ -279,8 +278,7 @@ public class PlayerView extends JPanel implements ActionListener {
     /**
      * The action listener is call each frame to handle frame-by-frame
      * updates and refresh the display
-     * 
-     * @param e action event of the caller
+     * @param e 
      */
     @Override
     public void actionPerformed(ActionEvent e) {
