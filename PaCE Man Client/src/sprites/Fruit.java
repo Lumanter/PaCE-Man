@@ -4,7 +4,7 @@ import javax.swing.ImageIcon;
 
 /**
  * Edible fruit sprite. Each can have custom points
- * @author Luis Mariano Ramírez Segura - github/Lumanter
+ * @author luism
  */
 public class Fruit extends Sprite {
     

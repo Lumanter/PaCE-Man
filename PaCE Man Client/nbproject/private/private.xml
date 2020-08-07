@@ -7,5 +7,34 @@
             <file>file:/C:/Users/luism/Desktop/__/Compiladores%20y%20Lenguajes/Pac%20Man/PaCE-Man/PaCE%20Man%20Client/src/data/ObserverPackage.java</file>
             <file>file:/C:/Users/luism/Desktop/__/Compiladores%20y%20Lenguajes/Pac%20Man/PaCE-Man/PaCE%20Man%20Client/src/data/GameDatabase.java</file>
         </group>
+        <group>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/sprites/Sprite.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/mainProcess/ClientPlayer.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/connector/MessageParser.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/sprites/SpriteManager.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/fakeServers/FakePlayerServer.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/data/GameDatabase.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/clientViews/PlayerView.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/clientViews/ObserverView.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/windows/Menu.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/commands/Command.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/commands/CreatePillCommand.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/data/Constants.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/data/GhostColor.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/commands/ChangeGhostsSpeedCommand.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/windows/PlayerWindow.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/connector/ConnectionManager.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/Main/main.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/data/ObserverPackage.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/commands/CreateFruitCommand.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/data/Position.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/windows/ObserverWindow.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/sprites/Ghost.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/sprites/Pacman.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/mainProcess/ClientObserver.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/fakeServers/FakeObserverServer.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/commands/CreateGhostCommand.java</file>
+            <file>file:/D:/OneDriveTEC/OneDrive%20-%20Estudiantes%20ITCR/GITHUB/PaCE-Man/PaCE%20Man%20Client/src/sprites/PillManager.java</file>
+        </group>
     </open-files>
 </project-private>

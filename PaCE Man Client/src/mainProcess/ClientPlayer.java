@@ -14,8 +14,10 @@ import connector.ConnectionManager;
 import data.ObserverPackage;
 import java.util.ArrayList;
 import java.util.Arrays;
+import sprites.Fruit;
 import sprites.Ghost;
 import sprites.Pacman;
+import sprites.Pill;
 
 /**
  * Main class that carries data between the view and socket
@@ -46,7 +48,7 @@ public class ClientPlayer {
         inputBuffer += pacman.getPos().x.toString() + ',' +
                 pacman.getPos().y.toString() + ',' +
                 pacman.getAnimationNumber().toString() + ',' +
-                observerPackage.score.toString() + ',';
+                observerPackage.lives + ',';
         
         ArrayList<Ghost> ghosts = observerPackage.ghosts;
 
@@ -71,7 +73,28 @@ public class ClientPlayer {
         
         inputBuffer += observerPackage.score.toString() + ',';
         
-        inputBuffer += observerPackage.gameState.toString();
+        inputBuffer += observerPackage.gameState.toString() + ',';
+        
+        ArrayList<Fruit> fruits = observerPackage.fruits;
+        
+        inputBuffer += "fruits" + ',';
+        
+        for(Fruit fruit: fruits){
+            inputBuffer += fruit.getPoints().toString() + ',' +
+                    fruit.getPos().x.toString() + ',' +
+                    fruit.getPos().y.toString() + ',';
+       }
+        
+        ArrayList<Pill> pills = observerPackage.pills;
+        
+        inputBuffer += "pills" + ',';
+        
+        for(Pill pill: pills){
+            inputBuffer += pill.getPos().x.toString() + ',' +
+                    pill.getPos().y.toString() + ',';
+        }
+        
+        //inputBuffer = inputBuffer.substring(0, inputBuffer.length()-1);
         
     }
     

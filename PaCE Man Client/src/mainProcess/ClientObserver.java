@@ -10,8 +10,10 @@ import connector.ConnectionManager;
 import data.ObserverPackage;
 import data.Position;
 import java.util.ArrayList;
+import sprites.Fruit;
 import sprites.Ghost;
 import sprites.Pacman;
+import sprites.Pill;
 
 /**
  * Main class that carries data between the view and socket
@@ -61,6 +63,41 @@ public class ClientObserver {
             }
             
         }
+        
+        int trueState = Integer.parseInt(parsedMessage[21]);
+        
+        observerPackage.pillActive = (trueState == 1);
+        
+        observerPackage.level = Integer.parseInt(parsedMessage[22]);
+        
+        observerPackage.score = Integer.parseInt(parsedMessage[23]);
+        
+        observerPackage.gameState = Integer.parseInt(parsedMessage[24]);
+        
+        String current = parsedMessage[25];
+        Integer counter = 25;
+        
+        if(!parsedMessage[counter+1].equals("pills")){
+            while(!current.equals("pills")){
+                Integer current_x = Integer.parseInt(parsedMessage[counter+1]);
+                Integer current_y = Integer.parseInt(parsedMessage[counter+2]);
+                observerPackage.fruits.add(new Fruit(current_x, current_y));
+                counter += 2;
+                current = parsedMessage[counter + 1];
+            }
+        }
+        
+        if(counter+2 < parsedMessage.length){
+            while(parsedMessage[counter+1] != null){
+                if(!parsedMessage[counter + 1].equals("pills")){
+                    Integer current_x = Integer.parseInt(parsedMessage[counter + 1]);
+                    Integer current_y = Integer.parseInt(parsedMessage[counter + 2]);
+                    observerPackage.pills.add(new Pill(current_x, current_y));
+                    counter += 2;
+                }
+            }
+        }
+        
         
         view.update(observerPackage);
         

@@ -1,7 +1,6 @@
 package windows;
 
 import clientViews.PlayerView;
-import fakeServers.FakePlayerServer;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import data.Constants;
@@ -12,13 +11,6 @@ import mainProcess.ClientPlayer;
  * @author Luis Mariano Ramírez Segura - github/Lumanter
  */
 public class PlayerWindow extends JFrame {
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            JFrame ex = new PlayerWindow("");
-            ex.setVisible(true);
-        });
-    }
     
     /**
      * Constructor passes the server ip to connect
@@ -33,7 +25,7 @@ public class PlayerWindow extends JFrame {
         
         PlayerView view = new PlayerView();
         
-        ClientPlayer clientProcess = new ClientPlayer(Constants.SERVERADDRESS, Constants.SERVERPORT, view);
+        ClientPlayer clientProcess = new ClientPlayer(serverIp, Constants.SERVERPORT, view);
         
         this.add(view);
     }
