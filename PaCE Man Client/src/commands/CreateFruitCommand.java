@@ -11,7 +11,7 @@ import sprites.Fruit;
 public class CreateFruitCommand extends Command {
 
     // create fruit
-    Fruit fruit;
+    private Fruit fruit;
     
     /**
      * Constructor receives the fruit value and position
